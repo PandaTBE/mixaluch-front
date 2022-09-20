@@ -1,12 +1,11 @@
 import type { NextPage } from 'next';
-import Header from '../components/Header/Header';
+import { withMainLayout } from '../layouts/MainLayout/MainLayout';
 
+/**
+ * компонент для отображения домашней страницы
+ */
 const Home: NextPage = () => {
-    return (
-        <div>
-            <Header />
-        </div>
-    );
+    return <div>123</div>;
 };
 
-export default Home;
+export default withMainLayout(Home);

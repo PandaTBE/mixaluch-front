@@ -4,4 +4,7 @@ export const theme = {
         black: '#333333',
         grey: '#999999',
     },
+    backgroundColors: {
+        primary: '#f7f7f7',
+    },
 };
