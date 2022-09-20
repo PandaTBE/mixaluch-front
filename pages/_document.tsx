@@ -29,7 +29,14 @@ class MyDocument extends Document {
     render(): JSX.Element {
         return (
             <Html lang="ru">
-                <Head />
+                <Head>
+                    <link rel="preconnect" href="https://fonts.googleapis.com" />
+                    <link rel="preconnect" href="https://fonts.gstatic.com" />
+                    <link
+                        href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@0,100;0,200;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+                        rel="stylesheet"
+                    />
+                </Head>
                 <body>
                     <Main />
                     <NextScript />

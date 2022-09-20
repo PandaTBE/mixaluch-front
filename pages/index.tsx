@@ -1,12 +1,12 @@
 import type { NextPage } from 'next';
-import styled from 'styled-components';
-
-const Title = styled.h1`
-    color: ${(p) => p.theme.colors.black};
-`;
+import Header from '../components/Header/Header';
 
 const Home: NextPage = () => {
-    return <Title>123</Title>;
+    return (
+        <div>
+            <Header />
+        </div>
+    );
 };
 
 export default Home;
