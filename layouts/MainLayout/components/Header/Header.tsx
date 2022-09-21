@@ -1,11 +1,17 @@
-import { ContentWrapper, Delivery, Telephone, Wrapper } from './styles';
+import { ContentWrapper, Delivery, StyledLink, Telephone, Wrapper } from './styles';
 import Container from '../../../../components/Container/Container';
 import { Grid, Stack } from '@mui/material';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 /**
  * Компонент для отображения шапки страницы
  */
 const Header = () => {
+    const router = useRouter();
+
+    console.log(router.pathname === '/catalog');
+
     return (
         <Wrapper>
             <Container>
@@ -14,7 +20,10 @@ const Header = () => {
                         <Grid item xs={3} sm={4} md={5} lg={7}>
                             <nav>
                                 <Stack direction="row" spacing={2}>
-                                    <div>Каталог</div>
+                                    <StyledLink active={router.pathname === '/catalog'}>
+                                        <Link href={'/catalog'}>Каталог</Link>
+                                    </StyledLink>
+
                                     <div>О компании</div>
                                 </Stack>
                             </nav>

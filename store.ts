@@ -1,3 +1,4 @@
+import catalog from './slices/Catalog/catalog';
 import { createWrapper } from 'next-redux-wrapper';
 import { configureStore } from '@reduxjs/toolkit';
 import category from './slices/Category/category';
@@ -8,6 +9,7 @@ const makeStore = () =>
         reducer: {
             category,
             product,
+            catalog,
         },
         devTools: true,
     });

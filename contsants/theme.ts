@@ -7,4 +7,7 @@ export const theme = {
     backgroundColors: {
         primary: '#f7f7f7',
     },
+    border: {
+        primary: '#f7f7f7',
+    },
 };

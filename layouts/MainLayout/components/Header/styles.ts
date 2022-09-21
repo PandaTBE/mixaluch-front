@@ -19,9 +19,6 @@ export const Telephone = styled.a`
     cursor: pointer;
 `;
 
-export const List = styled.ul`
-    list-style-type: none;
-    display: flex;
+export const StyledLink = styled.div<{ active: boolean }>`
+    color: ${(props) => (props.active ? props.theme.colors.primary : props.theme.colors.black)};
 `;
-
-export const ListItem = styled.li``;
