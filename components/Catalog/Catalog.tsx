@@ -1,4 +1,4 @@
-import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import List from '@mui/material/List';
 import { useSelector } from 'react-redux';
 import { catalogState } from '../../slices/Catalog/catalog';
