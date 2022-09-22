@@ -1,13 +1,17 @@
+import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 import List from '@mui/material/List';
 import { useSelector } from 'react-redux';
 import { catalogState } from '../../slices/Catalog/catalog';
+import { productState } from '../../slices/Product/product';
 import PageTitle from '../PageTitle/PageTitle';
+import ProductCard from '../ProductCard/ProductCard';
 import ListItem from './components/ListItem/ListItem';
 import usePrepareData from './hooks/usePrepareData';
 import { ContentWrapper, Wrapper, ListSubHeader } from './styles';
 
 const Catalog = () => {
     const { categoriesByParentId } = useSelector(catalogState);
+    const { products } = useSelector(productState);
     usePrepareData();
 
     return (
@@ -24,7 +28,17 @@ const Catalog = () => {
                             ))}
                     </List>
                 </aside>
-                <main></main>
+                <main>
+                    <Grid container spacing={2}>
+                        {products?.map((product) => {
+                            return (
+                                <Grid item xs={6}>
+                                    <ProductCard product={product} />
+                                </Grid>
+                            );
+                        })}
+                    </Grid>
+                </main>
             </ContentWrapper>
         </Wrapper>
     );

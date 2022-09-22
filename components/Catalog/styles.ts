@@ -6,13 +6,14 @@ export const Wrapper = styled.div`
 
 export const ContentWrapper = styled.div`
     display: grid;
-    margin-top: 10px;
-    grid-template-columns: 25% 75%;
+    margin-top: 20px;
+    grid-template-columns: 25% 70%;
     gap: 20px;
+    justify-content: space-between;
 `;
 
 export const ListSubHeader = styled.div`
     font-size: 20px;
     font-weight: 600;
-    padding: 8px 0;
+    padding-bottom: 8px;
 `;

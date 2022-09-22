@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-}
+    reactStrictMode: true,
+    swcMinify: true,
 
-module.exports = nextConfig
+    images: {
+        domains: ['127.0.0.1'],
+    },
+};
+
+// eslint-disable-next-line no-undef
+module.exports = nextConfig;
