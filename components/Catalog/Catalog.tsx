@@ -17,7 +17,9 @@ const Catalog = () => {
     return (
         <Wrapper>
             <section>
-                <PageTitle text={'Каталог'} />
+                <PageTitle>
+                    <div>Каталог</div>
+                </PageTitle>
             </section>
             <ContentWrapper>
                 <aside>

@@ -7,8 +7,8 @@ import { StyledTitle } from './styles';
  * @param text текст для отображения
  * @returns
  */
-const PageTitle: FC<IProps> = ({ text }) => {
-    return <StyledTitle>{text}</StyledTitle>;
+const PageTitle: FC<IProps> = ({ children }) => {
+    return <StyledTitle>{children}</StyledTitle>;
 };
 
 export default PageTitle;

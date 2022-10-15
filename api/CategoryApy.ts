@@ -7,7 +7,7 @@ import { instance } from './intex';
 export const CategoryApi = {
     /** Получение всех категорий */
     async getCategories() {
-        const data = await instance.get<ICategory[]>('/categories').then((response) => response.data);
+        const data = await instance.get<ICategory[]>('/categories/').then((response) => response.data);
         return data;
     },
 };

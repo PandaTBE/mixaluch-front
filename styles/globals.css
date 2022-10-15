@@ -13,6 +13,7 @@ a {
 
 * {
     box-sizing: border-box;
+    /* background-color: grey !important; */
 }
 
 @media (prefers-color-scheme: dark) {

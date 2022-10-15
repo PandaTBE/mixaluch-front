@@ -1,3 +1,3 @@
 export interface IProps {
-    text: string;
+    children: JSX.Element;
 }
