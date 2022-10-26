@@ -29,3 +29,8 @@ export const LinkText = styled.div`
     text-decoration: underline;
     cursor: pointer;
 `;
+
+export const ErrorWrapper = styled.div`
+    margin-top: 20px;
+    width: 50%;
+`;

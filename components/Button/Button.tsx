@@ -5,9 +5,9 @@ import { Wrapper } from './styles';
 /**
  * Компонент для отображения кнопки
  */
-const Button: FC<IProps> = ({ clickHandler, children, width = '100%' }) => {
+const Button: FC<IProps> = ({ clickHandler, children, width = '100%', disabled = false }) => {
     return (
-        <Wrapper width={width} onClick={clickHandler}>
+        <Wrapper disabled={disabled} width={width} onClick={disabled ? undefined : clickHandler}>
             {children}
         </Wrapper>
     );

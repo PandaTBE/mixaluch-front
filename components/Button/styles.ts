@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.button<{ width: string }>`
+export const Wrapper = styled.button<{ width: string; disabled: boolean }>`
     display: block;
-    cursor: pointer;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,6 +15,7 @@ export const Wrapper = styled.button<{ width: string }>`
     width: ${(p) => p.width};
     border: 0;
     :hover {
+        cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
         background-color: ${(p) => p.theme.colors.primarySmooth};
     }
     min-height: 40px;

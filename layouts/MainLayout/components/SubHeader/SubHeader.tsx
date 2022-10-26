@@ -1,8 +1,8 @@
 import { Grid, Tooltip } from '@mui/material';
 import Link from 'next/link';
 import Container from '../../../../components/Container/Container';
-import { Logo, Wrapper } from './styles';
-import SupervisedUserCircle from '@mui/icons-material/SupervisedUserCircle';
+import { LoginIcon, Logo, Wrapper } from './styles';
+import Person from '@mui/icons-material/Person';
 
 /**
  * Компонент для отображения сабхеддера
@@ -20,7 +20,7 @@ const SubHeader = () => {
                     <Grid item>
                         <Link href={'/login'}>
                             <Tooltip title="Вход">
-                                <SupervisedUserCircle />
+                                <LoginIcon />
                             </Tooltip>
                         </Link>
                     </Grid>

@@ -11,4 +11,8 @@ export interface IProps {
      * Ширина кнопки.DEFAULT 100%
      */
     width?: string;
+    /**
+     * Флаг, отвечающий за отключение кнопки
+     */
+    disabled?: boolean;
 }

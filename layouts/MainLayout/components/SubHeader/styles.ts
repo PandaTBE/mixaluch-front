@@ -1,3 +1,4 @@
+import { PersonOutlineOutlined } from '@mui/icons-material';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -6,6 +7,14 @@ export const Wrapper = styled.div`
 
 export const Logo = styled.img`
     width: 220px;
+    cursor: pointer;
+`;
+
+export const LoginIcon = styled(PersonOutlineOutlined)`
+    fill: ${(p) => p.theme.colors.primary};
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
     cursor: pointer;
 `;
 

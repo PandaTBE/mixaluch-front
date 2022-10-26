@@ -4,14 +4,19 @@ import { createWrapper } from 'next-redux-wrapper';
 import { AnyAction, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import category from './slices/Category/category';
 import product from './slices/Product/product';
+import { userApi } from './services/UserService';
 
 const makeStore = () =>
     configureStore({
         reducer: {
+            [userApi.reducerPath]: userApi.reducer,
             category,
             product,
             catalog,
             user,
+        },
+        middleware: (getDefaultMiddleware) => {
+            return getDefaultMiddleware().concat(userApi.middleware);
         },
         devTools: true,
     });
