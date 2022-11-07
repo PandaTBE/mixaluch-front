@@ -33,7 +33,7 @@ const MainLayout: FC<IProps> = ({ children }) => {
     );
 };
 
-/** HOC для отображения компонент с главный лэйаутом */
+/** HOC для отображения компонент с главным лэйаутом */
 export const withMainLayout = <T extends Record<string, unknown>>(Component: FC<T>) => {
     return function withLayoutComponent(props: T): JSX.Element {
         return (
