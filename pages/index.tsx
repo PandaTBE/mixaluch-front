@@ -1,19 +1,20 @@
-import { withMainLayout } from '../layouts/MainLayout/MainLayout';
-import { storeCategories } from '../slices/Category/category';
-import { ICategory } from '../slices/Category/interfaces';
-import { storeProducts } from '../slices/Product/product';
-import { IProduct } from '../slices/Product/interfaces';
 import { CategoryApi } from '../api/CategoryApy';
-import { ProductApi } from '../api/ProductApi';
+import HomePage from '../components/HomePage/HomePage';
+import { ICategory } from '../slices/Category/interfaces';
+import { IProduct } from '../slices/Product/interfaces';
 import type { NextPage } from 'next';
-import { wrapper } from '../store';
+import { ProductApi } from '../api/ProductApi';
 import axios from 'axios';
+import { storeCategories } from '../slices/Category/category';
+import { storeProducts } from '../slices/Product/product';
+import { withMainLayout } from '../layouts/MainLayout/MainLayout';
+import { wrapper } from '../store';
 
 /**
  * Компонент для отображения домашней страницы
  */
 const Home: NextPage = () => {
-    return <div>123</div>;
+    return <HomePage />;
 };
 
 /**

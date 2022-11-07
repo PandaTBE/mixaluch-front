@@ -11,6 +11,7 @@ import Link from 'next/link';
 import PageTitle from '../PageTitle/PageTitle';
 import { storeAuthToken } from '../../slices/User/user';
 import { useAppDispatch } from '../../hooks/mainHooks';
+import useData from './hooks/useData';
 import { useFormik } from 'formik';
 import { userApi } from '../../services/UserService';
 
@@ -22,6 +23,7 @@ const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const initialValues = { email: '', password: '' };
     const dispatch = useAppDispatch();
+    useData();
 
     useEffect(() => {
         if (data?.auth_token) {

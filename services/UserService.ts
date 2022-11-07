@@ -1,6 +1,6 @@
+import { IUser, IUserLoginDTO } from '../models/User';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { IUserLoginDTO } from '../models/User';
 import { urls } from '../contsants/urls';
 
 export const userApi = createApi({
@@ -12,6 +12,15 @@ export const userApi = createApi({
                 url: `auth/token/login/`,
                 method: 'POST',
                 body,
+            }),
+        }),
+        getUserInfo: build.mutation<IUser, string>({
+            query: (authToken) => ({
+                url: 'auth/users/me/',
+                method: 'GET',
+                headers: {
+                    Authorization: `Token ${authToken}`,
+                },
             }),
         }),
     }),

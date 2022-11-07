@@ -1,13 +1,17 @@
 import { Grid, Tooltip } from '@mui/material';
-import Link from 'next/link';
-import Container from '../../../../components/Container/Container';
 import { LoginIcon, Logo, Wrapper } from './styles';
-import Person from '@mui/icons-material/Person';
+
+import Container from '../../../../components/Container/Container';
+import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import { userReducerValues } from '../../../../slices/User/user';
 
 /**
  * Компонент для отображения сабхеддера
  */
 const SubHeader = () => {
+    const { authToken } = useSelector(userReducerValues);
+
     return (
         <Wrapper>
             <Container>
@@ -18,8 +22,8 @@ const SubHeader = () => {
                         </Link>
                     </Grid>
                     <Grid item>
-                        <Link href={'/login'}>
-                            <Tooltip title="Вход">
+                        <Link href={authToken ? 'user-account' : '/login'}>
+                            <Tooltip title={authToken ? 'Личный кабинет' : 'Вход'}>
                                 <LoginIcon />
                             </Tooltip>
                         </Link>

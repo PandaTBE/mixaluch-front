@@ -1,16 +1,22 @@
-import { FC } from 'react';
+import { ContentWrapper, Wrapper } from './styles';
+
 import Container from '../../components/Container/Container';
+import { FC } from 'react';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
-import SubHeader from './components/SubHeader/SubHeader';
 import { IProps } from './interfaces';
-import { ContentWrapper, Wrapper } from './styles';
+import SubHeader from './components/SubHeader/SubHeader';
+import useGetRawData from '../../hooks/useGetUserData';
+import usePrepareData from '../../hooks/usePrepareData';
 
 /**
  * Layot для оборачивания контена
  * @param children компонент, который необходимо обернуть
  */
 const MainLayout: FC<IProps> = ({ children }) => {
+    usePrepareData();
+    useGetRawData();
+
     return (
         <Wrapper>
             <header>
