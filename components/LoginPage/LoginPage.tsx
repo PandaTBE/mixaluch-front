@@ -1,7 +1,9 @@
+import * as yup from 'yup';
+
 import { ButtonsWrapper, ErrorWrapper, InputsWrapper, LinkText, LoginButtonText, StyledInput, Wrapper } from './styles';
-import { ChangeEvent, useEffect, useState } from 'react';
 import { IconButton, InputAdornment, Stack } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useEffect, useState } from 'react';
 
 import Button from '../Button/Button';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
@@ -9,6 +11,7 @@ import Link from 'next/link';
 import PageTitle from '../PageTitle/PageTitle';
 import { storeAuthToken } from '../../slices/User/user';
 import { useAppDispatch } from '../../hooks/mainHooks';
+import { useFormik } from 'formik';
 import { userApi } from '../../services/UserService';
 
 /**
@@ -16,9 +19,8 @@ import { userApi } from '../../services/UserService';
  */
 const LoginPage = () => {
     const [login, { isError, isLoading, data }] = userApi.useLoginMutation();
-    const [password, setPassword] = useState({ value: '', isError: false });
-    const [email, setEmail] = useState({ value: '', isError: false });
     const [showPassword, setShowPassword] = useState(false);
+    const initialValues = { email: '', password: '' };
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -27,29 +29,24 @@ const LoginPage = () => {
         }
     }, [data]);
 
-    const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setEmail((prevState) => ({ ...prevState, value: e.target.value, isError: false }));
-    };
-
-    const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setPassword((prevState) => ({ ...prevState, value: e.target.value, isError: false }));
-    };
-
     const toggleShowPassword = () => {
         setShowPassword((prevState) => !prevState);
     };
 
-    const onLoginClick = () => {
-        if (!email.value || !password.value) {
-            if (!password.value) setPassword((prevState) => ({ ...prevState, isError: true }));
-            if (!email.value) setEmail((prevState) => ({ ...prevState, isError: true }));
-        } else {
-            login({
-                password: password.value,
-                email: email.value,
-            });
-        }
+    const validationSchema = yup.object({
+        password: yup.string().min(6, 'Минимальная длина пароля 6 символов').required('Это обязательное поле'),
+        email: yup.string().email('Введите корректный email').required('Это обязательное поле'),
+    });
+
+    const onSubmit = (values: { email: string; password: string }) => {
+        login(values);
     };
+
+    const formik = useFormik({
+        validationSchema,
+        initialValues,
+        onSubmit,
+    });
 
     return (
         <Wrapper>
@@ -61,13 +58,23 @@ const LoginPage = () => {
                     <ErrorMessage text={'Сочетание логина и пароля не подходит'} />
                 </ErrorWrapper>
             )}
-            <InputsWrapper>
-                <StyledInput label={'Email'} error={email.isError} value={email.value} onChange={onEmailChange} />
+
+            <InputsWrapper onSubmit={formik.handleSubmit}>
                 <StyledInput
+                    name={'email'}
+                    label={'Email'}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    value={formik.values.email}
+                    helperText={formik.touched.email && formik.errors.email}
+                    onChange={formik.handleChange}
+                />
+                <StyledInput
+                    name={'password'}
                     type={showPassword ? 'text' : 'password'}
-                    onChange={onPasswordChange}
-                    error={password.isError}
-                    value={password.value}
+                    onChange={formik.handleChange}
+                    error={formik.touched.password && Boolean(formik.errors.password)}
+                    helperText={formik.touched.password && formik.errors.password}
+                    value={formik.values.password}
                     label={'Пароль'}
                     InputProps={{
                         endAdornment: (
@@ -84,20 +91,20 @@ const LoginPage = () => {
                         ),
                     }}
                 />
+                <ButtonsWrapper>
+                    <Stack alignItems="center" direction={'row'} spacing={2}>
+                        <Button type={'submit'} disabled={isLoading} width={'75px'}>
+                            <LoginButtonText>Войти</LoginButtonText>
+                        </Button>
+                        <Link href="/register">
+                            <LinkText>Восстановить пароль</LinkText>
+                        </Link>
+                        <Link href="/reset-password">
+                            <LinkText>Зарегестрироваться</LinkText>
+                        </Link>
+                    </Stack>
+                </ButtonsWrapper>
             </InputsWrapper>
-            <ButtonsWrapper>
-                <Stack alignItems="center" direction={'row'} spacing={2}>
-                    <Button disabled={isLoading} clickHandler={onLoginClick} width={'75px'}>
-                        <LoginButtonText>Войти</LoginButtonText>
-                    </Button>
-                    <Link href="/register">
-                        <LinkText>Восстановить пароль</LinkText>
-                    </Link>
-                    <Link href="/reset-password">
-                        <LinkText>Зарегестрироваться</LinkText>
-                    </Link>
-                </Stack>
-            </ButtonsWrapper>
         </Wrapper>
     );
 };

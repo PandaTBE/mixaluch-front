@@ -1,6 +1,13 @@
+import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
+
 import styled from 'styled-components';
 
-export const Wrapper = styled.button<{ width: string; disabled: boolean }>`
+interface IButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+    width: string;
+    disabled: boolean;
+}
+
+export const Wrapper = styled.button<IButtonProps>`
     display: block;
 
     display: flex;

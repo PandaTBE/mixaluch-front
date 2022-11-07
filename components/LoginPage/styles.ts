@@ -5,7 +5,7 @@ export const Wrapper = styled.section`
     padding: 15px 0;
 `;
 
-export const InputsWrapper = styled.div`
+export const InputsWrapper = styled.form`
     margin-top: 10px;
     display: flex;
     flex-direction: column;

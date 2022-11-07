@@ -1,4 +1,6 @@
-export interface IProps {
+import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
+
+export interface IProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
     /**
      * То что рисовать внутри кнопки
      */
@@ -6,7 +8,7 @@ export interface IProps {
     /**
      * Обработчик нажатия на кнопку
      */
-    clickHandler: () => void;
+    clickHandler?: () => void;
     /**
      * Ширина кнопки.DEFAULT 100%
      */
