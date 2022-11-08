@@ -8,8 +8,7 @@ interface IButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButton
 }
 
 export const Wrapper = styled.button<IButtonProps>`
-    display: block;
-
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
