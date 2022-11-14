@@ -16,7 +16,6 @@ import { IProps } from './interfaces';
 
 /**
  * Компонент для отображения карточки продукта
- * @param product Данные о продукте
  */
 const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
     const addToCart = () => {
