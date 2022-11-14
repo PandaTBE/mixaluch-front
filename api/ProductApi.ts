@@ -1,4 +1,4 @@
-import { IProduct } from '../slices/Product/interfaces';
+import { IProduct } from '../models/Product';
 import { instance } from './intex';
 
 /**
@@ -8,6 +8,12 @@ export const ProductApi = {
     /** Получение всех продуктов */
     async getProducts() {
         const data = await instance.get<IProduct[]>('/products').then((response) => response.data);
+        return data;
+    },
+
+    /** Получение популряных продуктов */
+    async getPopularProducts() {
+        const data = await instance.get<IProduct[]>('/products/popular/').then((response) => response.data);
         return data;
     },
 };

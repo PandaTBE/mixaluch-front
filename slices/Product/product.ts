@@ -1,10 +1,13 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IProduct, IState } from './interfaces';
-import { HYDRATE } from 'next-redux-wrapper';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
 import { AppState } from './../../store';
+import { HYDRATE } from 'next-redux-wrapper';
+import { IProduct } from '../../models/Product';
+import { IState } from './interfaces';
 
 const initialState: IState = {
     products: null,
+    popularProducts: null,
 };
 
 export const product = createSlice({
@@ -17,6 +20,13 @@ export const product = createSlice({
         storeProducts: (state, action: PayloadAction<IProduct[] | null>) => {
             state.products = action.payload;
         },
+
+        /**
+         * Сохранение популярных продуктов
+         */
+        storePopularProducts: (state, action: PayloadAction<IProduct[] | null>) => {
+            state.popularProducts = action.payload;
+        },
     },
 
     /**
@@ -26,13 +36,13 @@ export const product = createSlice({
         [HYDRATE]: (state, action) => {
             return {
                 ...state,
-                products: action.payload.product.products,
+                popularProducts: action.payload.product.popularProducts,
             };
         },
     },
 });
 
-export const { storeProducts } = product.actions;
+export const { storeProducts, storePopularProducts } = product.actions;
 
 export const productState = (state: AppState) => state.product;
 
