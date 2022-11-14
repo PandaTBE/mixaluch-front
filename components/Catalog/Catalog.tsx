@@ -1,13 +1,14 @@
+import { ContentWrapper, ListSubHeader, Wrapper } from './styles';
+
 import { Grid } from '@mui/material';
 import List from '@mui/material/List';
-import { useSelector } from 'react-redux';
-import { catalogState } from '../../slices/Catalog/catalog';
-import { productState } from '../../slices/Product/product';
+import ListItem from './components/ListItem/ListItem';
 import PageTitle from '../PageTitle/PageTitle';
 import ProductCard from '../ProductCard/ProductCard';
-import ListItem from './components/ListItem/ListItem';
+import { catalogState } from '../../slices/Catalog/catalog';
+import { productState } from '../../slices/Product/product';
 import usePrepareData from './hooks/usePrepareData';
-import { ContentWrapper, Wrapper, ListSubHeader } from './styles';
+import { useSelector } from 'react-redux';
 
 const Catalog = () => {
     const { categoriesByParentId } = useSelector(catalogState);

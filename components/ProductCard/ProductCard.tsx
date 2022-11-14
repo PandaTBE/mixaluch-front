@@ -1,31 +1,38 @@
-import Button from '../Button/Button';
-import { IProps } from './interfaces';
-import { FC } from 'react';
 import {
     ButtonContentWrapper,
-    ContentWrapper,
-    ButtonWrapper,
     ButtonText,
-    Wrapper,
+    ButtonWrapper,
+    ContentWrapper,
+    Image,
+    ImageWrapper,
     Price,
     Title,
-    Image,
+    Wrapper,
 } from './styles';
+
+import Button from '../Button/Button';
+import { FC } from 'react';
+import { IProps } from './interfaces';
 
 /**
  * Компонент для отображения карточки продукта
  * @param product Данные о продукте
  */
-const ProductCard: FC<IProps> = ({ product }) => {
+const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
     const addToCart = () => {
         console.log('add to cart');
     };
 
     return (
         <Wrapper>
-            <Image
-                src={product.product_image.find((image) => image.is_feature)?.image || product.product_image[0].image}
-            />
+            <ImageWrapper>
+                <Image
+                    height={imageHeight}
+                    src={
+                        product.product_image.find((image) => image.is_feature)?.image || product.product_image[0].image
+                    }
+                />
+            </ImageWrapper>
             <ContentWrapper>
                 <Title>{product.title}</Title>
                 <Price>{product.regular_price} ₽</Price>
