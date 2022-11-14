@@ -7,7 +7,7 @@ import { userApi } from '../services/UserService';
 /**
  * Кастомный хук для получения данных
  */
-const useGetRawData = () => {
+const useGetUserData = () => {
     const { authToken, user } = useSelector(userReducerValues);
     const [getUserInfo, { data, isError, isLoading }] = userApi.useGetUserInfoMutation();
     const dispatch = useDispatch();
@@ -37,4 +37,4 @@ const useGetRawData = () => {
     }, [authToken, user]);
 };
 
-export default useGetRawData;
+export default useGetUserData;

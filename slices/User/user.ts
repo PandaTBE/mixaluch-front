@@ -42,10 +42,14 @@ export const user = createSlice({
         toggleUserFetchingError: (state, action: PayloadAction<boolean>) => {
             state.userFetchingError = action.payload;
         },
+
+        /** Обнуление редьюсера */
+        resetUserReducer: () => initialState,
     },
 });
 
-export const { storeAuthToken, storeUser, toggleUserFetchingError, toggleUserFetching } = user.actions;
+export const { storeAuthToken, storeUser, toggleUserFetchingError, toggleUserFetching, resetUserReducer } =
+    user.actions;
 
 export const userReducerValues = (state: AppState) => state.user;
 

@@ -16,16 +16,6 @@ export const UserData = styled.div`
     }
 `;
 
-export const CheckboxWrapper = styled.div`
-    margin-top: 10px;
-`;
-
-export const ChangePasswordForm = styled.form`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-`;
-
 export const PasswordInputWrapper = styled.div`
     width: 50%;
     margin-top: 15px;

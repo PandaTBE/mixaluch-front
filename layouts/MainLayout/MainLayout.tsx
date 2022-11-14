@@ -6,17 +6,12 @@ import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import { IProps } from './interfaces';
 import SubHeader from './components/SubHeader/SubHeader';
-import useGetRawData from '../../hooks/useGetUserData';
-import usePrepareData from '../../hooks/usePrepareData';
 
 /**
  * Layot для оборачивания контена
  * @param children компонент, который необходимо обернуть
  */
 const MainLayout: FC<IProps> = ({ children }) => {
-    usePrepareData();
-    useGetRawData();
-
     return (
         <Wrapper>
             <header>

@@ -1,8 +1,11 @@
 import { Aside, NavItem, Section, Wrapper } from './styles';
+import { FC, useEffect } from 'react';
+import { resetUserReducer, userReducerValues } from '../../slices/User/user';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { FC } from 'react';
 import Link from 'next/link';
-import { Stack } from '@mui/material';
+import { useRouter } from 'next/router';
+import { userApi } from '../../services/UserService';
 
 interface IProps {
     /** контент, который нужно отобразить внутри макета */
@@ -13,6 +16,24 @@ interface IProps {
  * Компонент для отображения бокового меню пользваотеля
  */
 const UserAccountSidebarLayout: FC<IProps> = ({ children }) => {
+    const [logout, { isLoading }] = userApi.useLogoutMutation();
+    const { authToken } = useSelector(userReducerValues);
+    const dispatch = useDispatch();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!authToken && !isLoading) {
+            router.push('/login');
+        }
+    }, [authToken]);
+
+    const onLogoutClick = () => {
+        if (authToken) {
+            logout(authToken);
+            dispatch(resetUserReducer());
+        }
+    };
+
     return (
         <Wrapper>
             <Aside>
@@ -26,8 +47,8 @@ const UserAccountSidebarLayout: FC<IProps> = ({ children }) => {
                     <Link href="/user-account">
                         <NavItem>Адрес доставки</NavItem>
                     </Link>
-                    <Link href="/user-account">
-                        <NavItem>Выход</NavItem>
+                    <Link href="/">
+                        <NavItem onClick={onLogoutClick}>Выход</NavItem>
                     </Link>
                 </nav>
             </Aside>
