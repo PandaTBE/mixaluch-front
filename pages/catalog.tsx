@@ -4,11 +4,11 @@ import type { NextPage } from 'next';
 import { wrapper } from '../store';
 import { ProductApi } from '../api/ProductApi';
 import { CategoryApi } from '../api/CategoryApy';
-import { IProduct } from '../slices/Product/interfaces';
 import { ICategory } from '../slices/Category/interfaces';
 import axios from 'axios';
 import { storeCategories } from '../slices/Category/category';
 import { storeProducts } from '../slices/Product/product';
+import { IProduct } from '../models/Product';
 
 /**
  * Страница каталога

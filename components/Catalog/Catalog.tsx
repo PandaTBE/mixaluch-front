@@ -6,13 +6,13 @@ import ListItem from './components/ListItem/ListItem';
 import PageTitle from '../PageTitle/PageTitle';
 import ProductCard from '../ProductCard/ProductCard';
 import { catalogState } from '../../slices/Catalog/catalog';
-import { productState } from '../../slices/Product/product';
+import { productReducerValues } from '../../slices/Product/product';
 import usePrepareData from './hooks/usePrepareData';
 import { useSelector } from 'react-redux';
 
 const Catalog = () => {
     const { categoriesByParentId } = useSelector(catalogState);
-    const { products } = useSelector(productState);
+    const { products } = useSelector(productReducerValues);
     usePrepareData();
 
     return (
