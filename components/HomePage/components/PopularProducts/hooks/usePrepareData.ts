@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import useWindowSize from '../../../../../hooks/useWindowSize';
 
+/**
+ * кастомный хук для подготовки данных
+ */
 const usePrepareData = () => {
     const [swiperData, setSwiperData] = useState({
         slidesPerView: 5,
@@ -9,6 +12,7 @@ const usePrepareData = () => {
     });
     const windowSize = useWindowSize();
 
+    /** В зависимости от размеров окна изменяется состояние карусели с популярными продуктами */
     useEffect(() => {
         const { width } = windowSize;
         if (width < 1400 && width >= 1200) {
