@@ -15,6 +15,15 @@ const usePrepareData = () => {
     /** В зависимости от размеров окна изменяется состояние карусели с популярными продуктами */
     useEffect(() => {
         const { width } = windowSize;
+
+        if (width >= 1400) {
+            setSwiperData((prevState) => ({
+                ...prevState,
+                slidesPerView: 5,
+                imageHeight: '230px',
+            }));
+        }
+
         if (width < 1400 && width >= 1200) {
             setSwiperData((prevState) => ({
                 ...prevState,
