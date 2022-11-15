@@ -1,4 +1,5 @@
 import PopularProducts from './components/PopularProducts/PopularProducts';
+import PromoCarousel from './components/PromoCarousel/PromoCarousel';
 
 /**
  * Начальная страница
@@ -6,6 +7,7 @@ import PopularProducts from './components/PopularProducts/PopularProducts';
 const HomePage = () => {
     return (
         <div>
+            <PromoCarousel />
             <PopularProducts />
         </div>
     );
