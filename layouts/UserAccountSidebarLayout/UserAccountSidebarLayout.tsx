@@ -30,6 +30,7 @@ const UserAccountSidebarLayout: FC<IProps> = ({ children }) => {
     const onLogoutClick = () => {
         if (authToken) {
             logout(authToken);
+            localStorage.setItem('authToken', '');
             dispatch(resetUserReducer());
         }
     };
