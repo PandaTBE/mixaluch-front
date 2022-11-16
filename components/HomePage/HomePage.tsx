@@ -1,3 +1,4 @@
+import Advantages from './components/Anvantages/Advantages';
 import Kebab from './components/Kebab/Kebab';
 import MainCategories from './components/MainCategories/MainCategories';
 import PopularProducts from './components/PopularProducts/PopularProducts';
@@ -13,6 +14,7 @@ const HomePage = () => {
             <PopularProducts />
             <MainCategories />
             <Kebab />
+            <Advantages />
         </div>
     );
 };
