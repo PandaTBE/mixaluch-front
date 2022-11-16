@@ -1,3 +1,4 @@
+import Kebab from './components/Kebab/Kebab';
 import MainCategories from './components/MainCategories/MainCategories';
 import PopularProducts from './components/PopularProducts/PopularProducts';
 import PromoCarousel from './components/PromoCarousel/PromoCarousel';
@@ -11,6 +12,7 @@ const HomePage = () => {
             <PromoCarousel />
             <PopularProducts />
             <MainCategories />
+            <Kebab />
         </div>
     );
 };
