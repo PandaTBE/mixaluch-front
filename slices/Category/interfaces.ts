@@ -1,15 +1,12 @@
 export interface IState {
     categories: null | ICategory[];
+    mainCategories: null | ICategory[];
 }
 
 export interface ICategory {
     parent: number | null;
-    is_active: boolean;
-    tree_id: number;
-    level: number;
+    image: string;
     name: string;
     slug: string;
-    rght: number;
-    lft: number;
     id: number;
 }

@@ -5,6 +5,7 @@ import { ICategory, IState } from './interfaces';
 
 const initialState: IState = {
     categories: null,
+    mainCategories: null,
 };
 
 export const category = createSlice({
@@ -17,6 +18,13 @@ export const category = createSlice({
         storeCategories: (state, action: PayloadAction<null | ICategory[]>) => {
             state.categories = action.payload;
         },
+
+        /**
+         * Сохранение основных (главных категорий)
+         */
+        storeMainCategories: (state, action: PayloadAction<null | ICategory[]>) => {
+            state.mainCategories = action.payload;
+        },
     },
 
     extraReducers: {
@@ -27,12 +35,13 @@ export const category = createSlice({
             return {
                 ...state,
                 categories: action.payload.category.categories,
+                mainCategories: action.payload.category.mainCategories,
             };
         },
     },
 });
 
-export const { storeCategories } = category.actions;
+export const { storeCategories, storeMainCategories } = category.actions;
 
 export const categoryState = (state: AppState) => state.category;
 

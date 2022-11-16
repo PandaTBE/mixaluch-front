@@ -1,4 +1,4 @@
-import { storePopularProducts, storeProducts } from '../slices/Product/product';
+import { storePopularProducts } from '../slices/Product/product';
 
 import { CategoryApi } from '../api/CategoryApy';
 import HomePage from '../components/HomePage/HomePage';
@@ -7,7 +7,7 @@ import { IProduct } from '../models/Product';
 import type { NextPage } from 'next';
 import { ProductApi } from '../api/ProductApi';
 import axios from 'axios';
-import { storeCategories } from '../slices/Category/category';
+import { storeMainCategories } from '../slices/Category/category';
 import { withMainLayout } from '../layouts/MainLayout/MainLayout';
 import { wrapper } from '../store';
 
@@ -23,13 +23,13 @@ const Home: NextPage = () => {
  */
 export const getServerSideProps = wrapper.getStaticProps((store) => async () => {
     try {
-        const categoriesRequest = CategoryApi.getCategories();
+        const mainCategoriesRequest = CategoryApi.getMainCategories();
         const popularProdcutsRequest = ProductApi.getPopularProducts();
 
-        await axios.all<IProduct[] | ICategory[]>([categoriesRequest, popularProdcutsRequest]).then((responses) => {
-            const [categories, popularProducts] = responses as [ICategory[], IProduct[]];
+        await axios.all<IProduct[] | ICategory[]>([mainCategoriesRequest, popularProdcutsRequest]).then((responses) => {
+            const [mainCategories, popularProducts] = responses as [ICategory[], IProduct[]];
             store.dispatch(storePopularProducts(popularProducts));
-            store.dispatch(storeCategories(categories));
+            store.dispatch(storeMainCategories(mainCategories));
         });
     } catch (error) {
         console.log('error accured while getting initial data');

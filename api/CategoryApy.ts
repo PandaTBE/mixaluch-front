@@ -10,4 +10,10 @@ export const CategoryApi = {
         const data = await instance.get<ICategory[]>('/categories/').then((response) => response.data);
         return data;
     },
+
+    /** Получение основных категорий */
+    async getMainCategories() {
+        const data = await instance.get<ICategory[]>('/categories/main/').then((response) => response.data);
+        return data;
+    },
 };
