@@ -7,7 +7,7 @@ import ProductCard from '../../../ProductCard/ProductCard';
 import { productReducerValues } from '../../../../slices/Product/product';
 import { useSelector } from 'react-redux';
 import usePrepareData from './hooks/usePrepareData';
-import { StyledArrowBackIcon, SwiperWrapper, StyledArrowForwardIcon } from './styles';
+import { StyledArrowBackIcon, SwiperWrapper, StyledArrowForwardIcon, Wrapper } from './styles';
 import { useState } from 'react';
 import { Stack } from '@mui/material';
 
@@ -22,7 +22,7 @@ const PopularProducts = () => {
     if (!popularProducts?.length) return null;
 
     return (
-        <section>
+        <Wrapper>
             <Stack direction="row" alignItems="center" spacing={2} justifyContent={'space-between'}>
                 <PageTitle>
                     <div>Популярные товары</div>
@@ -50,7 +50,7 @@ const PopularProducts = () => {
                     })}
                 </Swiper>
             </SwiperWrapper>
-        </section>
+        </Wrapper>
     );
 };
 

@@ -1,3 +1,4 @@
+import MainCategories from './components/MainCategories/MainCategories';
 import PopularProducts from './components/PopularProducts/PopularProducts';
 import PromoCarousel from './components/PromoCarousel/PromoCarousel';
 
@@ -9,6 +10,7 @@ const HomePage = () => {
         <div>
             <PromoCarousel />
             <PopularProducts />
+            <MainCategories />
         </div>
     );
 };

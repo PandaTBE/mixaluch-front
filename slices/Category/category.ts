@@ -1,7 +1,8 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { AppState } from './../../store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICategory, IState } from './interfaces';
+import { IState } from './interfaces';
+import { ICategory } from '../../models/Category';
 
 const initialState: IState = {
     categories: null,
@@ -43,6 +44,6 @@ export const category = createSlice({
 
 export const { storeCategories, storeMainCategories } = category.actions;
 
-export const categoryState = (state: AppState) => state.category;
+export const categoryReducerValues = (state: AppState) => state.category;
 
 export default category.reducer;

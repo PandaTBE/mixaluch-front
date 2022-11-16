@@ -2,7 +2,6 @@ import { storePopularProducts } from '../slices/Product/product';
 
 import { CategoryApi } from '../api/CategoryApy';
 import HomePage from '../components/HomePage/HomePage';
-import { ICategory } from '../slices/Category/interfaces';
 import { IProduct } from '../models/Product';
 import type { NextPage } from 'next';
 import { ProductApi } from '../api/ProductApi';
@@ -10,6 +9,7 @@ import axios from 'axios';
 import { storeMainCategories } from '../slices/Category/category';
 import { withMainLayout } from '../layouts/MainLayout/MainLayout';
 import { wrapper } from '../store';
+import { ICategory } from '../models/Category';
 
 /**
  * Компонент для отображения домашней страницы

@@ -15,3 +15,7 @@ export const StyledArrowForwardIcon = styled(ArrowForwardIcon)`
     fill: ${(p) => p.theme.colors.primary};
     cursor: pointer;
 `;
+
+export const Wrapper = styled.section`
+    padding-bottom: 30px;
+`;
