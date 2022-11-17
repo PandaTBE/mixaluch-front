@@ -5,7 +5,7 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
 
 export const Wrapper = styled.section`
-    padding-bottom: 30px;
+    padding-bottom: 50px;
 `;
 
 export const Title = styled.div`

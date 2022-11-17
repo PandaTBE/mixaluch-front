@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.section`
-    padding-bottom: 15px;
+    padding-bottom: 50px;
     position: relative;
 `;
 

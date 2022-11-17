@@ -17,5 +17,5 @@ export const StyledArrowForwardIcon = styled(ArrowForwardIcon)`
 `;
 
 export const Wrapper = styled.section`
-    padding-bottom: 30px;
+    padding-bottom: 50px;
 `;
