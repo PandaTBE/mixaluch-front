@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
 
 export const Title = styled.div`
     font-weight: bold;
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     margin-top: 15px;
     text-align: center;
 `;
@@ -16,5 +16,5 @@ export const Title = styled.div`
 export const Text = styled.div`
     margin-top: 10px;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
 `;
