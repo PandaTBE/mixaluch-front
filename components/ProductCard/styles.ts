@@ -38,6 +38,7 @@ export const Image = styled.img<{ height?: string }>`
     width: 100%;
     height: ${(p) => p.height || 'auto'};
     cursor: pointer;
+    object-fit: contain;
 `;
 
 export const ButtonWrapper = styled.div`

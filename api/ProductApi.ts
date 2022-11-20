@@ -6,8 +6,15 @@ import { instance } from './intex';
  */
 export const ProductApi = {
     /** Получение всех продуктов */
-    async getProducts() {
-        const data = await instance.get<IProduct[]>('/products').then((response) => response.data);
+    async getProducts(category?: string) {
+        // eslint-disable-next-line prefer-const
+        let url = `/products/`;
+
+        if (category) {
+            url = `${url}?category=${category}`;
+        }
+
+        const data = await instance.get<IProduct[]>(url).then((response) => response.data);
         return data;
     },
 

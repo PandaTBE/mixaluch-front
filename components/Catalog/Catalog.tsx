@@ -36,7 +36,7 @@ const Catalog = () => {
                         {products?.map((product) => {
                             return (
                                 <Grid item xs={6}>
-                                    <ProductCard product={product} />
+                                    <ProductCard imageHeight={'300px'} product={product} />
                                 </Grid>
                             );
                         })}
