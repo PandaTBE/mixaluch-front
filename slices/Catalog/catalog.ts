@@ -4,6 +4,7 @@ import { ICategoriesByParentId, IState } from './interfaces';
 
 const initialState: IState = {
     categoriesByParentId: null,
+    selectedCategoryId: null,
 };
 
 export const catalog = createSlice({
@@ -16,11 +17,18 @@ export const catalog = createSlice({
         storeCategoriesByParentId: (state, action: PayloadAction<null | ICategoriesByParentId>) => {
             state.categoriesByParentId = action.payload;
         },
+
+        /**
+         * Сохранение выбранной категории
+         */
+        storeSelectedCategoryId: (state, action: PayloadAction<number | null>) => {
+            state.selectedCategoryId = action.payload;
+        },
     },
 });
 
-export const { storeCategoriesByParentId } = catalog.actions;
+export const { storeCategoriesByParentId, storeSelectedCategoryId } = catalog.actions;
 
-export const catalogState = (state: AppState) => state.catalog;
+export const catalogReducerValues = (state: AppState) => state.catalog;
 
 export default catalog.reducer;

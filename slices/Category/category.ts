@@ -6,6 +6,7 @@ import { ICategory } from '../../models/Category';
 
 const initialState: IState = {
     categories: null,
+    categoriesById: null,
     mainCategories: null,
 };
 
@@ -17,7 +18,17 @@ export const category = createSlice({
          * Сохранение всех категорий
          */
         storeCategories: (state, action: PayloadAction<null | ICategory[]>) => {
+            let categoriesById = null;
+
+            if (action.payload) {
+                categoriesById = action.payload.reduce((acc: { [id: string]: ICategory }, value) => {
+                    acc[value.id] = value;
+                    return acc;
+                }, {});
+            }
+
             state.categories = action.payload;
+            state.categoriesById = categoriesById;
         },
 
         /**

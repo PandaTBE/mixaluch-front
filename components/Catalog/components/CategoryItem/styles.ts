@@ -5,9 +5,11 @@ export const Wrapper = styled.div`
     cursor: pointer;
 `;
 
-export const Text = styled.div`
+export const Text = styled.div<{ isSelected: boolean; isChild?: boolean }>`
     width: 100%;
     padding: 10px 0;
+    color: ${(p) => (p.isSelected ? p.theme.colors.primary : 'inherit')};
+    padding-left: ${(p) => (p.isChild ? '20px' : 0)};
     :hover {
         color: ${(p) => p.theme.colors.primary};
     }
@@ -21,12 +23,4 @@ export const ParentWrapper = styled.div`
 
 export const ChildWrapper = styled.div`
     cursor: pointer;
-`;
-
-export const ChildText = styled.div`
-    padding: 10px 0;
-    padding-left: 20px;
-    :hover {
-        color: ${(p) => p.theme.colors.primary};
-    }
 `;
