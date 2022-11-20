@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';

@@ -3,14 +3,21 @@ import { LoginIcon, Logo, Wrapper } from './styles';
 
 import Container from '../../../../components/Container/Container';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userReducerValues } from '../../../../slices/User/user';
+import { storePageToSwitch } from '../../../../slices/General/general';
+import { TPageToSwitch } from '../../../../slices/General/interfaces';
 
 /**
  * Компонент для отображения сабхеддера
  */
 const SubHeader = () => {
     const { authToken } = useSelector(userReducerValues);
+    const dispatch = useDispatch();
+
+    const onLinkClick = (link: TPageToSwitch) => () => {
+        dispatch(storePageToSwitch(link));
+    };
 
     return (
         <Wrapper>
@@ -18,7 +25,7 @@ const SubHeader = () => {
                 <Grid container spacing={2} justifyContent="space-between" alignItems="center">
                     <Grid item>
                         <Link href={'/'}>
-                            <Logo src={'/logo.png'} alt={'Mixaluch logo'} />
+                            <Logo onClick={onLinkClick('/')} src={'/logo.png'} alt={'Mixaluch logo'} />
                         </Link>
                     </Grid>
                     <Grid item>

@@ -5,6 +5,7 @@ import { AnyAction, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import category from './slices/Category/category';
 import product from './slices/Product/product';
 import { userApi } from './services/UserService';
+import general from './slices/General/general';
 
 const makeStore = () =>
     configureStore({
@@ -14,6 +15,7 @@ const makeStore = () =>
             product,
             catalog,
             user,
+            general,
         },
         middleware: (getDefaultMiddleware) => {
             return getDefaultMiddleware().concat(userApi.middleware);

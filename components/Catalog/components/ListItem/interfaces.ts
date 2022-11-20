@@ -1,4 +1,4 @@
-import { ICategory } from '../../../../slices/Category/interfaces';
+import { ICategory } from '../../../../models/Category';
 
 export interface IProps {
     item: { parent: ICategory; children: ICategory[] };

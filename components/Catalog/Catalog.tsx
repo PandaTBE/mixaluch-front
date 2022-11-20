@@ -35,8 +35,8 @@ const Catalog = () => {
                     <Grid container spacing={2}>
                         {products?.map((product) => {
                             return (
-                                <Grid item xs={6}>
-                                    <ProductCard imageHeight={'300px'} product={product} />
+                                <Grid item xs={12} sm={6} md={4} xl={3}>
+                                    <ProductCard imageHeight={'250px'} product={product} />
                                 </Grid>
                             );
                         })}

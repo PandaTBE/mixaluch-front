@@ -20,10 +20,9 @@ const Catalog: NextPage = () => {
 /**
  * Получение данных на сервере
  */
-export const getServerSideProps = wrapper.getServerSideProps((store) => async (context) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
     try {
-        const category = context.query['category'] as string | undefined;
-        const productsRequest = ProductApi.getProducts(category);
+        const productsRequest = ProductApi.getProducts();
         const categoriesRequest = CategoryApi.getCategories();
 
         await axios.all<IProduct[] | ICategory[]>([productsRequest, categoriesRequest]).then((responses) => {

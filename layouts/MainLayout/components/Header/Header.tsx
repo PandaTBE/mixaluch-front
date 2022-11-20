@@ -3,12 +3,20 @@ import Container from '../../../../components/Container/Container';
 import { Grid, Stack } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { storePageToSwitch } from '../../../../slices/General/general';
+import { TPageToSwitch } from '../../../../slices/General/interfaces';
 
 /**
  * Компонент для отображения шапки страницы
  */
 const Header = () => {
+    const dispatch = useDispatch();
     const router = useRouter();
+
+    const onLinkClick = (link: TPageToSwitch) => () => {
+        dispatch(storePageToSwitch(link));
+    };
 
     return (
         <Wrapper>
@@ -18,7 +26,10 @@ const Header = () => {
                         <Grid item xs={3} sm={4} md={5} lg={7}>
                             <nav>
                                 <Stack direction="row" spacing={2}>
-                                    <StyledLink active={router.pathname === '/catalog'}>
+                                    <StyledLink
+                                        onClick={onLinkClick('/catalog')}
+                                        active={router.pathname === '/catalog'}
+                                    >
                                         <Link href={'/catalog'}>Каталог</Link>
                                     </StyledLink>
 
