@@ -3,7 +3,7 @@ import { withMainLayout } from '../layouts/MainLayout/MainLayout';
 import type { NextPage } from 'next';
 import { wrapper } from '../store';
 import { ProductApi } from '../api/ProductApi';
-import { CategoryApi } from '../api/CategoryApy';
+import { CategoryApi } from '../api/CategoryApi';
 import axios from 'axios';
 import { storeCategories } from '../slices/Category/category';
 import { storeProducts } from '../slices/Product/product';

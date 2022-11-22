@@ -1,4 +1,4 @@
-import { ICategory } from '../slices/Category/interfaces';
+import { ICategory } from '../models/Category';
 import { instance } from './intex';
 
 /**
