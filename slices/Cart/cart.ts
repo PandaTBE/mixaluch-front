@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { cloneDeep } from 'lodash';
 import { ICartItem } from '../../models/CartItem';
-import { IState } from './interfaces';
+import { IProduct } from '../../models/Product';
+import { AppState } from '../../store';
+import { IExtendedCartItem, IState } from './interfaces';
 
 const initialState: IState = {
     cartItems: [],
@@ -15,14 +17,14 @@ const cart = createSlice({
         /**
          * Запись всех товаров в корзине
          */
-        storeCartItems: (state, action: PayloadAction<ICartItem[]>) => {
+        storeCartItems: (state, action: PayloadAction<IExtendedCartItem[]>) => {
             state.cartItems = action.payload;
         },
 
         /**
          * Доавление нового товара в корзину
          */
-        addCartItem: (state, action: PayloadAction<ICartItem>) => {
+        addCartItem: (state, action: PayloadAction<IExtendedCartItem>) => {
             const { cartItems } = cloneDeep(state);
             cartItems.push(action.payload);
             state.cartItems = cartItems;
@@ -33,7 +35,7 @@ const cart = createSlice({
          */
         deleteCartItem: (state, action: PayloadAction<number>) => {
             const { cartItems } = cloneDeep(state);
-            const result = cartItems.filter((cartItem) => cartItem.id !== action.payload);
+            const result = cartItems.filter((cartItem) => cartItem.product.id !== action.payload);
             state.cartItems = result;
         },
 
@@ -47,5 +49,7 @@ const cart = createSlice({
 });
 
 export const { storeCartItems, addCartItem, deleteCartItem, storeTotalSum } = cart.actions;
+
+export const cartReducerValues = (state: AppState) => state.cart;
 
 export default cart.reducer;

@@ -1,5 +1,5 @@
-import { Grid, Tooltip } from '@mui/material';
-import { LoginIcon, Logo, Wrapper } from './styles';
+import { Stack, Tooltip } from '@mui/material';
+import { CartIcon, LoginIcon, Logo, Wrapper } from './styles';
 
 import Container from '../../../../components/Container/Container';
 import Link from 'next/link';
@@ -22,20 +22,24 @@ const SubHeader = () => {
     return (
         <Wrapper>
             <Container>
-                <Grid container spacing={2} justifyContent="space-between" alignItems="center">
-                    <Grid item>
-                        <Link href={'/'}>
-                            <Logo onClick={onLinkClick('/')} src={'/logo.png'} alt={'Mixaluch logo'} />
-                        </Link>
-                    </Grid>
-                    <Grid item>
+                <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
+                    <Link href={'/'}>
+                        <Logo onClick={onLinkClick('/')} src={'/logo.png'} alt={'Mixaluch logo'} />
+                    </Link>
+
+                    <Stack direction="row" spacing={2} alignItems="center">
                         <Link href={authToken ? 'user-account' : '/login'}>
                             <Tooltip title={authToken ? 'Личный кабинет' : 'Вход'}>
                                 <LoginIcon />
                             </Tooltip>
                         </Link>
-                    </Grid>
-                </Grid>
+                        <Link href={'/cart'}>
+                            <Tooltip title={'Корзина'} onClick={onLinkClick('/cart')}>
+                                <CartIcon />
+                            </Tooltip>
+                        </Link>
+                    </Stack>
+                </Stack>
             </Container>
         </Wrapper>
     );

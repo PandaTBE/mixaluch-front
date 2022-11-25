@@ -11,15 +11,27 @@ import {
 } from './styles';
 
 import Button from '../Button/Button';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { IProps } from './interfaces';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCartItem, cartReducerValues } from '../../slices/Cart/cart';
 
 /**
  * Компонент для отображения карточки продукта
  */
 const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
-    const addToCart = () => {
-        console.log('add to cart');
+    const { cartItems } = useSelector(cartReducerValues);
+    const [quantity, setQuantity] = useState(1);
+
+    const dispatch = useDispatch();
+
+    const onProductAdd = () => {
+        dispatch(
+            addCartItem({
+                product,
+                quantity,
+            }),
+        );
     };
 
     return (
@@ -36,7 +48,7 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
                 <Title>{product.title}</Title>
                 <Price>{product.regular_price} ₽</Price>
                 <ButtonWrapper>
-                    <Button width={'100%'} clickHandler={addToCart}>
+                    <Button width={'100%'} clickHandler={onProductAdd}>
                         <ButtonContentWrapper>
                             <ButtonText>В корзину</ButtonText>
                         </ButtonContentWrapper>

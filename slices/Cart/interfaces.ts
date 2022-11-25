@@ -1,6 +1,12 @@
 import { ICartItem } from '../../models/CartItem';
+import { IProduct } from '../../models/Product';
 
 export interface IState {
-    cartItems: ICartItem[];
+    cartItems: IExtendedCartItem[];
     totalSum: number;
+}
+
+export interface IExtendedCartItem {
+    product: IProduct;
+    quantity: number;
 }

@@ -6,6 +6,7 @@ import category from './slices/Category/category';
 import product from './slices/Product/product';
 import { userApi } from './services/UserService';
 import general from './slices/General/general';
+import cart from './slices/Cart/cart';
 
 const makeStore = () =>
     configureStore({
@@ -16,6 +17,7 @@ const makeStore = () =>
             catalog,
             user,
             general,
+            cart,
         },
         middleware: (getDefaultMiddleware) => {
             return getDefaultMiddleware().concat(userApi.middleware);

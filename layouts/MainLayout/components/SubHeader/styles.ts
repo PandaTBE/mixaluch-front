@@ -1,4 +1,6 @@
 import { PersonOutlineOutlined } from '@mui/icons-material';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -11,6 +13,14 @@ export const Logo = styled.img`
 `;
 
 export const LoginIcon = styled(PersonOutlineOutlined)`
+    fill: ${(p) => p.theme.colors.primary};
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+    cursor: pointer;
+`;
+
+export const CartIcon = styled(ShoppingCartOutlinedIcon)`
     fill: ${(p) => p.theme.colors.primary};
     width: 30px;
     height: 30px;
