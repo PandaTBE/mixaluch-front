@@ -18,7 +18,7 @@ const CartPage = () => {
             <ContentWrapper>
                 {!cartItems.length && <div>Ваша корзина пуста</div>}
                 {cartItems.length ? (
-                    <Stack direction="column" gap={10}>
+                    <Stack direction="column" spacing={2}>
                         {cartItems.map((element) => {
                             return <CartItem cartItem={element} key={element.product.id} />;
                         })}
