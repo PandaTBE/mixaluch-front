@@ -1,5 +1,5 @@
 import { Stack, Tooltip } from '@mui/material';
-import { CartIcon, LoginIcon, Logo, Wrapper } from './styles';
+import { CartIcon, LoginIcon, Logo, TotalSum, Wrapper, CartWrapper, TotalItems, CartIconWrapper } from './styles';
 
 import Container from '../../../../components/Container/Container';
 import Link from 'next/link';
@@ -7,12 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userReducerValues } from '../../../../slices/User/user';
 import { storePageToSwitch } from '../../../../slices/General/general';
 import { TPageToSwitch } from '../../../../slices/General/interfaces';
+import { cartReducerValues } from '../../../../slices/Cart/cart';
 
 /**
  * Компонент для отображения сабхеддера
  */
 const SubHeader = () => {
     const { authToken } = useSelector(userReducerValues);
+    const { totalSum, cartItems } = useSelector(cartReducerValues);
     const dispatch = useDispatch();
 
     const onLinkClick = (link: TPageToSwitch) => () => {
@@ -34,9 +36,17 @@ const SubHeader = () => {
                             </Tooltip>
                         </Link>
                         <Link href={'/cart'}>
-                            <Tooltip title={'Корзина'} onClick={onLinkClick('/cart')}>
-                                <CartIcon />
-                            </Tooltip>
+                            <CartWrapper>
+                                <Stack direction="row" spacing={1} alignItems="center">
+                                    <Tooltip title={'Корзина'} onClick={onLinkClick('/cart')}>
+                                        <CartIconWrapper>
+                                            <CartIcon />
+                                            {cartItems.length ? <TotalItems>{cartItems.length}</TotalItems> : null}
+                                        </CartIconWrapper>
+                                    </Tooltip>
+                                    <TotalSum>{totalSum} ₽</TotalSum>
+                                </Stack>
+                            </CartWrapper>
                         </Link>
                     </Stack>
                 </Stack>
