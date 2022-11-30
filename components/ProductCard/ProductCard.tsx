@@ -14,25 +14,30 @@ import Button from '../Button/Button';
 import { FC, useMemo, useState } from 'react';
 import { IProps } from './interfaces';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCartItem, cartReducerValues } from '../../slices/Cart/cart';
+import { addCartItem, cartReducerValues, updateCartItem } from '../../slices/Cart/cart';
 import QuantityInput from '../QuantityInput/QuantityInput';
+import { IExtendedCartItem } from '../../slices/Cart/interfaces';
 
 /**
  * Компонент для отображения карточки продукта
  */
 const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
     const { cartItems } = useSelector(cartReducerValues);
-    const [quantity, setQuantity] = useState(1);
-
     const dispatch = useDispatch();
 
     const onProductAdd = () => {
         dispatch(
             addCartItem({
                 product,
-                quantity,
+                quantity: 1,
             }),
         );
+    };
+
+    const onQuantityChange = (cartItem: IExtendedCartItem) => (quantity: number) => {
+        if (quantity !== cartItem?.quantity) {
+            dispatch(updateCartItem({ quantity, productId: product.id }));
+        }
     };
 
     const cartItem = useMemo(() => {
@@ -54,7 +59,7 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
                 <Price>{product.regular_price} ₽</Price>
                 <ButtonWrapper>
                     {cartItem ? (
-                        <QuantityInput defaultValue={cartItem.quantity} />
+                        <QuantityInput onQuantityChange={onQuantityChange(cartItem)} defaultValue={cartItem.quantity} />
                     ) : (
                         <Button width={'100%'} clickHandler={onProductAdd}>
                             <ButtonContentWrapper>

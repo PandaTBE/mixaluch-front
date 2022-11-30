@@ -6,26 +6,31 @@ import { MinusButton, PlusButton, StyledInput } from './styles';
 
 interface IProps {
     defaultValue?: number;
+    onQuantityChange: (quantity: number) => void;
 }
 
-const QuantityInput: FC<IProps> = ({ defaultValue = 1 }) => {
+const QuantityInput: FC<IProps> = ({ defaultValue = 1, onQuantityChange }) => {
     const [quantity, setQuantity] = useState<string | number>(defaultValue);
-    const debouncedQuantityValue = useDebounce(quantity, 500);
+    const debouncedQuantityValue = useDebounce(quantity, 2000);
 
     useEffect(() => {
-        if (debouncedQuantityValue && isNaN(Number(debouncedQuantityValue))) {
+        if (debouncedQuantityValue && (isNaN(Number(debouncedQuantityValue)) || Number(debouncedQuantityValue < 0.2))) {
             setQuantity(1);
+        } else {
+            if (debouncedQuantityValue) {
+                onQuantityChange(Number(debouncedQuantityValue));
+            }
         }
     }, [debouncedQuantityValue]);
 
-    const onQuantityChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setQuantity(e.target.value);
     };
 
     return (
         <Stack direction="row">
             <MinusButton>-</MinusButton>
-            <StyledInput onChange={onQuantityChange} value={quantity} />
+            <StyledInput onChange={onChange} value={quantity} />
             <PlusButton>+</PlusButton>
         </Stack>
     );

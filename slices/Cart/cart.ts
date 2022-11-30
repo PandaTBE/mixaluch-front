@@ -40,6 +40,22 @@ const cart = createSlice({
         },
 
         /**
+         * Изменение количества товара в корзине
+         */
+        updateCartItem: (state, action: PayloadAction<{ productId: number; quantity: number }>) => {
+            const { cartItems } = cloneDeep(state);
+
+            const currentProdcut = cartItems.find((cartItem) => cartItem.product.id === action.payload.productId);
+
+            if (currentProdcut) {
+                currentProdcut.quantity = action.payload.quantity;
+                const result = cartItems.filter((cartItem) => cartItem.product.id !== action.payload.productId);
+                result.push(currentProdcut);
+                state.cartItems = result;
+            }
+        },
+
+        /**
          * Запись итоговой суммы карзины
          */
         storeTotalSum: (state, action: PayloadAction<number>) => {
@@ -48,7 +64,7 @@ const cart = createSlice({
     },
 });
 
-export const { storeCartItems, addCartItem, deleteCartItem, storeTotalSum } = cart.actions;
+export const { storeCartItems, addCartItem, deleteCartItem, storeTotalSum, updateCartItem } = cart.actions;
 
 export const cartReducerValues = (state: AppState) => state.cart;
 
