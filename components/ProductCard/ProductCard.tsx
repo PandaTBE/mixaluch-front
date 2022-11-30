@@ -34,12 +34,6 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
         );
     };
 
-    const onQuantityChange = (cartItem: IExtendedCartItem) => (quantity: number) => {
-        if (quantity !== cartItem?.quantity) {
-            dispatch(updateCartItem({ quantity, productId: product.id }));
-        }
-    };
-
     const cartItem = useMemo(() => {
         return cartItems.find((element) => element.product.id === product.id);
     }, [cartItems, product]);
@@ -59,7 +53,7 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
                 <Price>{product.regular_price} ₽</Price>
                 <ButtonWrapper>
                     {cartItem ? (
-                        <QuantityInput onQuantityChange={onQuantityChange(cartItem)} defaultValue={cartItem.quantity} />
+                        <QuantityInput productId={product.id} defaultValue={cartItem.quantity} />
                     ) : (
                         <Button width={'100%'} clickHandler={onProductAdd}>
                             <ButtonContentWrapper>

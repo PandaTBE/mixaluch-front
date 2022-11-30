@@ -16,6 +16,8 @@ export const usePrepareData = () => {
             }, 0);
 
             dispatch(storeTotalSum(totalSum));
+        } else {
+            dispatch(storeTotalSum(0));
         }
     }, [cartItems]);
 };

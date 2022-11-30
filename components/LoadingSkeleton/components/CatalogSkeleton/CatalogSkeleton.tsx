@@ -23,9 +23,9 @@ const CatalogSkeleton = () => {
                                     <SubCategoryWrapper>
                                         {Array(3)
                                             .fill(null)
-                                            .map(() => {
+                                            .map((_, index) => {
                                                 return (
-                                                    <SubCategory>
+                                                    <SubCategory key={index}>
                                                         <Skeleton height={10} />
                                                     </SubCategory>
                                                 );
