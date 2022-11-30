@@ -30,11 +30,28 @@ const QuantityInput: FC<IProps> = ({ productId, defaultValue = 1 }) => {
         setQuantity(e.target.value);
     };
 
+    const onButtonClick = (type: 'minus' | 'plus') => () => {
+        switch (type) {
+            case 'minus':
+                if (Number(quantity) > 0.1) {
+                    setQuantity((prevValue) => Number(prevValue) - 0.1);
+                }
+                break;
+            case 'plus':
+                setQuantity((prevValue) => Number(prevValue) + 0.1);
+
+                break;
+
+            default:
+                break;
+        }
+    };
+
     return (
         <Stack direction="row">
-            <MinusButton>-</MinusButton>
-            <StyledInput onChange={onChange} value={quantity} />
-            <PlusButton>+</PlusButton>
+            <MinusButton onClick={onButtonClick('minus')}>-</MinusButton>
+            <StyledInput onChange={onChange} value={Number(quantity).toFixed(1)} />
+            <PlusButton onClick={onButtonClick('plus')}>+</PlusButton>
         </Stack>
     );
 };
