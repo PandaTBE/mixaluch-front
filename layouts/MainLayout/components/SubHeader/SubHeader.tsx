@@ -44,7 +44,7 @@ const SubHeader = () => {
                                             {cartItems.length ? <TotalItems>{cartItems.length}</TotalItems> : null}
                                         </CartIconWrapper>
                                     </Tooltip>
-                                    <TotalSum>{totalSum} ₽</TotalSum>
+                                    <TotalSum>{Math.floor(totalSum)} ₽</TotalSum>
                                 </Stack>
                             </CartWrapper>
                         </Link>

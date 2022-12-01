@@ -27,19 +27,18 @@ const QuantityInput: FC<IProps> = ({ productId, defaultValue = 1 }) => {
     }, [debouncedQuantityValue]);
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setQuantity(e.target.value);
+        setQuantity(e.target.value.replace(',', '.'));
     };
 
-    const onButtonClick = (type: 'minus' | 'plus') => () => {
+    const onButtonClick = (type: 'minus' | 'plus', currentQuantity: number) => () => {
         switch (type) {
             case 'minus':
-                if (Number(quantity) > 0.1) {
-                    setQuantity((prevValue) => Number(prevValue) - 0.1);
+                if (Number(currentQuantity) > 0.3) {
+                    setQuantity((currentQuantity - 0.1).toFixed(1));
                 }
                 break;
             case 'plus':
-                setQuantity((prevValue) => Number(prevValue) + 0.1);
-
+                setQuantity((currentQuantity + 0.1).toFixed(1));
                 break;
 
             default:
@@ -49,9 +48,9 @@ const QuantityInput: FC<IProps> = ({ productId, defaultValue = 1 }) => {
 
     return (
         <Stack direction="row">
-            <MinusButton onClick={onButtonClick('minus')}>-</MinusButton>
-            <StyledInput onChange={onChange} value={Number(quantity).toFixed(1)} />
-            <PlusButton onClick={onButtonClick('plus')}>+</PlusButton>
+            <MinusButton onClick={onButtonClick('minus', Number(quantity))}>-</MinusButton>
+            <StyledInput onChange={onChange} value={quantity} />
+            <PlusButton onClick={onButtonClick('plus', Number(quantity))}>+</PlusButton>
         </Stack>
     );
 };

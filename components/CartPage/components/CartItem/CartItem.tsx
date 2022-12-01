@@ -48,7 +48,7 @@ const CartItem: FC<IProps> = ({ cartItem }) => {
                 </div>
                 <Stack spacing={2} direction={'column'} justifyContent="space-between">
                     <StyledCloseIcon onClick={onRemoveClick} />
-                    <TotalPrice>{cartItem.product.regular_price * cartItem.quantity} ₽</TotalPrice>
+                    <TotalPrice>{Math.floor(cartItem.product.regular_price * cartItem.quantity)} ₽</TotalPrice>
                 </Stack>
             </Stack>
         </Wrapper>
