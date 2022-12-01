@@ -6,6 +6,7 @@ import { AppState } from '../../store';
 import { IExtendedCartItem, IState } from './interfaces';
 
 const initialState: IState = {
+    rawCartItems: [],
     cartItems: [],
     totalSum: 0,
 };
@@ -56,6 +57,13 @@ const cart = createSlice({
         },
 
         /**
+         * Сохранение сырых данных для корзины
+         */
+        storeRawCartItems: (state, action: PayloadAction<ICartItem[]>) => {
+            state.rawCartItems = action.payload;
+        },
+
+        /**
          * Запись итоговой суммы карзины
          */
         storeTotalSum: (state, action: PayloadAction<number>) => {
@@ -64,7 +72,8 @@ const cart = createSlice({
     },
 });
 
-export const { storeCartItems, addCartItem, deleteCartItem, storeTotalSum, updateCartItem } = cart.actions;
+export const { storeCartItems, addCartItem, deleteCartItem, storeTotalSum, updateCartItem, storeRawCartItems } =
+    cart.actions;
 
 export const cartReducerValues = (state: AppState) => state.cart;
 

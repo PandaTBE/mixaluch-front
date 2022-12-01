@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { cartReducerValues, storeTotalSum } from '../../../slices/Cart/cart';
+import { cartReducerValues, storeCartItems, storeTotalSum } from '../../../slices/Cart/cart';
 
 /**
  * Касстомный хук для подготовки данных
  */
 export const usePrepareData = () => {
-    const { cartItems } = useSelector(cartReducerValues);
+    const { cartItems, rawCartItems } = useSelector(cartReducerValues);
     const dispatch = useDispatch();
 
+    /** Получение суммы корзины */
     useEffect(() => {
         if (cartItems.length) {
             const totalSum = cartItems.reduce((acc, value) => {
@@ -20,4 +21,17 @@ export const usePrepareData = () => {
             dispatch(storeTotalSum(0));
         }
     }, [cartItems]);
+
+    useEffect(() => {
+        if (rawCartItems.length) {
+            const result = rawCartItems.map((element) => {
+                return {
+                    quantity: element.quantity,
+                    product: element.product,
+                };
+            });
+
+            dispatch(storeCartItems(result));
+        }
+    }, [rawCartItems]);
 };
