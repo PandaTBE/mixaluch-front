@@ -7,11 +7,13 @@ import product from './slices/Product/product';
 import { userApi } from './services/UserService';
 import general from './slices/General/general';
 import cart from './slices/Cart/cart';
+import { cartApi } from './services/CartService';
 
 const makeStore = () =>
     configureStore({
         reducer: {
             [userApi.reducerPath]: userApi.reducer,
+            [cartApi.reducerPath]: cartApi.reducer,
             category,
             product,
             catalog,

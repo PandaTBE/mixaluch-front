@@ -1,5 +1,6 @@
 import { Grid } from '@mui/material';
 import { Stack } from '@mui/system';
+import { cloneDeep } from 'lodash';
 import { useSelector } from 'react-redux';
 import { cartReducerValues } from '../../slices/Cart/cart';
 import Button from '../Button/Button';
@@ -28,16 +29,18 @@ const CartPage = () => {
                         <>
                             <Grid item xs={12} md={8} xl={9}>
                                 <Stack direction="column" spacing={2}>
-                                    {cartItems.map((element) => {
-                                        return <CartItem cartItem={element} key={element.product.id} />;
-                                    })}
+                                    {cloneDeep(cartItems)
+                                        .sort((a, b) => (a.product.title < b.product.title ? -1 : 1))
+                                        .map((element) => {
+                                            return <CartItem cartItem={element} key={element.product.id} />;
+                                        })}
                                 </Stack>
                             </Grid>
                             <Grid item xs={12} md={4} xl={3}>
                                 <TotalValueWrapper>
                                     <TotalValueTitle>
                                         <span>Итого к оплате: </span>
-                                        <span>{totalSum} ₽</span>
+                                        <span>{Math.floor(totalSum)} ₽</span>
                                     </TotalValueTitle>
                                     <ConfirmButtonWrapper>
                                         <Button>
