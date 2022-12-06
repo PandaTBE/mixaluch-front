@@ -2,4 +2,4 @@ export interface IState {
     pageToSwitch: TPageToSwitch;
 }
 
-export type TPageToSwitch = '/' | '/catalog' | '/cart';
+export type TPageToSwitch = '/' | '/catalog' | '/cart' | '/user-account';

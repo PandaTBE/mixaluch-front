@@ -12,6 +12,7 @@ import { useAppDispatch } from '../../../hooks/mainHooks';
 import useData from './hooks/useData';
 import { useFormik } from 'formik';
 import { userApi } from '../../../services/UserService';
+import { storePageToSwitch } from '../../../slices/General/general';
 
 /**
  * Компонент для отображения страницы входа

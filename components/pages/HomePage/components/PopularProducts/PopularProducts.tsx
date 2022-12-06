@@ -7,13 +7,19 @@ import { productReducerValues } from '../../../../../slices/Product/product';
 import { useSelector } from 'react-redux';
 import usePrepareData from './hooks/usePrepareData';
 import { StyledArrowBackIcon, SwiperWrapper, StyledArrowForwardIcon, Wrapper } from './styles';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { Stack } from '@mui/material';
+import Skeleton from 'react-loading-skeleton';
+
+interface IProps {
+    /** Флаг загрузки */
+    isSkeleton?: boolean;
+}
 
 /**
  * Компонент для отображения популярных товаров
  */
-const PopularProducts = () => {
+const PopularProducts: FC<IProps> = ({ isSkeleton = false }) => {
     const [swiperInstance, setSwiperInstance] = useState<null | SwiperCore>(null);
     const { popularProducts } = useSelector(productReducerValues);
     const { swiperData } = usePrepareData();
@@ -40,13 +46,23 @@ const PopularProducts = () => {
                     modules={[A11y]}
                     loop={true}
                 >
-                    {popularProducts?.map((product) => {
-                        return (
-                            <SwiperSlide style={{ height: 'auto' }} key={product.id}>
-                                <ProductCard imageHeight={swiperData.imageHeight} product={product} />
-                            </SwiperSlide>
-                        );
-                    })}
+                    {isSkeleton
+                        ? Array(6)
+                              .fill(null)
+                              .map((_, index) => {
+                                  return (
+                                      <SwiperSlide style={{ height: 'auto' }} key={index}>
+                                          <Skeleton height={300} />
+                                      </SwiperSlide>
+                                  );
+                              })
+                        : popularProducts?.map((product) => {
+                              return (
+                                  <SwiperSlide style={{ height: 'auto' }} key={product.id}>
+                                      <ProductCard imageHeight={swiperData.imageHeight} product={product} />
+                                  </SwiperSlide>
+                              );
+                          })}
                 </Swiper>
             </SwiperWrapper>
         </Wrapper>

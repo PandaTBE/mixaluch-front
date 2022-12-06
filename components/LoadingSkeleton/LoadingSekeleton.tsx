@@ -1,12 +1,13 @@
 import { useSelector } from 'react-redux';
 import { generalReducerValues } from '../../slices/General/general';
-import CatalogSkeleton from './components/CatalogSkeleton/CatalogSkeleton';
+import CatalogSkeleton from './components/CatalogPageSkeleton/CatalogSkeleton';
+import HomePageSkeleton from './components/HomePageSkeleton/HomePageSkeleton';
 
 const LoadingSkeleton = () => {
     const { pageToSwitch } = useSelector(generalReducerValues);
 
     if (pageToSwitch === '/') {
-        return <div>loading...</div>;
+        return <HomePageSkeleton />;
     }
 
     if (pageToSwitch === '/catalog') {

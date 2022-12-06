@@ -31,19 +31,15 @@ const SubHeader = () => {
 
                     <Stack direction="row" spacing={2} alignItems="center">
                         <Link href={authToken ? 'user-account' : '/login'}>
-                            <Tooltip title={authToken ? 'Личный кабинет' : 'Вход'}>
-                                <LoginIcon />
-                            </Tooltip>
+                            <LoginIcon onClick={onLinkClick('/user-account')} />
                         </Link>
                         <Link href={'/cart'}>
                             <CartWrapper>
-                                <Stack direction="row" spacing={1} alignItems="center">
-                                    <Tooltip title={'Корзина'} onClick={onLinkClick('/cart')}>
-                                        <CartIconWrapper>
-                                            <CartIcon />
-                                            {cartItems.length ? <TotalItems>{cartItems.length}</TotalItems> : null}
-                                        </CartIconWrapper>
-                                    </Tooltip>
+                                <Stack direction="row" spacing={1} alignItems="center" onClick={onLinkClick('/cart')}>
+                                    <CartIconWrapper>
+                                        <CartIcon />
+                                        {cartItems.length ? <TotalItems>{cartItems.length}</TotalItems> : null}
+                                    </CartIconWrapper>
                                     <TotalSum>{Math.floor(totalSum)} ₽</TotalSum>
                                 </Stack>
                             </CartWrapper>
