@@ -60,9 +60,9 @@ export const usePrepareData = () => {
                         body: { quantity: element.quantity, product: element.product.id },
                     });
                 });
+                localStorage.setItem('cartItems', '[]');
             }
             dispatch(storeCartItems(cartItemsFromLocalStorage));
-            localStorage.setItem('cartItems', '[]');
         }
     }, [rawCartItems, authToken]);
 };
