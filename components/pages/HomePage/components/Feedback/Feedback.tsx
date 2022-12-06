@@ -34,34 +34,34 @@ const Feedback = () => {
                     <Form onSubmit={formik.handleSubmit}>
                         <Stack direction="row" spacing={2}>
                             <TextField
-                                name="name"
                                 error={formik.touched.name && Boolean(formik.errors.name)}
-                                value={formik.values.name}
                                 helperText={formik.touched.name && formik.errors.name}
                                 onChange={formik.handleChange}
+                                value={formik.values.name}
                                 fullWidth={true}
                                 label={'Имя'}
+                                name="name"
                             />
                             <TextField
-                                name="email"
                                 error={formik.touched.email && Boolean(formik.errors.email)}
-                                value={formik.values.email}
                                 helperText={formik.touched.email && formik.errors.email}
                                 onChange={formik.handleChange}
-                                fullWidth={true}
+                                value={formik.values.email}
                                 label={'Ваша почта'}
+                                fullWidth={true}
+                                name="email"
                             />
                         </Stack>
                         <TextWrapper>
                             <TextField
-                                name="text"
                                 error={formik.touched.text && Boolean(formik.errors.text)}
-                                value={formik.values.text}
                                 helperText={formik.touched.text && formik.errors.text}
-                                onChange={formik.handleChange}
-                                fullWidth={true}
                                 label={'Ваш вопрос, отзыв или пожелание'}
+                                onChange={formik.handleChange}
+                                value={formik.values.text}
+                                fullWidth={true}
                                 multiline={true}
+                                name="text"
                                 rows={4}
                             />
                         </TextWrapper>

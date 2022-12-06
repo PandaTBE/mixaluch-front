@@ -14,6 +14,7 @@ import {
 } from './styles';
 
 interface IProps {
+    /** Элемент коризны */
     cartItem: IExtendedCartItem;
 }
 

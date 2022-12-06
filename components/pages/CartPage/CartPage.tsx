@@ -6,7 +6,7 @@ import { cartReducerValues } from '../../../slices/Cart/cart';
 import Button from '../../Button/Button';
 import PageTitle from '../../PageTitle/PageTitle';
 import CartItem from './components/CartItem/CartItem';
-import { CartItemsWrapper, ConfirmButtonWrapper, ContentWrapper, TotalValueTitle, TotalValueWrapper } from './styles';
+import { ConfirmButtonWrapper, ContentWrapper, TotalValueTitle, TotalValueWrapper } from './styles';
 
 /**
  * Компонент для отображения страницы корзины

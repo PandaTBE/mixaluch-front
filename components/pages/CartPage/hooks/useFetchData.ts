@@ -24,6 +24,7 @@ export const useGetRawData = () => {
     useLocalStorage();
     usePrepareData();
 
+    /** Обновление товаров в корзине */
     useEffect(() => {
         if (cartItemResponse.data || cartItemResponse.error) {
             dispatch(storeCartItemsRefetchObject());

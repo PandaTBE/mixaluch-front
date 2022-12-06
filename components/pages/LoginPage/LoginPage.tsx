@@ -1,10 +1,8 @@
 import * as yup from 'yup';
-
 import { ButtonsWrapper, ErrorWrapper, InputsWrapper, LinkText, LoginButtonText, StyledInput, Wrapper } from './styles';
 import { IconButton, InputAdornment, Stack } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
-
 import Button from '../../Button/Button';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import Link from 'next/link';
@@ -63,20 +61,20 @@ const LoginPage = () => {
 
             <InputsWrapper onSubmit={formik.handleSubmit}>
                 <StyledInput
-                    name={'email'}
-                    label={'Email'}
                     error={formik.touched.email && Boolean(formik.errors.email)}
-                    value={formik.values.email}
                     helperText={formik.touched.email && formik.errors.email}
                     onChange={formik.handleChange}
+                    value={formik.values.email}
+                    label={'Email'}
+                    name={'email'}
                 />
                 <StyledInput
-                    name={'password'}
-                    type={showPassword ? 'text' : 'password'}
-                    onChange={formik.handleChange}
                     error={formik.touched.password && Boolean(formik.errors.password)}
                     helperText={formik.touched.password && formik.errors.password}
+                    type={showPassword ? 'text' : 'password'}
+                    onChange={formik.handleChange}
                     value={formik.values.password}
+                    name={'password'}
                     label={'Пароль'}
                     InputProps={{
                         endAdornment: (

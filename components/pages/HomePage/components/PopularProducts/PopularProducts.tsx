@@ -1,7 +1,6 @@
 import { A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
-
 import PageTitle from '../../../../PageTitle/PageTitle';
 import ProductCard from '../../../../ProductCard/ProductCard';
 import { productReducerValues } from '../../../../../slices/Product/product';
