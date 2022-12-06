@@ -11,27 +11,22 @@ import {
 } from './styles';
 
 import Button from '../Button/Button';
-import { FC, useMemo, useState } from 'react';
+import { FC, useMemo } from 'react';
 import { IProps } from './interfaces';
-import { useDispatch, useSelector } from 'react-redux';
-import { addCartItem, cartReducerValues, updateCartItem } from '../../slices/Cart/cart';
+import { useSelector } from 'react-redux';
+import { cartReducerValues } from '../../slices/Cart/cart';
 import QuantityInput from '../QuantityInput/QuantityInput';
-import { IExtendedCartItem } from '../../slices/Cart/interfaces';
+import useFetchData from './hooks/useFetchData';
 
 /**
  * Компонент для отображения карточки продукта
  */
 const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
     const { cartItems } = useSelector(cartReducerValues);
-    const dispatch = useDispatch();
+    const { addCartItem } = useFetchData();
 
     const onProductAdd = () => {
-        dispatch(
-            addCartItem({
-                product,
-                quantity: 1,
-            }),
-        );
+        addCartItem(product);
     };
 
     const cartItem = useMemo(() => {

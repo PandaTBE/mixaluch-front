@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { cartApi } from '../../../../services/CartService';
-import { storeCartItems, storeRawCartItems } from '../../../../slices/Cart/cart';
+import { cartReducerValues, storeCartItems, storeRawCartItems } from '../../../../slices/Cart/cart';
 import { userReducerValues } from '../../../../slices/User/user';
 import getCartItemsFromLocalStorage from '../tools/getCartItemsFromLocalStorage';
 import { useLocalStorage } from './useLocalStorage';
@@ -13,6 +13,7 @@ import { usePrepareData } from './usePrepareData';
 export const useGetRawData = () => {
     const [getCartItems, { data }] = cartApi.useGetCartItemsMutation();
     const { authToken } = useSelector(userReducerValues);
+    const { refetchCartItems } = useSelector(cartReducerValues);
     const dispatch = useDispatch();
     useLocalStorage();
     usePrepareData();
@@ -21,9 +22,6 @@ export const useGetRawData = () => {
     useEffect(() => {
         if (data) {
             dispatch(storeRawCartItems(data));
-        } else {
-            const cartItemsFromLocalStorage = getCartItemsFromLocalStorage();
-            dispatch(storeCartItems(cartItemsFromLocalStorage));
         }
     }, [data]);
 
@@ -32,5 +30,5 @@ export const useGetRawData = () => {
         if (authToken) {
             getCartItems(authToken);
         }
-    }, [authToken]);
+    }, [authToken, refetchCartItems]);
 };

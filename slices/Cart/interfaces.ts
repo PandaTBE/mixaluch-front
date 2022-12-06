@@ -5,6 +5,7 @@ export interface IState {
     cartItems: IExtendedCartItem[];
     totalSum: number;
     rawCartItems: ICartItem[];
+    refetchCartItems: {};
 }
 
 export interface IExtendedCartItem {

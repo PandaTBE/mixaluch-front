@@ -19,11 +19,22 @@ export const cartApi = createApi({
         /** Удаление товара из корзины */
         removeCartItem: build.mutation<ICartItem[], { authToken: string; cartItemId: number }>({
             query: (data) => ({
-                url: `cart-item/${data.cartItemId}`,
+                url: `cart-item/${data.cartItemId}/`,
                 method: 'DELETE',
                 headers: {
                     Authorization: `Token ${data.authToken}`,
                 },
+            }),
+        }),
+        /** Добавление товара в коризну */
+        addCartItem: build.mutation<ICartItem[], { authToken: string; body: { quantity: number; product: number } }>({
+            query: (data) => ({
+                url: `cart/`,
+                method: 'POST',
+                headers: {
+                    Authorization: `Token ${data.authToken}`,
+                },
+                body: data.body,
             }),
         }),
     }),

@@ -1,9 +1,8 @@
 import { Stack } from '@mui/material';
 import { FC } from 'react';
-import { useDispatch } from 'react-redux';
-import { deleteCartItem } from '../../../../../slices/Cart/cart';
 import { IExtendedCartItem } from '../../../../../slices/Cart/interfaces';
 import QuantityInput from '../../../../QuantityInput/QuantityInput';
+import useFecthData from './hooks/useFetchData';
 import {
     Price,
     ProductImage,
@@ -22,10 +21,10 @@ interface IProps {
  * Компонент для отображения товара в корзине
  */
 const CartItem: FC<IProps> = ({ cartItem }) => {
-    const dispatch = useDispatch();
+    const { deleteCartItem } = useFecthData();
 
     const onRemoveClick = () => {
-        dispatch(deleteCartItem(cartItem.product.id));
+        deleteCartItem(cartItem.product.id, cartItem.id);
     };
 
     const image =

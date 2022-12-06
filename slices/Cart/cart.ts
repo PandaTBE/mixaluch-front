@@ -9,6 +9,7 @@ const initialState: IState = {
     rawCartItems: [],
     cartItems: [],
     totalSum: 0,
+    refetchCartItems: {},
 };
 
 const cart = createSlice({
@@ -69,11 +70,23 @@ const cart = createSlice({
         storeTotalSum: (state, action: PayloadAction<number>) => {
             state.totalSum = action.payload;
         },
+
+        /** Сохранение нового объекта для перезапроса корзины */
+        storeCartItemsRefetchObject: (state) => {
+            state.refetchCartItems = {};
+        },
     },
 });
 
-export const { storeCartItems, addCartItem, deleteCartItem, storeTotalSum, updateCartItem, storeRawCartItems } =
-    cart.actions;
+export const {
+    storeCartItems,
+    addCartItem,
+    deleteCartItem,
+    storeTotalSum,
+    updateCartItem,
+    storeRawCartItems,
+    storeCartItemsRefetchObject,
+} = cart.actions;
 
 export const cartReducerValues = (state: AppState) => state.cart;
 

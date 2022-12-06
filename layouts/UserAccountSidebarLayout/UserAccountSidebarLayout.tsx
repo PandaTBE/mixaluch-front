@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { userApi } from '../../services/UserService';
+import { storeRawCartItems } from '../../slices/Cart/cart';
 
 interface IProps {
     /** контент, который нужно отобразить внутри макета */
@@ -32,6 +33,7 @@ const UserAccountSidebarLayout: FC<IProps> = ({ children }) => {
             logout(authToken);
             localStorage.setItem('authToken', '');
             dispatch(resetUserReducer());
+            dispatch(storeRawCartItems([]));
         }
     };
 
