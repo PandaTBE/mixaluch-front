@@ -1,4 +1,4 @@
-import { default as CatalogPage } from '../components/Catalog/Catalog';
+import { default as CatalogPage } from '../components/pages/CatalogPage/Catalog';
 import { withMainLayout } from '../layouts/MainLayout/MainLayout';
 import type { NextPage } from 'next';
 import { wrapper } from '../store';

@@ -16,5 +16,15 @@ export const cartApi = createApi({
                 },
             }),
         }),
+        /** Удаление товара из корзины */
+        removeCartItem: build.mutation<ICartItem[], { authToken: string; cartItemId: number }>({
+            query: (data) => ({
+                url: `cart-item/${data.cartItemId}`,
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Token ${data.authToken}`,
+                },
+            }),
+        }),
     }),
 });

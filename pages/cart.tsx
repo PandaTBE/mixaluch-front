@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import CartPage from '../components/CartPage/CartPage';
+import CartPage from '../components/pages/CartPage/CartPage';
 import { withMainLayout } from '../layouts/MainLayout/MainLayout';
 
 /**

@@ -1,6 +1,6 @@
 import useGetUserData from '../../hooks/useGetUserData';
 import usePrepareData from '../../hooks/usePrepareData';
-import { useGetRawData as useCartRawData } from '../CartPage/hooks/useGetRawData';
+import { useGetRawData as useCartRawData } from '../pages/CartPage/hooks/useGetRawData';
 
 /**
  * Функция для получения начальных данных

@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import UserAccountPage from '../../components/UserAccountPage/UserAccountPage';
+import UserAccountPage from '../../components/pages/UserAccountPage/UserAccountPage';
 import { withMainLayout } from '../../layouts/MainLayout/MainLayout';
 
 /**

@@ -1,7 +1,7 @@
 import { storePopularProducts } from '../slices/Product/product';
 
 import { CategoryApi } from '../api/CategoryApi';
-import HomePage from '../components/HomePage/HomePage';
+import HomePage from '../components/pages/HomePage/HomePage';
 import { IProduct } from '../models/Product';
 import type { NextPage } from 'next';
 import { ProductApi } from '../api/ProductApi';

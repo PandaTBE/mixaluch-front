@@ -8,6 +8,7 @@ export interface IState {
 }
 
 export interface IExtendedCartItem {
+    id?: number;
     product: IProduct;
     quantity: number;
 }
