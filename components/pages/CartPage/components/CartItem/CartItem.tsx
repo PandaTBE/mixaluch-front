@@ -40,7 +40,11 @@ const CartItem: FC<IProps> = ({ cartItem }) => {
                             <ProductTitle>{cartItem.product.title}</ProductTitle>
                             <Price>{cartItem.product.regular_price} ₽</Price>
                             <QuantityInputWrapper>
-                                <QuantityInput productId={cartItem.product.id} defaultValue={cartItem.quantity} />
+                                <QuantityInput
+                                    cartItemId={cartItem.id}
+                                    productId={cartItem.product.id}
+                                    defaultValue={cartItem.quantity}
+                                />
                             </QuantityInputWrapper>
                         </Stack>
                     </Stack>

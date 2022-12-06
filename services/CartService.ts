@@ -37,5 +37,19 @@ export const cartApi = createApi({
                 body: data.body,
             }),
         }),
+        /** Изменение товара в коризне */
+        patchCartItem: build.mutation<
+            ICartItem[],
+            { authToken: string; cartItemId: number; body: { quantity: number } }
+        >({
+            query: (data) => ({
+                url: `cart-item/${data.cartItemId}/`,
+                method: 'PATCH',
+                headers: {
+                    Authorization: `Token ${data.authToken}`,
+                },
+                body: data.body,
+            }),
+        }),
     }),
 });

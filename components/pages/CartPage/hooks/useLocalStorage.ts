@@ -20,9 +20,4 @@ export const useLocalStorage = () => {
             localStorage.setItem('cartItems', cartItemsForLocalStorage);
         }
     }, [cartItems, authToken]);
-
-    /**
-     * Получение данных из LocalStorage
-     */
-    useEffect(() => {}, []);
 };

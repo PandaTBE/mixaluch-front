@@ -48,7 +48,11 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
                 <Price>{product.regular_price} ₽</Price>
                 <ButtonWrapper>
                     {cartItem ? (
-                        <QuantityInput productId={product.id} defaultValue={cartItem.quantity} />
+                        <QuantityInput
+                            defaultValue={cartItem.quantity}
+                            cartItemId={cartItem.id}
+                            productId={product.id}
+                        />
                     ) : (
                         <Button width={'100%'} clickHandler={onProductAdd}>
                             <ButtonContentWrapper>
