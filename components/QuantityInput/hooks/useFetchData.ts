@@ -5,19 +5,21 @@ import { storeCartItemsRefetchObject, updateCartItem } from '../../../slices/Car
 import { userReducerValues } from '../../../slices/User/user';
 
 /**
- * Кастомный хук для работы с данными
+ * Кастомный хук для работы с сервером
  */
 const useFetchData = () => {
     const [patchCartItem, data] = cartApi.usePatchCartItemMutation();
     const { authToken } = useSelector(userReducerValues);
     const dispatch = useDispatch();
 
+    /** Перезапрос товаров */
     useEffect(() => {
         if (data.error) {
             dispatch(storeCartItemsRefetchObject());
         }
     }, [data.error]);
 
+    /** Обновление товара в корзине */
     const patchCartItemHandler = useCallback(
         (productId: number, quantity: number, cartItemId?: number) => {
             if (authToken && cartItemId) {

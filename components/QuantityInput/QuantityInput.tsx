@@ -5,8 +5,11 @@ import useFetchData from './hooks/useFetchData';
 import { MinusButton, PlusButton, StyledInput } from './styles';
 
 interface IProps {
+    /** Id товара в коризне */
     cartItemId?: number;
+    /** Дефотное значение */
     defaultValue?: number;
+    /** Id товара */
     productId: number;
 }
 
