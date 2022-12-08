@@ -12,7 +12,6 @@ import { useAppDispatch } from '../../../hooks/mainHooks';
 import useData from './hooks/useData';
 import { useFormik } from 'formik';
 import { userApi } from '../../../services/UserService';
-import { storePageToSwitch } from '../../../slices/General/general';
 
 /**
  * Компонент для отображения страницы входа
@@ -97,10 +96,10 @@ const LoginPage = () => {
                         <Button type={'submit'} disabled={isLoading} width={'75px'}>
                             <LoginButtonText>Войти</LoginButtonText>
                         </Button>
-                        <Link href="/register">
+                        <Link href="/reset-password">
                             <LinkText>Восстановить пароль</LinkText>
                         </Link>
-                        <Link href="/reset-password">
+                        <Link href="/register">
                             <LinkText>Зарегестрироваться</LinkText>
                         </Link>
                     </Stack>
