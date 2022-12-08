@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
+/**
+ * Кастомный хук для получения флага загрузки для страницы
+ */
 const usePageLoading = () => {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
-        const handleStart = (url: any) => url !== router.asPath && setLoading(true);
-        const handleComplete = (url: any) => url === router.asPath && setLoading(false);
+        const handleStart = (url: string) => url !== router.asPath && setLoading(true);
+        const handleComplete = (url: string) => url === router.asPath && setLoading(false);
 
         router.events.on('routeChangeStart', handleStart);
         router.events.on('routeChangeComplete', handleComplete);

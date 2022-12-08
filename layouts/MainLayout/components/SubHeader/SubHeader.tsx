@@ -1,4 +1,4 @@
-import { Stack, Tooltip } from '@mui/material';
+import { Stack } from '@mui/material';
 import { CartIcon, LoginIcon, Logo, TotalSum, Wrapper, CartWrapper, TotalItems, CartIconWrapper } from './styles';
 
 import Container from '../../../../components/Container/Container';
