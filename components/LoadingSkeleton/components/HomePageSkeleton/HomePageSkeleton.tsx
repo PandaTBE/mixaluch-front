@@ -1,4 +1,3 @@
-import { Grid, Skeleton } from '@mui/material';
 import Advantages from '../../../pages/HomePage/components/Anvantages/Advantages';
 import Feedback from '../../../pages/HomePage/components/Feedback/Feedback';
 import Kebab from '../../../pages/HomePage/components/Kebab/Kebab';
