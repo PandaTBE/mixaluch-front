@@ -9,3 +9,12 @@ export interface IUserLoginDTO {
     password: string;
     email: string;
 }
+
+export interface IUserRegisterDTO {
+    email: string;
+    name: string;
+    second_name: null | string;
+    phone_number: string;
+    password: string;
+    re_password: string;
+}

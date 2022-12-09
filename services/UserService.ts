@@ -1,4 +1,4 @@
-import { IUser, IUserLoginDTO } from '../models/User';
+import { IUser, IUserLoginDTO, IUserRegisterDTO } from '../models/User';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { urls } from '../contsants/urls';
@@ -33,6 +33,17 @@ export const userApi = createApi({
                 headers: {
                     Authorization: `Token ${authToken}`,
                 },
+            }),
+        }),
+        /** Регистрация */
+        register: build.mutation<'', { body: IUserRegisterDTO; authToken: string }>({
+            query: (data) => ({
+                url: 'auth/users/',
+                method: 'POST',
+                headers: {
+                    Authorization: `Token ${data.authToken}`,
+                },
+                body: data.body,
             }),
         }),
     }),
