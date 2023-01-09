@@ -25,3 +25,7 @@ export const LinkText = styled.div`
     text-decoration: underline;
     cursor: pointer;
 `;
+
+export const RegisterButtonWrapper = styled.div`
+    min-width: 175px;
+`;

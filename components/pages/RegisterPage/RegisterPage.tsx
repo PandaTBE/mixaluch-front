@@ -1,6 +1,6 @@
 import { Stack } from '@mui/system';
 import PageTitle from '../../PageTitle/PageTitle';
-import { ButtonsWrapper, LinkText, StyledForm, StyledInput, Wrapper } from './styles';
+import { ButtonsWrapper, LinkText, RegisterButtonWrapper, StyledForm, StyledInput, Wrapper } from './styles';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import Button from '../../Button/Button';
@@ -105,11 +105,11 @@ const RegisterPage = () => {
                 />
                 <ButtonsWrapper>
                     <Stack direction={'row'} alignItems={'center'} spacing={2}>
-                        <span>
-                            <Button type={'submit'}>
+                        <RegisterButtonWrapper>
+                            <Button loading={false} type={'submit'}>
                                 <div>Зарегистрироваться</div>
                             </Button>
-                        </span>
+                        </RegisterButtonWrapper>
                         <Link href="/login">
                             <LinkText>У меня уже есть аккаунт</LinkText>
                         </Link>

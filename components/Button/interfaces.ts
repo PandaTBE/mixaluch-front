@@ -17,4 +17,8 @@ export interface IProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButto
      * Флаг, отвечающий за отключение кнопки
      */
     disabled?: boolean;
+    /**
+     * Флаг отвечающий за отображение спиннера
+     */
+    loading?: boolean;
 }

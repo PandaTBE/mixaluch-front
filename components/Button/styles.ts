@@ -1,3 +1,4 @@
+import { CircularProgress } from '@mui/material';
 import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 
 import styled from 'styled-components';
@@ -27,4 +28,13 @@ export const Wrapper = styled.button<IButtonProps>`
     min-height: 40px;
     font-size: 16px;
     font-family: ${(p) => p.theme.fontFamily.default};
+`;
+
+export const SpinnerWrapper = styled.span`
+    color: white;
+`;
+
+export const StyledCircularProgress = styled(CircularProgress)`
+    width: 25px !important;
+    height: 25px !important;
 `;
