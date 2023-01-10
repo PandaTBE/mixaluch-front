@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
 `;
 
 export const StyledForm = styled.form`
-    margin-top: 30px;
+    margin-top: 15px;
     display: flex;
     flex-direction: column;
 `;
@@ -28,4 +28,9 @@ export const LinkText = styled.div`
 
 export const RegisterButtonWrapper = styled.div`
     min-width: 175px;
+`;
+
+export const ErrorWrapper = styled.div`
+    margin-top: 15px;
+    width: 50%;
 `;

@@ -4,7 +4,7 @@ import { IconButton, InputAdornment, Stack } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import Button from '../../Button/Button';
-import ErrorMessage from './components/ErrorMessage/ErrorMessage';
+import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import Link from 'next/link';
 import PageTitle from '../../PageTitle/PageTitle';
 import { storeAuthToken } from '../../../slices/User/user';

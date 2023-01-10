@@ -36,14 +36,11 @@ export const userApi = createApi({
             }),
         }),
         /** Регистрация */
-        register: build.mutation<'', { body: IUserRegisterDTO; authToken: string }>({
-            query: (data) => ({
+        register: build.mutation<'', IUserRegisterDTO>({
+            query: (body) => ({
                 url: 'auth/users/',
                 method: 'POST',
-                headers: {
-                    Authorization: `Token ${data.authToken}`,
-                },
-                body: data.body,
+                body: body,
             }),
         }),
     }),

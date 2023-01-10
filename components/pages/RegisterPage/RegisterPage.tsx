@@ -1,16 +1,36 @@
 import { Stack } from '@mui/system';
 import PageTitle from '../../PageTitle/PageTitle';
-import { ButtonsWrapper, LinkText, RegisterButtonWrapper, StyledForm, StyledInput, Wrapper } from './styles';
+import {
+    ButtonsWrapper,
+    ErrorWrapper,
+    LinkText,
+    RegisterButtonWrapper,
+    StyledForm,
+    StyledInput,
+    Wrapper,
+} from './styles';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import Button from '../../Button/Button';
 import Link from 'next/link';
+import { userApi } from '../../../services/UserService';
+import ErrorMessage from '../../ErrorMessage/ErrorMessage';
+import { useMemo } from 'react';
 
 /**
  * Страница регистрации
  */
 const RegisterPage = () => {
+    const [register, { isLoading, error }] = userApi.useRegisterMutation();
     const initialValues = { name: '', second_name: '', email: '', phone_number: '', password: '', re_password: '' };
+
+    const errorMessage = useMemo(() => {
+        if (error && 'data' in error) {
+            return JSON.stringify(Object.values(error.data || {})[0]);
+        }
+
+        return null;
+    }, [error]);
 
     const phoneRegExp = /^(\+7|7|8)?[\s-]?\(?[489][0-9]{2}\)?[\s-]?[0-9]{3}[\s-]?[0-9]{2}[\s-]?[0-9]{2}$/gm;
 
@@ -25,7 +45,7 @@ const RegisterPage = () => {
         name: yup.string().required('Это обязательное поле'),
     });
 
-    const onSubmit = (values: {
+    const onSubmit = (body: {
         phone_number: string;
         second_name: string;
         re_password: string;
@@ -33,7 +53,7 @@ const RegisterPage = () => {
         email: string;
         name: string;
     }) => {
-        console.log(values);
+        register(body);
     };
 
     const formik = useFormik({
@@ -47,6 +67,11 @@ const RegisterPage = () => {
             <PageTitle>
                 <div>Регистрация</div>
             </PageTitle>
+            {errorMessage && (
+                <ErrorWrapper>
+                    <ErrorMessage text={errorMessage} />
+                </ErrorWrapper>
+            )}
             <StyledForm onSubmit={formik.handleSubmit}>
                 <Stack direction={'row'} width={'50%'} spacing={2}>
                     <StyledInput
@@ -106,7 +131,7 @@ const RegisterPage = () => {
                 <ButtonsWrapper>
                     <Stack direction={'row'} alignItems={'center'} spacing={2}>
                         <RegisterButtonWrapper>
-                            <Button loading={false} type={'submit'}>
+                            <Button loading={isLoading} type={'submit'}>
                                 <div>Зарегистрироваться</div>
                             </Button>
                         </RegisterButtonWrapper>
