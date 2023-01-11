@@ -30,7 +30,7 @@ export const RegisterButtonWrapper = styled.div`
     min-width: 175px;
 `;
 
-export const ErrorWrapper = styled.div`
+export const MessageWrapper = styled.div`
     margin-top: 15px;
     width: 50%;
 `;

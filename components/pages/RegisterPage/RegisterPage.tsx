@@ -2,7 +2,7 @@ import { Stack } from '@mui/system';
 import PageTitle from '../../PageTitle/PageTitle';
 import {
     ButtonsWrapper,
-    ErrorWrapper,
+    MessageWrapper,
     LinkText,
     RegisterButtonWrapper,
     StyledForm,
@@ -16,12 +16,13 @@ import Link from 'next/link';
 import { userApi } from '../../../services/UserService';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import { useMemo } from 'react';
+import SuccessMessage from '../../SuccessMessage/SuccessMessage';
 
 /**
  * Страница регистрации
  */
 const RegisterPage = () => {
-    const [register, { isLoading, error }] = userApi.useRegisterMutation();
+    const [register, { isLoading, error, data }] = userApi.useRegisterMutation();
     const initialValues = { name: '', second_name: '', email: '', phone_number: '', password: '', re_password: '' };
 
     const errorMessage = useMemo(() => {
@@ -68,9 +69,15 @@ const RegisterPage = () => {
                 <div>Регистрация</div>
             </PageTitle>
             {errorMessage && (
-                <ErrorWrapper>
+                <MessageWrapper>
                     <ErrorMessage text={errorMessage} />
-                </ErrorWrapper>
+                </MessageWrapper>
+            )}
+
+            {data && (
+                <MessageWrapper>
+                    <SuccessMessage text={'Для завершения регистрации подтвердите свою почту'} />
+                </MessageWrapper>
             )}
             <StyledForm onSubmit={formik.handleSubmit}>
                 <Stack direction={'row'} width={'50%'} spacing={2}>
