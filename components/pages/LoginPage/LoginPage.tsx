@@ -1,17 +1,17 @@
 import * as yup from 'yup';
-import { ButtonsWrapper, ErrorWrapper, InputsWrapper, LinkText, LoginButtonText, StyledInput, Wrapper } from './styles';
-import { IconButton, InputAdornment, Stack } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useEffect, useState } from 'react';
 import Button from '../../Button/Button';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import Link from 'next/link';
 import PageTitle from '../../PageTitle/PageTitle';
+import useData from './hooks/useData';
+import { ButtonsWrapper, ErrorWrapper, InputsWrapper, LinkText, LoginButtonText, StyledInput, Wrapper } from './styles';
+import { IconButton, InputAdornment, Stack } from '@mui/material';
 import { storeAuthToken } from '../../../slices/User/user';
 import { useAppDispatch } from '../../../hooks/mainHooks';
-import useData from './hooks/useData';
+import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { userApi } from '../../../services/UserService';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 /**
  * Компонент для отображения страницы входа
