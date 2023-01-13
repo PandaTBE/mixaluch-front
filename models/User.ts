@@ -18,3 +18,8 @@ export interface IUserRegisterDTO {
     password: string;
     re_password: string;
 }
+
+export interface IUserActivateDTO {
+    uid: string;
+    token: string;
+}
