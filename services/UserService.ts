@@ -1,4 +1,11 @@
-import { IUser, IUserActivateDTO, IUserLoginDTO, IUserRegisterDTO, IUserResetPasswordDTO } from '../models/User';
+import {
+    IUser,
+    IUserActivateDTO,
+    IUserLoginDTO,
+    IUserRegisterDTO,
+    IUserResetPasswordConfirmDTO,
+    IUserResetPasswordDTO,
+} from '../models/User';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { urls } from '../contsants/urls';
@@ -57,6 +64,15 @@ export const userApi = createApi({
         resetPassword: build.mutation<'', IUserResetPasswordDTO>({
             query: (body) => ({
                 url: 'auth/users/reset_password/',
+                method: 'POST',
+                body: body,
+            }),
+        }),
+
+        /** Подтверждение сброса пароля */
+        resetPasswordConfirm: build.mutation<'', IUserResetPasswordConfirmDTO>({
+            query: (body) => ({
+                url: 'auth/users/reset_password_confirm/',
                 method: 'POST',
                 body: body,
             }),

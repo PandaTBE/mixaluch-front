@@ -27,3 +27,10 @@ export interface IUserActivateDTO {
 export interface IUserResetPasswordDTO {
     email: string;
 }
+
+export interface IUserResetPasswordConfirmDTO {
+    uid: string;
+    token: string;
+    new_password: string;
+    re_new_password: string;
+}
