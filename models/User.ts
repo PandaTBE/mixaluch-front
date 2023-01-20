@@ -3,6 +3,7 @@ export interface IUser {
     email: string;
     name: string;
     id: number;
+    second_name: string | null;
 }
 
 export interface IUserLoginDTO {

@@ -1,6 +1,7 @@
 import { Grid } from '@mui/material';
 import { Stack } from '@mui/system';
 import { cloneDeep } from 'lodash';
+import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { cartReducerValues } from '../../../slices/Cart/cart';
 import Button from '../../Button/Button';
@@ -13,6 +14,12 @@ import { ConfirmButtonWrapper, ContentWrapper, TotalValueTitle, TotalValueWrappe
  */
 const CartPage = () => {
     const { cartItems, totalSum } = useSelector(cartReducerValues);
+    const router = useRouter();
+
+    const onOrderClick = () => {
+        router.push('/ordering');
+    };
+
     return (
         <div>
             <PageTitle>
@@ -43,7 +50,7 @@ const CartPage = () => {
                                         <span>{Math.floor(totalSum)} ₽</span>
                                     </TotalValueTitle>
                                     <ConfirmButtonWrapper>
-                                        <Button>
+                                        <Button clickHandler={onOrderClick}>
                                             <div>Оформить заказ</div>
                                         </Button>
                                     </ConfirmButtonWrapper>
