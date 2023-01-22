@@ -82,7 +82,7 @@ const Delivery = () => {
                 <Stack>
                     <Title>Доставка</Title>
                     <CheckboxWrapper onClick={onSelfDeliveryChange(formik.setFieldValue)}>
-                        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+                        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={1}>
                             <Stack direction={'row'} spacing={1} alignItems={'center'}>
                                 <StyledCheckbox
                                     onChange={onSelfDeliveryChange(formik.setFieldValue)}
@@ -95,7 +95,7 @@ const Delivery = () => {
                         </Stack>
                     </CheckboxWrapper>
                     <CheckboxWrapper onClick={onCourierDeliveryChange(formik.setFieldValue)}>
-                        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+                        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={1}>
                             <Stack direction={'row'} spacing={1} alignItems={'center'}>
                                 <StyledCheckbox
                                     onChange={onCourierDeliveryChange(formik.setFieldValue)}
@@ -113,7 +113,9 @@ const Delivery = () => {
                                 </Stack>
                             </Stack>
 
-                            <DeliveryCost>+ 200 ₽</DeliveryCost>
+                            <DeliveryCost>
+                                {Math.floor(context?.totalSum || 0) >= FREE_DELIVERY_BORDER ? '+ 0 ₽' : '+ 200 ₽'}
+                            </DeliveryCost>
                         </Stack>
                     </CheckboxWrapper>
 

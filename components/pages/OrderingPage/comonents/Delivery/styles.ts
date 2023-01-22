@@ -21,6 +21,7 @@ export const ButtonWrapper = styled.div`
 export const DeliveryCost = styled.div`
     font-weight: bold;
     font-size: 1.25rem;
+    white-space: nowrap;
 `;
 
 export const CheckboxWrapper = styled.div`

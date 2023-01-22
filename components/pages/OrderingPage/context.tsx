@@ -1,9 +1,13 @@
 import { createContext } from 'react';
 import { IUser } from '../../../models/User';
+import { IExtendedCartItem } from '../../../slices/Cart/interfaces';
 
 interface IContext {
-    totalSum: number;
+    cartItems: IExtendedCartItem[];
+    totalSumWithDelivery: number;
+    deliveryCost: number;
     user: IUser | null;
+    totalSum: number;
     storeDeliveryCostTrans: (value: number) => void;
 }
 

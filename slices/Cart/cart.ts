@@ -13,6 +13,7 @@ const initialState: IState = {
     totalSum: 0,
     refetchCartItems: {},
     deliveryCost: DELIVERY_COST,
+    totalSumWithDelivery: 0,
 };
 
 const cart = createSlice({
@@ -31,6 +32,13 @@ const cart = createSlice({
          */
         storeDeliveryCost: (state, action: PayloadAction<number>) => {
             state.deliveryCost = action.payload;
+        },
+
+        /**
+         * Изменение итоговой стоимости заказа, включая доставку
+         */
+        storeTotalSumWithDeliivery: (state, action: PayloadAction<number>) => {
+            state.totalSumWithDelivery = action.payload;
         },
 
         /**
@@ -97,6 +105,7 @@ export const {
     storeRawCartItems,
     storeCartItemsRefetchObject,
     storeDeliveryCost,
+    storeTotalSumWithDeliivery,
 } = cart.actions;
 
 export const cartReducerValues = (state: AppState) => state.cart;

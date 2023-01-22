@@ -6,12 +6,13 @@ import { cartReducerValues, storeDeliveryCost } from '../../../slices/Cart/cart'
 import { useDispatch, useSelector } from 'react-redux';
 import { userReducerValues } from '../../../slices/User/user';
 import { Wrapper, WrapperItem } from './styles';
+import Order from './comonents/Order/Order';
 
 /**
  * Компонент для отображения страницы оформления заказа
  */
 const OrderingPage = () => {
-    const { totalSum } = useSelector(cartReducerValues);
+    const { totalSum, cartItems, deliveryCost, totalSumWithDelivery } = useSelector(cartReducerValues);
     const { user } = useSelector(userReducerValues);
 
     const dispatch = useDispatch();
@@ -21,6 +22,9 @@ const OrderingPage = () => {
     };
 
     const context = {
+        totalSumWithDelivery,
+        deliveryCost,
+        cartItems,
         totalSum,
         user,
         storeDeliveryCostTrans,
@@ -36,7 +40,9 @@ const OrderingPage = () => {
                     {user && <UserInfo />}
                     <Delivery />
                 </WrapperItem>
-                <WrapperItem></WrapperItem>
+                <WrapperItem>
+                    <Order />
+                </WrapperItem>
             </Wrapper>
         </OrderingPageContext.Provider>
     );

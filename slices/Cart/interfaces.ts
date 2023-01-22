@@ -7,6 +7,7 @@ export interface IState {
     deliveryCost: number;
     rawCartItems: ICartItem[];
     refetchCartItems: object;
+    totalSumWithDelivery: number;
 }
 
 export interface IExtendedCartItem {
