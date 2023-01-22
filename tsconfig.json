@@ -24,7 +24,8 @@
         "next-env.d.ts",
         "**/*.ts",
         "**/*.tsx",
-        "next.config.js"
+        "next.config.js",
+        "components/pages/OrderingPage/comonents/Delivery/constants"
     ],
     "exclude": [
         "node_modules"

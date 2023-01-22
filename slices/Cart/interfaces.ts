@@ -4,8 +4,9 @@ import { IProduct } from '../../models/Product';
 export interface IState {
     cartItems: IExtendedCartItem[];
     totalSum: number;
+    deliveryCost: number;
     rawCartItems: ICartItem[];
-    refetchCartItems: {};
+    refetchCartItems: object;
 }
 
 export interface IExtendedCartItem {

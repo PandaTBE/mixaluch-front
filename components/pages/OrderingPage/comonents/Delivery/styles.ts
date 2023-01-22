@@ -1,4 +1,4 @@
-import { Checkbox } from '@mui/material';
+import { Checkbox, TextField } from '@mui/material';
 import styled from 'styled-components';
 
 export const Wrapper = styled.section`
@@ -23,7 +23,7 @@ export const DeliveryCost = styled.div`
     font-size: 1.25rem;
 `;
 
-export const DeliveryTypeWrapper = styled.div`
+export const CheckboxWrapper = styled.div`
     cursor: pointer;
     margin-top: 5px;
     padding: 5px;
@@ -39,4 +39,21 @@ export const StyledCheckbox = styled(Checkbox)`
     svg {
         fill: ${(p) => p.theme.colors.primary} !important;
     }
+`;
+
+export const CheckboxLabel = styled.div`
+    font-size: 20px;
+`;
+
+export const CheckboxSubLabel = styled.div`
+    color: rgb(116, 116, 116);
+    margin-top: 10px;
+    span {
+        display: inline-block;
+        margin-right: 5px;
+    }
+`;
+
+export const StyledTextField = styled(TextField)`
+    margin-top: 15px;
 `;

@@ -1,19 +1,29 @@
-import { useSelector } from 'react-redux';
-import { userReducerValues } from '../../../slices/User/user';
+import Delivery from './comonents/Delivery/Delivery';
 import PageTitle from '../../PageTitle/PageTitle';
 import UserInfo from './comonents/UserInfo/UserInfo';
-import { Wrapper, WrapperItem } from './styles';
 import { OrderingPageContext } from './context';
-import Delivery from './comonents/Delivery/Delivery';
+import { cartReducerValues, storeDeliveryCost } from '../../../slices/Cart/cart';
+import { useDispatch, useSelector } from 'react-redux';
+import { userReducerValues } from '../../../slices/User/user';
+import { Wrapper, WrapperItem } from './styles';
 
 /**
  * Компонент для отображения страницы оформления заказа
  */
 const OrderingPage = () => {
+    const { totalSum } = useSelector(cartReducerValues);
     const { user } = useSelector(userReducerValues);
 
+    const dispatch = useDispatch();
+
+    const storeDeliveryCostTrans = (value: number) => {
+        dispatch(storeDeliveryCost(value));
+    };
+
     const context = {
+        totalSum,
         user,
+        storeDeliveryCostTrans,
     };
 
     return (

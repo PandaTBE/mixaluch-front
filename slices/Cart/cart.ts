@@ -1,15 +1,18 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { cloneDeep } from 'lodash';
-import { ICartItem } from '../../models/CartItem';
-import { IProduct } from '../../models/Product';
 import { AppState } from '../../store';
+import { cloneDeep } from 'lodash';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ICartItem } from '../../models/CartItem';
 import { IExtendedCartItem, IState } from './interfaces';
+
+export const FREE_DELIVERY_BORDER = 5000;
+export const DELIVERY_COST = 200;
 
 const initialState: IState = {
     rawCartItems: [],
     cartItems: [],
     totalSum: 0,
     refetchCartItems: {},
+    deliveryCost: DELIVERY_COST,
 };
 
 const cart = createSlice({
@@ -21,6 +24,13 @@ const cart = createSlice({
          */
         storeCartItems: (state, action: PayloadAction<IExtendedCartItem[]>) => {
             state.cartItems = action.payload;
+        },
+
+        /**
+         * Изменение стоимоси доставки
+         */
+        storeDeliveryCost: (state, action: PayloadAction<number>) => {
+            state.deliveryCost = action.payload;
         },
 
         /**
@@ -86,6 +96,7 @@ export const {
     updateCartItem,
     storeRawCartItems,
     storeCartItemsRefetchObject,
+    storeDeliveryCost,
 } = cart.actions;
 
 export const cartReducerValues = (state: AppState) => state.cart;
