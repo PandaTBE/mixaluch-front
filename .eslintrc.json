@@ -11,7 +11,8 @@
             {
                 "allowSingleExtends": true
             }
-        ]
+        ],
+        "prefer-const": "off"
     },
     "extends": [
         "eslint:recommended",

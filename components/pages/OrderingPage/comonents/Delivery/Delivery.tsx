@@ -17,6 +17,7 @@ import {
     Title,
     Wrapper,
 } from './styles';
+import { IOrderFormValues } from './interfaces';
 
 /**
  * Компонент для отображения секции доставки
@@ -44,8 +45,8 @@ const Delivery = () => {
         name: yup.string().required('Это обязательное поле'),
     });
 
-    const onSubmit = (values: any) => {
-        console.log(values);
+    const onSubmit = (formValues: IOrderFormValues) => {
+        context?.createOrderTrans && context.createOrderTrans(formValues);
     };
 
     const formik = useFormik({
@@ -172,7 +173,11 @@ const Delivery = () => {
                         </Stack>
                     </CheckboxWrapper>
                     <ButtonWrapper>
-                        <Button type={'submit'}>
+                        <Button
+                            disabled={context?.totalSum === 0}
+                            loading={context?.createOrderFetching}
+                            type={'submit'}
+                        >
                             <div>Подтвердить заказ</div>
                         </Button>
                     </ButtonWrapper>

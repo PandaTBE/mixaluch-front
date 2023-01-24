@@ -1,28 +1,33 @@
-import user from './slices/User/user';
-import catalog from './slices/Catalog/catalog';
-import { createWrapper } from 'next-redux-wrapper';
-import { AnyAction, configureStore, ThunkAction } from '@reduxjs/toolkit';
-import category from './slices/Category/category';
-import product from './slices/Product/product';
-import { userApi } from './services/UserService';
-import general from './slices/General/general';
 import cart from './slices/Cart/cart';
+import catalog from './slices/Catalog/catalog';
+import category from './slices/Category/category';
+import general from './slices/General/general';
+import product from './slices/Product/product';
+import user from './slices/User/user';
+import { AnyAction, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { cartApi } from './services/CartService';
+import { createWrapper } from 'next-redux-wrapper';
+import { orderApi } from './services/OrderService';
+import { userApi } from './services/UserService';
 
 const makeStore = () =>
     configureStore({
         reducer: {
+            [orderApi.reducerPath]: orderApi.reducer,
             [userApi.reducerPath]: userApi.reducer,
             [cartApi.reducerPath]: cartApi.reducer,
             category,
             product,
             catalog,
-            user,
             general,
+            user,
             cart,
         },
         middleware: (getDefaultMiddleware) => {
-            return getDefaultMiddleware().concat(userApi.middleware);
+            return getDefaultMiddleware()
+                .concat(userApi.middleware)
+                .concat(cartApi.middleware)
+                .concat(orderApi.middleware);
         },
         devTools: true,
     });
