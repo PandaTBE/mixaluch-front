@@ -15,5 +15,18 @@ export const orderApi = createApi({
                 headers: data.authToken ? { Authorization: `Token ${data.authToken}` } : {},
             }),
         }),
+
+        /** Получение информации о конкретном заказе */
+        getOrderInfo: build.query<IOrder, number | undefined>({
+            query: (id) => {
+                if (!id) {
+                    throw new Error('ID is required.');
+                }
+                return {
+                    url: `order-info/${id}/`,
+                    method: 'GET',
+                };
+            },
+        }),
     }),
 });
