@@ -9,6 +9,8 @@ export interface IOrder {
     payment_type: TOrderPaymentType;
     status: TOrderStatusType;
     total_sum_with_delivery: number;
+    created_at: string;
+    updated_at: string;
     order_data: OrderData;
     delivery_cost: number;
     phone_number: string;

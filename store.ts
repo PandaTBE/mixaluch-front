@@ -2,6 +2,7 @@ import cart from './slices/Cart/cart';
 import catalog from './slices/Catalog/catalog';
 import category from './slices/Category/category';
 import general from './slices/General/general';
+import order from './slices/Order/order';
 import product from './slices/Product/product';
 import user from './slices/User/user';
 import { AnyAction, configureStore, ThunkAction } from '@reduxjs/toolkit';
@@ -20,6 +21,7 @@ const makeStore = () =>
             product,
             catalog,
             general,
+            order,
             user,
             cart,
         },

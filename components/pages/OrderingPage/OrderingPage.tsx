@@ -2,7 +2,12 @@ import Delivery from './comonents/Delivery/Delivery';
 import PageTitle from '../../PageTitle/PageTitle';
 import UserInfo from './comonents/UserInfo/UserInfo';
 import { OrderingPageContext } from './context';
-import { cartReducerValues, storeCartItemsRefetchObject, storeDeliveryCost } from '../../../slices/Cart/cart';
+import {
+    cartReducerValues,
+    storeCartItems,
+    storeCartItemsRefetchObject,
+    storeDeliveryCost,
+} from '../../../slices/Cart/cart';
 import { useDispatch, useSelector } from 'react-redux';
 import { userReducerValues } from '../../../slices/User/user';
 import { Wrapper, WrapperItem } from './styles';
@@ -11,22 +16,24 @@ import { orderApi } from '../../../services/OrderService';
 import { IOrderFormValues } from './comonents/Delivery/interfaces';
 import generateOrderQueryData from './tools/generateOrderQueryData';
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 /**
  * Компонент для отображения страницы оформления заказа
  */
 const OrderingPage = () => {
-    const [createOrder, { data, isLoading, error }] = orderApi.useCreateOrderMutation();
+    const [createOrder, { data, isLoading }] = orderApi.useCreateOrderMutation();
     const { totalSum, cartItems, deliveryCost, totalSumWithDelivery } = useSelector(cartReducerValues);
     const { user, authToken } = useSelector(userReducerValues);
+    const router = useRouter();
 
     const dispatch = useDispatch();
 
-    console.log(data, error, isLoading);
-
     useEffect(() => {
         if (data) {
+            router.push(`/orders/${data.id}`);
             dispatch(storeCartItemsRefetchObject());
+            dispatch(storeCartItems([]));
         }
     }, [data]);
 

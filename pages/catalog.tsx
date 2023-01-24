@@ -31,7 +31,9 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
             store.dispatch(storeProducts(products));
         });
     } catch (error) {
-        console.log(error);
+        return {
+            props: {},
+        };
     }
 
     return {

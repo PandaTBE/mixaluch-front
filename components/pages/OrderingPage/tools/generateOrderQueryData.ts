@@ -31,14 +31,14 @@ const generateOrderQueryData = (args: IArgs): IOrderDTO => {
     const products = orderItems.map((orderItem) => omit(orderItem, 'id'));
 
     const result: IOrderDTO = {
-        total_sum_with_delivery: totalSumWithDelivery,
+        total_sum_with_delivery: Math.floor(totalSumWithDelivery),
         phone_number: formValues.phone_number,
         delivery_cost: deliveryCost,
         address: formValues.address,
         delivery_type: deliveryType,
         payment_type: paymentType,
         name: formValues.name,
-        total_sum: totalSum,
+        total_sum: Math.floor(totalSum),
         order_data: {
             products,
         },
