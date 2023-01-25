@@ -40,4 +40,4 @@ const UserAccountPage = () => {
     );
 };
 
-export default withUserAccountSidebar(UserAccountPage);
+export default UserAccountPage;
