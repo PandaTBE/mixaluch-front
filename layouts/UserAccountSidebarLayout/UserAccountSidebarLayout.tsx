@@ -44,11 +44,8 @@ const UserAccountSidebarLayout: FC<IProps> = ({ children }) => {
                     <Link href="/user-account">
                         <NavItem>Контактные данные</NavItem>
                     </Link>
-                    <Link href="/user-account">
+                    <Link href="/orders">
                         <NavItem>История заказов</NavItem>
-                    </Link>
-                    <Link href="/user-account">
-                        <NavItem>Адрес доставки</NavItem>
                     </Link>
                     <Link href="/">
                         <NavItem onClick={onLogoutClick}>Выход</NavItem>

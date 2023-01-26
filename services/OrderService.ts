@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { urls } from '../contsants/urls';
 import { IOrder, IOrderDTO } from '../models/Order';
+import { urls } from '../contsants/urls';
 
 export const orderApi = createApi({
     reducerPath: 'orderApi',
@@ -27,6 +27,15 @@ export const orderApi = createApi({
                     method: 'GET',
                 };
             },
+        }),
+
+        /** Получение всех заказв (истории заказов) для данного пользователя*/
+        getOrders: build.mutation<IOrder[], string>({
+            query: (authToken) => ({
+                url: 'orders/',
+                method: 'GET',
+                headers: { Authorization: `Token ${authToken}` },
+            }),
         }),
     }),
 });
