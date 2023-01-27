@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    background-color: ${(p) => p.theme.backgroundColors.primary}; ;
+    background-color: ${(p) => p.theme.backgroundColors.primary};
 `;
 
 export const ContentWrapper = styled.div`
@@ -13,12 +13,19 @@ export const ContentWrapper = styled.div`
 
 export const Delivery = styled.div`
     color: ${(p) => p.theme.colors.grey};
+    white-space: nowrap;
 `;
 
 export const Telephone = styled.a`
     cursor: pointer;
+    white-space: nowrap;
 `;
 
 export const StyledLink = styled.div<{ active: boolean }>`
     color: ${(props) => (props.active ? props.theme.colors.primary : props.theme.colors.black)};
+    white-space: nowrap;
+`;
+
+export const Nav = styled.nav`
+    padding-right: 60px;
 `;
