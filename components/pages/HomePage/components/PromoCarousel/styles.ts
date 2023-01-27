@@ -14,7 +14,7 @@ export const SlideWrapper = styled.div<{ image: string }>`
     background-repeat: no-repeat;
     display: flex;
     text-align: center;
-    padding: 10px 50px;
+    padding: 0px 50px;
     justify-content: center;
     align-items: center;
     background-position: 50% 50%;
@@ -32,7 +32,7 @@ export const SlideWrapper = styled.div<{ image: string }>`
 export const SlideArrowWrapper = styled.div<{ side: 'left' | 'right' }>`
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-100%);
     left: ${(p) => (p.side === 'left' ? '20px' : 'auto')};
     right: ${(p) => (p.side === 'right' ? '20px' : 'auto')};
     z-index: 10;
@@ -54,8 +54,10 @@ export const Layout = styled.div`
 export const SlideText = styled.div`
     color: white;
     font-size: 3rem;
+    line-height: 3rem;
     z-index: 5;
     @media (max-width: 767px) {
         font-size: 2rem;
+        line-height: 2rem;
     }
 `;
