@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { generalReducerValues } from '../../slices/General/general';
+import AboutPage from '../pages/AboutPage/AboutPage';
 import CartPageSkeleton from './components/CartPageSkeleton/CartPageSkeleton';
 import CatalogSkeleton from './components/CatalogPageSkeleton/CatalogSkeleton';
 import HomePageSkeleton from './components/HomePageSkeleton/HomePageSkeleton';
@@ -22,6 +23,10 @@ const LoadingSkeleton = () => {
 
     if (pageToSwitch === '/cart') {
         return <CartPageSkeleton />;
+    }
+
+    if (pageToSwitch === '/about') {
+        return <AboutPage />;
     }
 
     return <div>loading...</div>;

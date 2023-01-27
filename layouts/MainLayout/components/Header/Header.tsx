@@ -1,6 +1,6 @@
 import { ContentWrapper, Delivery, Nav, StyledLink, Telephone, Wrapper } from './styles';
 import Container from '../../../../components/Container/Container';
-import { Grid, Stack } from '@mui/material';
+import { Grid } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
@@ -36,7 +36,7 @@ const Header = () => {
                                     </StyledLink>
                                     <StyledLink
                                         data-targetid="about"
-                                        // onClick={onLinkClick('/about')}
+                                        onClick={onLinkClick('/about')}
                                         active={router.pathname === '/about'}
                                     >
                                         <Link href={'/about'}>О компании</Link>
