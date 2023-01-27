@@ -8,6 +8,7 @@ import { IState } from './interfaces';
 const initialState: IState = {
     products: null,
     popularProducts: null,
+    selectedProduct: null,
 };
 
 export const product = createSlice({
@@ -27,6 +28,13 @@ export const product = createSlice({
         storePopularProducts: (state, action: PayloadAction<IProduct[] | null>) => {
             state.popularProducts = action.payload;
         },
+
+        /**
+         * Сохранение информации о выбранном товаре
+         */
+        storeSelectedProduct: (state, action: PayloadAction<null | IProduct>) => {
+            state.selectedProduct = action.payload;
+        },
     },
 
     /**
@@ -38,12 +46,13 @@ export const product = createSlice({
                 ...state,
                 popularProducts: action.payload.product.popularProducts,
                 products: action.payload.product.products,
+                selectedProduct: action.payload.product.selectedProduct,
             };
         },
     },
 });
 
-export const { storeProducts, storePopularProducts } = product.actions;
+export const { storeProducts, storePopularProducts, storeSelectedProduct } = product.actions;
 
 export const productReducerValues = (state: AppState) => state.product;
 

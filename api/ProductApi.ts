@@ -16,4 +16,10 @@ export const ProductApi = {
         const data = await instance.get<IProduct[]>('/products/popular/').then((response) => response.data);
         return data;
     },
+
+    /** Получение информации о выбранном товаре */
+    async getProductInfo(id: number) {
+        const data = await instance.get<IProduct>(`/products/${id}/`).then((response) => response.data);
+        return data;
+    },
 };

@@ -1,14 +1,14 @@
-import { default as CatalogPage } from '../components/pages/CatalogPage/Catalog';
-import { withMainLayout } from '../layouts/MainLayout/MainLayout';
+import { default as CatalogPage } from '../../components/pages/CatalogPage/Catalog';
+import { withMainLayout } from '../../layouts/MainLayout/MainLayout';
 import type { NextPage } from 'next';
-import { wrapper } from '../store';
-import { ProductApi } from '../api/ProductApi';
-import { CategoryApi } from '../api/CategoryApi';
+import { wrapper } from '../../store';
+import { ProductApi } from '../../api/ProductApi';
+import { CategoryApi } from '../../api/CategoryApi';
 import axios from 'axios';
-import { storeCategories } from '../slices/Category/category';
-import { storeProducts } from '../slices/Product/product';
-import { IProduct } from '../models/Product';
-import { ICategory } from '../models/Category';
+import { storeCategories } from '../../slices/Category/category';
+import { storeProducts } from '../../slices/Product/product';
+import { IProduct } from '../../models/Product';
+import { ICategory } from '../../models/Category';
 
 /**
  * Страница каталога
