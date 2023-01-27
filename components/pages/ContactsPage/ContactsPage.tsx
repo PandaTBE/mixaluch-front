@@ -23,7 +23,7 @@ const ContactsPage = () => {
             <Text fontWeight={700}>График работы магазина:</Text>
             <ScheduleWrapper>
                 {weekDays.map((element) => (
-                    <ScheduleItem>
+                    <ScheduleItem key={element.name}>
                         <ScheduleWeekDay>{element.name}</ScheduleWeekDay>
                         <div>{element.workingHours}</div>
                     </ScheduleItem>
