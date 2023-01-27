@@ -49,7 +49,7 @@ const Header = () => {
                                         <Link href={'/contacts'}>Контакты</Link>
                                     </StyledLink>
                                     <StyledLink
-                                        // onClick={onLinkClick('/delivery')}
+                                        onClick={onLinkClick('/delivery')}
                                         active={router.pathname === '/delivery'}
                                         data-targetid="delivery"
                                     >

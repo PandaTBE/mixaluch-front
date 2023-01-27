@@ -6,6 +6,7 @@ import HomePageSkeleton from './components/HomePageSkeleton/HomePageSkeleton';
 import UserAccountPageSkeleton from './components/UserAccountPageSkeleton/UserAccountPageSkeleton';
 import { generalReducerValues } from '../../slices/General/general';
 import { useSelector } from 'react-redux';
+import DeliveryPage from '../pages/DeliveryPage/DeliveryPage';
 
 const LoadingSkeleton = () => {
     const { pageToSwitch } = useSelector(generalReducerValues);
@@ -32,6 +33,10 @@ const LoadingSkeleton = () => {
 
     if (pageToSwitch === '/contacts') {
         return <ContactsPage />;
+    }
+
+    if (pageToSwitch === '/delivery') {
+        return <DeliveryPage />;
     }
 
     return <div>loading...</div>;

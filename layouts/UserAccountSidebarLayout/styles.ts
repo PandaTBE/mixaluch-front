@@ -4,6 +4,7 @@ export const Wrapper = styled.div`
     width: 100%;
     flex-grow: 1;
     display: flex;
+    padding: 20px 0;
 `;
 
 export const NavItem = styled.div`

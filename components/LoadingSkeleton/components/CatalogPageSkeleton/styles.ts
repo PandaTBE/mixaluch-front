@@ -20,3 +20,6 @@ export const SubCategory = styled.div`
 export const SubCategoryWrapper = styled.div`
     margin-top: 10px;
 `;
+export const SkeletonPageWrapper = styled.div`
+    padding: 20px 0;
+`;

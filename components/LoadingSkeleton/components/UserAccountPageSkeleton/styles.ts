@@ -10,3 +10,7 @@ export const NavItemWrapper = styled.div`
         margin-top: 0px;
     }
 `;
+
+export const Wrapper = styled.div`
+    padding: 20px 0;
+`;

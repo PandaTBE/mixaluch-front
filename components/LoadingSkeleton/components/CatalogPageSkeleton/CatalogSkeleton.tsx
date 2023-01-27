@@ -1,14 +1,14 @@
 import { Grid } from '@mui/material';
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { MainCategory, SubCategory, SubCategoryWrapper, Wrapper } from './styles';
+import { MainCategory, SkeletonPageWrapper, SubCategory, SubCategoryWrapper, Wrapper } from './styles';
 
 /**
  * Компонент для отображения зазрузки
  */
 const CatalogSkeleton = () => {
     return (
-        <div>
+        <SkeletonPageWrapper>
             <Skeleton height={50} width={100} />
             <Wrapper>
                 <div>
@@ -49,7 +49,7 @@ const CatalogSkeleton = () => {
                     </Grid>
                 </div>
             </Wrapper>
-        </div>
+        </SkeletonPageWrapper>
     );
 };
 
