@@ -30,7 +30,7 @@ const SubHeader = () => {
                     </Link>
 
                     <Stack direction="row" spacing={2} alignItems="center">
-                        <Link href={authToken ? 'user-account' : '/login'}>
+                        <Link href={authToken ? '/user-account' : '/login'}>
                             <LoginIcon onClick={onLinkClick('/user-account')} />
                         </Link>
                         <Link href={'/cart'}>
