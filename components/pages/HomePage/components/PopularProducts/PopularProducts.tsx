@@ -1,4 +1,3 @@
-import { A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import PageTitle from '../../../../PageTitle/PageTitle';
@@ -43,7 +42,7 @@ const PopularProducts: FC<IProps> = ({ isSkeleton = false }) => {
                     onSwiper={(swiper) => setSwiperInstance(swiper)}
                     slidesPerView={swiperData.slidesPerView}
                     spaceBetween={swiperData.spaceBetween}
-                    modules={[A11y]}
+                    // modules={[A11y]}
                     loop={true}
                 >
                     {isSkeleton

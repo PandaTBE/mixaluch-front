@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import { cartReducerValues } from '../../slices/Cart/cart';
 import QuantityInput from '../QuantityInput/QuantityInput';
 import useFetchData from './hooks/useFetchData';
+import { useRouter } from 'next/router';
 
 /**
  * Компонент для отображения карточки продукта
@@ -24,9 +25,14 @@ import useFetchData from './hooks/useFetchData';
 const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
     const { cartItems } = useSelector(cartReducerValues);
     const { addCartItem } = useFetchData();
+    const router = useRouter();
 
     const onProductAdd = () => {
         addCartItem(product);
+    };
+
+    const onProductClick = () => {
+        router.push(`/catalog/${product.id}`);
     };
 
     const cartItem = useMemo(() => {
@@ -35,7 +41,7 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
 
     return (
         <Wrapper>
-            <ImageWrapper>
+            <ImageWrapper onClick={onProductClick}>
                 <Image
                     height={imageHeight}
                     src={
@@ -44,7 +50,7 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
                 />
             </ImageWrapper>
             <ContentWrapper>
-                <Title>{product.title}</Title>
+                <Title onClick={onProductClick}>{product.title}</Title>
                 <Price>{product.regular_price} ₽</Price>
                 <ButtonWrapper>
                     {cartItem ? (
