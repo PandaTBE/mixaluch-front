@@ -1,5 +1,5 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { Drawer, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import { FC } from 'react';
 import {
     BodyWrapper,
