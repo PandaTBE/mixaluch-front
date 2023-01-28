@@ -18,6 +18,10 @@ export const LoginIcon = styled(PersonOutlineOutlined)`
     height: 30px;
     font-size: 30px;
     cursor: pointer;
+
+    @media (max-width: 767px) {
+        display: none;
+    }
 `;
 
 export const CartIcon = styled(ShoppingCartOutlinedIcon)`
@@ -53,8 +57,19 @@ export const TotalSum = styled.div`
     color: ${(p) => p.theme.colors.primary};
     font-size: 18px;
     font-weight: 600;
+    @media (max-width: 767px) {
+        display: none;
+    }
 `;
 
 export const CartWrapper = styled.div`
     cursor: pointer;
+`;
+
+export const MenuIconWrapper = styled.div`
+    color: ${(p) => p.theme.colors.primary};
+    display: none;
+    @media (max-width: 767px) {
+        display: block;
+    }
 `;

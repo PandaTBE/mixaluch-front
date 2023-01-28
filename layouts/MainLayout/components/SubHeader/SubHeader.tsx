@@ -1,13 +1,25 @@
-import { Stack } from '@mui/material';
-import { CartIcon, LoginIcon, Logo, TotalSum, Wrapper, CartWrapper, TotalItems, CartIconWrapper } from './styles';
-
 import Container from '../../../../components/Container/Container';
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
-import { userReducerValues } from '../../../../slices/User/user';
+import MenuIcon from '@mui/icons-material/Menu';
+import OverflowMenu from './components/OverflowMenu/OverflowMenu';
+import { cartReducerValues } from '../../../../slices/Cart/cart';
+import { IconButton, Stack } from '@mui/material';
 import { storePageToSwitch } from '../../../../slices/General/general';
 import { TPageToSwitch } from '../../../../slices/General/interfaces';
-import { cartReducerValues } from '../../../../slices/Cart/cart';
+import { useDispatch, useSelector } from 'react-redux';
+import { userReducerValues } from '../../../../slices/User/user';
+import { useState } from 'react';
+import {
+    CartIcon,
+    CartIconWrapper,
+    CartWrapper,
+    LoginIcon,
+    Logo,
+    MenuIconWrapper,
+    TotalItems,
+    TotalSum,
+    Wrapper,
+} from './styles';
 
 /**
  * Компонент для отображения сабхеддера
@@ -15,7 +27,12 @@ import { cartReducerValues } from '../../../../slices/Cart/cart';
 const SubHeader = () => {
     const { authToken } = useSelector(userReducerValues);
     const { totalSum, cartItems } = useSelector(cartReducerValues);
+    const [isDrawerOpen, setDrawerOpen] = useState(false);
     const dispatch = useDispatch();
+
+    const toggleDrawerOpen = () => {
+        setDrawerOpen((prevState) => !prevState);
+    };
 
     const onLinkClick = (link: TPageToSwitch) => () => {
         dispatch(storePageToSwitch(link));
@@ -25,6 +42,12 @@ const SubHeader = () => {
         <Wrapper>
             <Container>
                 <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
+                    <MenuIconWrapper>
+                        <IconButton color="inherit" onClick={toggleDrawerOpen}>
+                            <MenuIcon />
+                        </IconButton>
+                    </MenuIconWrapper>
+
                     <Link href={'/'}>
                         <Logo onClick={onLinkClick('/')} src={'/logo.png'} alt={'Mixaluch logo'} />
                     </Link>
@@ -47,6 +70,7 @@ const SubHeader = () => {
                     </Stack>
                 </Stack>
             </Container>
+            <OverflowMenu isDrawerOpen={isDrawerOpen} toggleDrawerOpen={toggleDrawerOpen} />
         </Wrapper>
     );
 };

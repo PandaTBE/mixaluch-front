@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     background-color: ${(p) => p.theme.backgroundColors.primary};
+    @media (max-width: 767px) {
+        display: none;
+    }
 `;
 
 export const ContentWrapper = styled.div`
@@ -21,11 +24,12 @@ export const Telephone = styled.a`
     white-space: nowrap;
 `;
 
-export const StyledLink = styled.div<{ active: boolean }>`
+export const StyledLink = styled.li<{ active: boolean }>`
     color: ${(props) => (props.active ? props.theme.colors.primary : props.theme.colors.black)};
     white-space: nowrap;
 `;
 
 export const Nav = styled.nav`
     padding-right: 60px;
+    list-style-type: none;
 `;

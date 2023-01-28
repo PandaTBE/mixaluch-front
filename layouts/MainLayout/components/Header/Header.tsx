@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { storePageToSwitch } from '../../../../slices/General/general';
 import { TPageToSwitch } from '../../../../slices/General/interfaces';
 import IntersectionObserverWrapper from './components/IntersectionObserverWrapper/IntersectionObserverWrapper';
+import { navigationListItems } from '../constants/constants';
 
 /**
  * Компонент для отображения шапки страницы
@@ -27,41 +28,20 @@ const Header = () => {
                         <Grid item xs={3} sm={6} md={7} lg={8}>
                             <Nav>
                                 <IntersectionObserverWrapper>
-                                    <StyledLink
-                                        data-targetid="catalog"
-                                        onClick={onLinkClick('/catalog')}
-                                        active={router.pathname === '/catalog'}
-                                    >
-                                        <Link href={'/catalog'}>Каталог</Link>
-                                    </StyledLink>
-                                    <StyledLink
-                                        data-targetid="about"
-                                        onClick={onLinkClick('/about')}
-                                        active={router.pathname === '/about'}
-                                    >
-                                        <Link href={'/about'}>О компании</Link>
-                                    </StyledLink>
-                                    <StyledLink
-                                        onClick={onLinkClick('/contacts')}
-                                        active={router.pathname === '/contacts'}
-                                        data-targetid="contacts"
-                                    >
-                                        <Link href={'/contacts'}>Контакты</Link>
-                                    </StyledLink>
-                                    <StyledLink
-                                        onClick={onLinkClick('/delivery')}
-                                        active={router.pathname === '/delivery'}
-                                        data-targetid="delivery"
-                                    >
-                                        <Link href={'/delivery'}>Доставка</Link>
-                                    </StyledLink>
-                                    <StyledLink
-                                        onClick={onLinkClick('/user-account')}
-                                        active={router.pathname === '/user-account'}
-                                        data-targetid="user-account"
-                                    >
-                                        <Link href={'/user-account'}>Личный кабинет</Link>
-                                    </StyledLink>
+                                    {
+                                        navigationListItems.map((element) => {
+                                            return (
+                                                <StyledLink
+                                                    key={element.id}
+                                                    data-targetid={element.id}
+                                                    onClick={onLinkClick(element.href as TPageToSwitch)}
+                                                    active={router.pathname === element.href}
+                                                >
+                                                    <Link href={element.href}>{element.name}</Link>
+                                                </StyledLink>
+                                            );
+                                        }) as JSX.Element[]
+                                    }
                                 </IntersectionObserverWrapper>
                             </Nav>
                         </Grid>
