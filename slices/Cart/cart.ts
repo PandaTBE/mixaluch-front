@@ -13,6 +13,7 @@ const initialState: IState = {
     totalSum: 0,
     refetchCartItems: {},
     deliveryCost: DELIVERY_COST,
+    rawCartItemsByProductId: {},
     totalSumWithDelivery: 0,
 };
 
@@ -79,7 +80,12 @@ const cart = createSlice({
          * Сохранение сырых данных для корзины
          */
         storeRawCartItems: (state, action: PayloadAction<ICartItem[]>) => {
+            const rawCartItemsByProductId = action.payload.reduce((acc: { [productId: string]: ICartItem }, value) => {
+                acc[value.product.id] = value;
+                return acc;
+            }, {});
             state.rawCartItems = action.payload;
+            state.rawCartItemsByProductId = rawCartItemsByProductId;
         },
 
         /**

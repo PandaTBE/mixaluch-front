@@ -6,6 +6,7 @@ export interface IState {
     totalSum: number;
     deliveryCost: number;
     rawCartItems: ICartItem[];
+    rawCartItemsByProductId: { [productId: string]: ICartItem };
     refetchCartItems: object;
     totalSumWithDelivery: number;
 }

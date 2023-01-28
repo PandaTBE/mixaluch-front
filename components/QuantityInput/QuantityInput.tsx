@@ -25,7 +25,7 @@ const QuantityInput: FC<IProps> = ({ productId, defaultValue = 1, cartItemId }) 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (quantity && (!isNaN(Number(quantity)) || !Number(quantity < 0.2))) {
+        if (quantity && !isNaN(Number(quantity)) && !Number(quantity < 0.2)) {
             dispatch(updateCartItem({ productId, quantity: Number(quantity) }));
         }
     }, [quantity]);
@@ -33,8 +33,9 @@ const QuantityInput: FC<IProps> = ({ productId, defaultValue = 1, cartItemId }) 
     useEffect(() => {
         if (debouncedQuantityValue && (isNaN(Number(debouncedQuantityValue)) || Number(debouncedQuantityValue < 0.2))) {
             setQuantity(1);
+            patchCartItem(1, cartItemId);
         } else {
-            if (debouncedQuantityValue) {
+            if (debouncedQuantityValue && debouncedQuantityValue !== defaultValue) {
                 patchCartItem(Number(debouncedQuantityValue), cartItemId);
             }
         }
