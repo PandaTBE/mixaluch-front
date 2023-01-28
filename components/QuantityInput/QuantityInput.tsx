@@ -1,6 +1,8 @@
 import { Stack } from '@mui/system';
 import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import useDebounce from '../../hooks/useDebounce';
+import { updateCartItem } from '../../slices/Cart/cart';
 import useFetchData from './hooks/useFetchData';
 import { MinusButton, PlusButton, StyledInput } from './styles';
 
@@ -20,13 +22,20 @@ const QuantityInput: FC<IProps> = ({ productId, defaultValue = 1, cartItemId }) 
     const [quantity, setQuantity] = useState<string | number>(defaultValue);
     const debouncedQuantityValue = useDebounce(quantity, 2000);
     const { patchCartItem } = useFetchData();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (quantity && (!isNaN(Number(quantity)) || !Number(quantity < 0.2))) {
+            dispatch(updateCartItem({ productId, quantity: Number(quantity) }));
+        }
+    }, [quantity]);
 
     useEffect(() => {
         if (debouncedQuantityValue && (isNaN(Number(debouncedQuantityValue)) || Number(debouncedQuantityValue < 0.2))) {
             setQuantity(1);
         } else {
-            if (debouncedQuantityValue && Number(debouncedQuantityValue) !== defaultValue) {
-                patchCartItem(productId, Number(debouncedQuantityValue), cartItemId);
+            if (debouncedQuantityValue) {
+                patchCartItem(Number(debouncedQuantityValue), cartItemId);
             }
         }
     }, [debouncedQuantityValue]);

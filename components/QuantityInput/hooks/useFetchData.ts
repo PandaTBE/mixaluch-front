@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartApi } from '../../../services/CartService';
-import { storeCartItemsRefetchObject, updateCartItem } from '../../../slices/Cart/cart';
+import { storeCartItemsRefetchObject } from '../../../slices/Cart/cart';
 import { userReducerValues } from '../../../slices/User/user';
 
 /**
@@ -21,11 +21,10 @@ const useFetchData = () => {
 
     /** Обновление товара в корзине */
     const patchCartItemHandler = useCallback(
-        (productId: number, quantity: number, cartItemId?: number) => {
+        (quantity: number, cartItemId?: number) => {
             if (authToken && cartItemId) {
                 patchCartItem({ authToken, cartItemId, body: { quantity } });
             }
-            dispatch(updateCartItem({ productId, quantity }));
         },
         [authToken],
     );

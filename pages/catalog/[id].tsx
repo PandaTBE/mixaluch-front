@@ -1,4 +1,5 @@
 import { ProductApi } from '../../api/ProductApi';
+import ProductInfoPage from '../../components/pages/ProductInfoPage/ProductInfoPage';
 import { withMainLayout } from '../../layouts/MainLayout/MainLayout';
 import { storeSelectedProduct } from '../../slices/Product/product';
 import { wrapper } from '../../store';
@@ -7,7 +8,7 @@ import { wrapper } from '../../store';
  * Страница информации о товаре
  */
 const ProductInfo = () => {
-    return null;
+    return <ProductInfoPage />;
 };
 
 export default withMainLayout(ProductInfo);
