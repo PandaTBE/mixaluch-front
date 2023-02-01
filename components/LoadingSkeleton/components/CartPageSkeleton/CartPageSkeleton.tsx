@@ -1,21 +1,32 @@
+import { Grid } from '@mui/material';
 import { Stack } from '@mui/system';
 import Skeleton from 'react-loading-skeleton';
-import { WrappedItem } from './styles';
+import PageTitle from '../../../PageTitle/PageTitle';
+import { ContentWrapper, Wrapper } from './styles';
 
 const CartPageSkeleton = () => {
     return (
-        <Stack justifyContent="space-between" direction={'row'}>
-            <WrappedItem flex={'0 0 75%'}>
-                <Stack direction="column" spacing={3}>
-                    <Skeleton width={'100%'} height={150} />
-                    <Skeleton width={'100%'} height={150} />
-                    <Skeleton width={'100%'} height={150} />
-                </Stack>
-            </WrappedItem>
-            <WrappedItem flex={'0 0 20%'}>
-                <Skeleton width={'100%'} height={300} />
-            </WrappedItem>
-        </Stack>
+        <Wrapper>
+            <PageTitle>
+                <div>Корзина</div>
+            </PageTitle>
+            <ContentWrapper>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} md={8} xl={9}>
+                        <Stack direction="column" spacing={2}>
+                            {Array(3)
+                                .fill(null)
+                                .map((_, index) => (
+                                    <Skeleton key={index} height={200} />
+                                ))}
+                        </Stack>
+                    </Grid>
+                    <Grid item xs={12} md={4} xl={3}>
+                        <Skeleton height={125} />
+                    </Grid>
+                </Grid>
+            </ContentWrapper>
+        </Wrapper>
     );
 };
 
