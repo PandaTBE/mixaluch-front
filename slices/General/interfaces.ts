@@ -10,4 +10,5 @@ export type TPageToSwitch =
     | '/about'
     | '/contacts'
     | '/delivery'
-    | '/ordering';
+    | '/ordering'
+    | '/orders';

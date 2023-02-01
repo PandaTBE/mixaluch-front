@@ -10,7 +10,7 @@ const OrderingPageSkeleton = () => {
     return (
         <>
             <PageTitle>
-                <div>Оформление закака</div>
+                <div>Оформление заказа</div>
             </PageTitle>
             <Wrapper>
                 <WrapperItem>
