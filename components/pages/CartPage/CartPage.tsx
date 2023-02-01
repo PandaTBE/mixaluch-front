@@ -7,7 +7,7 @@ import { cartReducerValues } from '../../../slices/Cart/cart';
 import Button from '../../Button/Button';
 import PageTitle from '../../PageTitle/PageTitle';
 import CartItem from './components/CartItem/CartItem';
-import { ConfirmButtonWrapper, ContentWrapper, TotalValueTitle, TotalValueWrapper } from './styles';
+import { ConfirmButtonWrapper, ContentWrapper, TotalValueTitle, TotalValueWrapper, Wrapper } from './styles';
 
 /**
  * Компонент для отображения страницы корзины
@@ -21,17 +21,12 @@ const CartPage = () => {
     };
 
     return (
-        <div>
+        <Wrapper>
             <PageTitle>
                 <div>Корзина</div>
             </PageTitle>
             <ContentWrapper>
                 <Grid container spacing={2}>
-                    {!cartItems.length && (
-                        <Grid item xs={12}>
-                            Ваша корзина пуста
-                        </Grid>
-                    )}
                     {cartItems.length ? (
                         <>
                             <Grid item xs={12} md={8} xl={9}>
@@ -57,10 +52,14 @@ const CartPage = () => {
                                 </TotalValueWrapper>
                             </Grid>
                         </>
-                    ) : null}
+                    ) : (
+                        <Grid item xs={12}>
+                            Ваша корзина пуста
+                        </Grid>
+                    )}
                 </Grid>
             </ContentWrapper>
-        </div>
+        </Wrapper>
     );
 };
 

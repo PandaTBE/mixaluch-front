@@ -4,6 +4,11 @@ import CloseIcon from '@mui/icons-material/Close';
 export const ProductImage = styled.img`
     width: 165px;
     height: 165px;
+
+    @media (max-width: 599px) {
+        width: 80px;
+        height: 80px;
+    }
 `;
 
 export const Wrapper = styled.div`
@@ -15,6 +20,10 @@ export const Wrapper = styled.div`
 export const ProductTitle = styled.div`
     font-size: 1.5rem;
     font-weight: bold;
+
+    @media (max-width: 599px) {
+        font-size: 1rem;
+    }
 `;
 
 export const Price = styled.div`
@@ -24,6 +33,9 @@ export const Price = styled.div`
 
 export const QuantityInputWrapper = styled.div`
     width: 70%;
+    @media (max-width: 599px) {
+        display: none;
+    }
 `;
 
 export const StyledCloseIcon = styled(CloseIcon)`
@@ -31,9 +43,35 @@ export const StyledCloseIcon = styled(CloseIcon)`
     font-size: 35px !important;
     align-self: flex-end !important;
     cursor: pointer;
+
+    @media (max-width: 599px) {
+        font-size: 25px !important;
+    }
 `;
 
 export const TotalPrice = styled.div`
     font-size: 1.5rem;
-    align-self: flex-end;
+    /* align-self: flex-end; */
+    white-space: nowrap;
+    @media (max-width: 599px) {
+        font-size: 1rem;
+    }
+`;
+
+export const TotalPriceWrapper = styled.div`
+    @media (max-width: 599px) {
+        display: none;
+    }
+`;
+
+export const FooterWrapper = styled.div`
+    display: none;
+    margin-top: 10px;
+    @media (max-width: 599px) {
+        display: block;
+    }
+`;
+
+export const FooterQuantityInputWrapper = styled.div`
+    width: 150px;
 `;

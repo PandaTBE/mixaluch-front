@@ -1,7 +1,15 @@
 import styled from 'styled-components';
 
+export const Wrapper = styled.div`
+    padding: 20px 0;
+`;
+
 export const ContentWrapper = styled.div`
     margin-top: 40px;
+
+    @media (max-width: 575px) {
+        margin-top: 20px;
+    }
 `;
 
 export const CartItemsWrapper = styled.div`
@@ -19,6 +27,8 @@ export const TotalValueTitle = styled.div`
     justify-content: space-between;
     font-size: 1.5rem;
     font-weight: bold;
+    flex-wrap: wrap;
+    column-gap: 10px;
     span {
         margin-right: 5px;
         :last-child {
