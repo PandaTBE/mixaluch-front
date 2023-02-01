@@ -2,6 +2,10 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.section`
     padding-bottom: 50px;
+
+    @media (max-width: 575px) {
+        padding-bottom: 25px;
+    }
 `;
 
 export const ContentWrapper = styled.div`
@@ -12,8 +16,12 @@ export const ContentWrapper = styled.div`
 
 export const Title = styled.div`
     text-align: center;
-    font-size: 2rem;
+    font-size: 32px;
     font-weight: 700;
+
+    @media (max-width: 575px) {
+        font-size: 28px;
+    }
 `;
 
 export const FormWrapper = styled.div`

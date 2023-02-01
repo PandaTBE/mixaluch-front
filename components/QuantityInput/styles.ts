@@ -17,7 +17,7 @@ export const StyledInput = styled.input`
     background-color: ${(p) => p.theme.colors.primary};
     color: white;
     border: none;
-    width: auto;
+    width: 100%;
     font-size: 16px;
     border-radius: 0px;
     text-align: center;

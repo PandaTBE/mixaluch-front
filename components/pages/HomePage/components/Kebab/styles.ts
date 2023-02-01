@@ -2,10 +2,13 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.section`
     padding-bottom: 50px;
+    @media (max-width: 575px) {
+        padding-bottom: 25px;
+    }
 `;
 
 export const ContentWrapper = styled.div`
-    height: 320px;
+    min-height: 320px;
     padding: 15px 40px;
     background-image: url('/kebab/kebab.jpeg');
     background-size: cover;
@@ -14,6 +17,9 @@ export const ContentWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    @media (max-width: 575px) {
+        padding: 20px;
+    }
 `;
 
 export const Layout = styled.div`
@@ -30,6 +36,9 @@ export const Title = styled.div`
     font-weight: 700;
     color: white;
     z-index: 5;
+    @media (max-width: 575px) {
+        font-size: 1.75rem;
+    }
 `;
 
 export const SubTitle = styled.div`
@@ -37,6 +46,10 @@ export const SubTitle = styled.div`
     margin-top: 20px;
     color: white;
     z-index: 5;
+
+    @media (max-width: 575px) {
+        font-size: 1.35rem;
+    }
 `;
 
 export const ButtonWrapper = styled.div`

@@ -66,7 +66,7 @@ const Feedback = () => {
                             />
                         </TextWrapper>
                         <ButtonWrapper>
-                            <Button type={'submit'} width={'30%'}>
+                            <Button type={'submit'} width={'35%'}>
                                 <div>Отправить</div>
                             </Button>
                         </ButtonWrapper>

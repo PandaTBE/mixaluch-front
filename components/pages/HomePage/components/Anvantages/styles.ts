@@ -6,12 +6,19 @@ import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
 
 export const Wrapper = styled.section`
     padding-bottom: 50px;
+    @media (max-width: 575px) {
+        padding-bottom: 25px;
+    }
 `;
 
 export const Title = styled.div`
     font-size: 32px;
     font-weight: 700;
     margin: 0;
+
+    @media (max-width: 575px) {
+        font-size: 28px;
+    }
 `;
 
 export const StyledInventoryOutlinedIcon = styled(InventoryOutlinedIcon)`
