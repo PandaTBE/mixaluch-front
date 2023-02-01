@@ -14,16 +14,9 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../contsants/theme';
 import { wrapper } from '../store';
-import { useEffect, useState } from 'react';
 
 function MyApp({ Component, ...rest }: AppProps) {
     const { store, props } = wrapper.useWrappedStore(rest);
-
-    const [isHydrated, setIsHydrated] = useState(false);
-
-    useEffect(() => {
-        setIsHydrated(true);
-    }, []);
 
     return (
         <Provider store={store}>
@@ -33,11 +26,9 @@ function MyApp({ Component, ...rest }: AppProps) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <DataComponent />
-            {isHydrated && (
-                <ThemeProvider theme={theme}>
-                    <Component {...props.pageProps} />
-                </ThemeProvider>
-            )}
+            <ThemeProvider theme={theme}>
+                <Component {...props.pageProps} />
+            </ThemeProvider>
         </Provider>
     );
 }
