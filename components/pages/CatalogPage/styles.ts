@@ -10,6 +10,10 @@ export const ContentWrapper = styled.div`
     grid-template-columns: 25% 70%;
     gap: 20px;
     justify-content: space-between;
+
+    @media (max-width: 767px) {
+        grid-template-columns: 1fr;
+    }
 `;
 
 export const ListSubHeader = styled.div`

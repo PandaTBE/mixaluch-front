@@ -9,7 +9,7 @@ import { MainCategory, SkeletonPageWrapper, SubCategory, SubCategoryWrapper, Wra
 const CatalogSkeleton = () => {
     return (
         <SkeletonPageWrapper>
-            <Skeleton height={50} width={100} />
+            <Skeleton height={50} width={150} />
             <Wrapper>
                 <div>
                     {Array(2)
@@ -41,7 +41,7 @@ const CatalogSkeleton = () => {
                             .fill(null)
                             .map((_, index) => {
                                 return (
-                                    <Grid key={index} item xs={3}>
+                                    <Grid key={index} item xs={12} sm={6} md={4} xl={3}>
                                         <Skeleton height={300} />
                                     </Grid>
                                 );

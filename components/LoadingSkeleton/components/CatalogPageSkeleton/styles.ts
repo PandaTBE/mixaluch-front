@@ -5,16 +5,25 @@ export const Wrapper = styled.div`
     grid-template-columns: 25% 70%;
     gap: 20px;
     justify-content: space-between;
+    @media (max-width: 767px) {
+        grid-template-columns: 1fr;
+    }
 `;
 
 export const MainCategory = styled.div`
     margin-top: 20px;
-    width: 40%;
+    width: 75%;
+    @media (max-width: 767px) {
+        width: 45%;
+    }
 `;
 
 export const SubCategory = styled.div`
     margin-left: 30px;
-    width: 40%;
+    width: 75%;
+    @media (max-width: 767px) {
+        width: 45%;
+    }
 `;
 
 export const SubCategoryWrapper = styled.div`
