@@ -40,9 +40,7 @@ const PopularProducts: FC<IProps> = ({ isSkeleton = false }) => {
 
             <SwiperWrapper>
                 <StyledSwiper
-                    onSwiper={(swiper) => setSwiperInstance(swiper)}
-                    // slidesPerView={swiperData.slidesPerView}
-                    // spaceBetween={swiperData.spaceBetween}
+                    onSwiper={(swiper: SwiperCore) => setSwiperInstance(swiper)}
                     slidesPerView={1}
                     spaceBetween={10}
                     breakpoints={{

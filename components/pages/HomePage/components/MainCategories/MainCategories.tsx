@@ -36,7 +36,7 @@ const MainCategories: FC<IProps> = ({ isSkeleton = false }) => {
                           .fill(null)
                           .map((_, index) => {
                               return (
-                                  <Grid xs={6} item key={index}>
+                                  <Grid xs={12} sm={6} item key={index}>
                                       <Skeleton height={350} />
                                   </Grid>
                               );
