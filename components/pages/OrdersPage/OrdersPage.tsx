@@ -36,9 +36,11 @@ const OrdersPage = () => {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Дата оформления</TableCell>
-                                        <TableCell align="right">Номер заказа</TableCell>
+                                        <TableCell align="right">№ заказа</TableCell>
                                         <TableCell align="right">Статус</TableCell>
-                                        <TableCell align="right">Сумма заказа</TableCell>
+                                        <TableCell sx={{ display: 'none' }} align="right">
+                                            Сумма заказа
+                                        </TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -55,7 +57,9 @@ const OrdersPage = () => {
                                             <TableCell align="right">
                                                 {orderStatusMap[order.status] || order.status}
                                             </TableCell>
-                                            <TableCell align="right">{order.total_sum_with_delivery} ₽</TableCell>
+                                            <TableCell sx={{ display: 'none' }} align="right">
+                                                {order.total_sum_with_delivery} ₽
+                                            </TableCell>
                                         </StyledTableRow>
                                     ))}
                                 </TableBody>

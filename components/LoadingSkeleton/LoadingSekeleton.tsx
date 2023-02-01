@@ -8,6 +8,7 @@ import OrderingPageSkeleton from './components/OrderingPageSkeleton/OrderingPage
 import UserAccountPageSkeleton from './components/UserAccountPageSkeleton/UserAccountPageSkeleton';
 import { generalReducerValues } from '../../slices/General/general';
 import { useSelector } from 'react-redux';
+import OrdersPageSkeleton from './components/OrdersPageSkeleton/OrdersPageSkeleton';
 
 const LoadingSkeleton = () => {
     const { pageToSwitch } = useSelector(generalReducerValues);
@@ -42,6 +43,10 @@ const LoadingSkeleton = () => {
 
     if (pageToSwitch === '/ordering') {
         return <OrderingPageSkeleton />;
+    }
+
+    if (pageToSwitch === '/orders') {
+        return <OrdersPageSkeleton />;
     }
 
     return <div>Loading...</div>;
