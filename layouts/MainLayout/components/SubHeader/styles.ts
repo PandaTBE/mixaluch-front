@@ -10,26 +10,28 @@ export const Wrapper = styled.div`
 export const Logo = styled.img`
     width: 220px;
     cursor: pointer;
+    @media (max-width: 575px) {
+        width: 150px;
+    }
 `;
 
 export const LoginIcon = styled(PersonOutlineOutlined)`
-    fill: ${(p) => p.theme.colors.primary};
-    width: 30px;
-    height: 30px;
-    font-size: 30px;
+    fill: ${(p) => p.theme.colors.primary} !important;
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 30px !important;
     cursor: pointer;
 
     @media (max-width: 767px) {
-        display: none;
+        display: none !important;
     }
 `;
 
 export const CartIcon = styled(ShoppingCartOutlinedIcon)`
-    fill: ${(p) => p.theme.colors.primary};
-    width: 30px;
-    height: 30px;
-    font-size: 30px;
-
+    fill: ${(p) => p.theme.colors.primary} !important;
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 30px !important;
     cursor: pointer;
 `;
 
@@ -49,6 +51,9 @@ export const TotalItems = styled.div`
 
 export const CartIconWrapper = styled.div`
     position: relative;
+    @media (max-width: 767px) {
+        margin-right: 10px;
+    }
 `;
 
 export const ContentWrapper = styled.div``;

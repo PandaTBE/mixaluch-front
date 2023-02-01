@@ -1,14 +1,15 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import PageTitle from '../../../../PageTitle/PageTitle';
 import ProductCard from '../../../../ProductCard/ProductCard';
 import { productReducerValues } from '../../../../../slices/Product/product';
 import { useSelector } from 'react-redux';
 import usePrepareData from './hooks/usePrepareData';
-import { StyledArrowBackIcon, SwiperWrapper, StyledArrowForwardIcon, Wrapper } from './styles';
+import { StyledArrowBackIcon, SwiperWrapper, StyledArrowForwardIcon, Wrapper, StyledSwiper } from './styles';
 import { FC, useState } from 'react';
 import { Stack } from '@mui/material';
 import Skeleton from 'react-loading-skeleton';
+import { Pagination } from 'swiper';
 
 interface IProps {
     /** Флаг загрузки */
@@ -23,7 +24,7 @@ const PopularProducts: FC<IProps> = ({ isSkeleton = false }) => {
     const { popularProducts } = useSelector(productReducerValues);
     const { swiperData } = usePrepareData();
 
-    if (!popularProducts?.length) return null;
+    if (!popularProducts?.length && !isSkeleton) return null;
 
     return (
         <Wrapper>
@@ -38,11 +39,31 @@ const PopularProducts: FC<IProps> = ({ isSkeleton = false }) => {
             </Stack>
 
             <SwiperWrapper>
-                <Swiper
+                <StyledSwiper
                     onSwiper={(swiper) => setSwiperInstance(swiper)}
-                    slidesPerView={swiperData.slidesPerView}
-                    spaceBetween={swiperData.spaceBetween}
-                    // modules={[A11y]}
+                    // slidesPerView={swiperData.slidesPerView}
+                    // spaceBetween={swiperData.spaceBetween}
+                    slidesPerView={1}
+                    spaceBetween={10}
+                    breakpoints={{
+                        450: {
+                            slidesPerView: 2,
+                        },
+                        768: {
+                            slidesPerView: 3,
+                        },
+                        992: {
+                            slidesPerView: 4,
+                        },
+                        1200: {
+                            slidesPerView: 5,
+                        },
+                    }}
+                    modules={[Pagination]}
+                    pagination={{
+                        enabled: true,
+                        clickable: true,
+                    }}
                     loop={true}
                 >
                     {isSkeleton
@@ -62,7 +83,7 @@ const PopularProducts: FC<IProps> = ({ isSkeleton = false }) => {
                                   </SwiperSlide>
                               );
                           })}
-                </Swiper>
+                </StyledSwiper>
             </SwiperWrapper>
         </Wrapper>
     );

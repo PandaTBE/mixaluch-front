@@ -15,21 +15,34 @@ export const Title = styled.div`
 `;
 
 export const StyledInventoryOutlinedIcon = styled(InventoryOutlinedIcon)`
-    fill: ${(p) => p.theme.colors.primary};
-    height: 100px;
-    width: 100px;
+    fill: ${(p) => p.theme.colors.primary} !important;
+    height: 100px !important;
+    width: 100px !important;
+
+    @media (max-width: 575px) {
+        height: 50px !important;
+        width: 50px !important;
+    }
 `;
 
 export const StyledThumbUpAltOutlinedIcon = styled(ThumbUpAltOutlinedIcon)`
-    fill: ${(p) => p.theme.colors.primary};
-    height: 100px;
-    width: 100px;
+    fill: ${(p) => p.theme.colors.primary} !important;
+    height: 100px !important;
+    width: 100px !important;
+    @media (max-width: 575px) {
+        height: 50px !important;
+        width: 50px !important;
+    }
 `;
 
 export const StyledTVerifiedUserOutlinedIcon = styled(VerifiedUserOutlinedIcon)`
-    fill: ${(p) => p.theme.colors.primary};
-    height: 100px;
-    width: 100px;
+    fill: ${(p) => p.theme.colors.primary} !important;
+    height: 100px !important;
+    width: 100px !important;
+    @media (max-width: 575px) {
+        height: 50px !important;
+        width: 50px !important;
+    }
 `;
 
 export const CardsWrapper = styled.div`

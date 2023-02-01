@@ -11,7 +11,11 @@ const Advantages = () => {
         <Wrapper>
             <Title>Наши приемущества</Title>
             <CardsWrapper>
-                <Stack direction={'row'} spacing={4}>
+                <Stack
+                    direction={'row'}
+                    justifyContent={{ xs: 'center', sm: 'space-between' }}
+                    spacing={{ xs: 2, sm: 3, md: 4 }}
+                >
                     {advantagesCardsContent.map((card) => {
                         return <Card key={card.id} card={card} />;
                     })}

@@ -14,4 +14,11 @@ export const Wrapper = styled.div`
         width: 100%;
         padding: 0 20px;
     }
+    @media (max-width: 991px) {
+        padding: 0 15px;
+    }
+
+    @media (max-width: 767px) {
+        padding: 0 10px;
+    }
 `;

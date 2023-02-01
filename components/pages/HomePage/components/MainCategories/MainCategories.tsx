@@ -43,7 +43,7 @@ const MainCategories: FC<IProps> = ({ isSkeleton = false }) => {
                           })
                     : mainCategories?.map((category) => {
                           return (
-                              <Grid xs={6} item key={category.id}>
+                              <Grid xs={12} sm={6} item key={category.id}>
                                   <CategoryCard
                                       storeSelectedCategoryIdTrans={storeSelectedCategoryIdTrans}
                                       storePageToSwitchTrans={storePageToSwitchTrans}

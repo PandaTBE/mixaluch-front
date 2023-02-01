@@ -11,10 +11,19 @@ export const Title = styled.div`
     font-size: 1.5rem;
     margin-top: 15px;
     text-align: center;
+    @media (max-width: 767px) {
+        font-size: 1.3rem;
+    }
+    @media (max-width: 575px) {
+        font-size: 1.2rem;
+    }
 `;
 
 export const Text = styled.div`
     margin-top: 10px;
     text-align: center;
     font-size: 1.4rem;
+    @media (max-width: 767px) {
+        display: none;
+    }
 `;

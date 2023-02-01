@@ -27,9 +27,9 @@ export const QuantityInputWrapper = styled.div`
 `;
 
 export const StyledCloseIcon = styled(CloseIcon)`
-    fill: ${(p) => p.theme.colors.primary};
-    font-size: 35px;
-    align-self: flex-end;
+    fill: ${(p) => p.theme.colors.primary} !important;
+    font-size: 35px !important;
+    align-self: flex-end !important;
     cursor: pointer;
 `;
 

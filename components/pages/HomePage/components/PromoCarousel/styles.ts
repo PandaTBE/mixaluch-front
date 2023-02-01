@@ -3,6 +3,9 @@ import styled from 'styled-components';
 export const Wrapper = styled.section`
     padding-bottom: 50px;
     position: relative;
+    @media (max-width: 767px) {
+        padding-bottom: 25px;
+    }
 `;
 
 export const SlideWrapper = styled.div<{ image: string }>`
@@ -26,6 +29,12 @@ export const SlideWrapper = styled.div<{ image: string }>`
     }
     @media (max-width: 991px) {
         height: 350px;
+    }
+    @media (max-width: 767px) {
+        height: 300px;
+    }
+    @media (max-width: 575px) {
+        height: 200px;
     }
 `;
 
@@ -59,5 +68,9 @@ export const SlideText = styled.div`
     @media (max-width: 767px) {
         font-size: 2rem;
         line-height: 2rem;
+    }
+    @media (max-width: 575px) {
+        font-size: 1.3rem;
+        line-height: 1.3rem;
     }
 `;

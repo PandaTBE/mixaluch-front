@@ -19,6 +19,13 @@ export const Title = styled.div`
 export const FormWrapper = styled.div`
     margin-top: 20px;
     width: 50%;
+
+    @media (max-width: 991px) {
+        width: 75%;
+    }
+    @media (max-width: 767px) {
+        width: 100%;
+    }
 `;
 
 export const Form = styled.form`
