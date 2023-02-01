@@ -1,22 +1,24 @@
 import Delivery from './comonents/Delivery/Delivery';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import generateOrderQueryData from './tools/generateOrderQueryData';
+import Order from './comonents/Order/Order';
 import PageTitle from '../../PageTitle/PageTitle';
 import UserInfo from './comonents/UserInfo/UserInfo';
+import { Accordion, AccordionDetails, AccordionSummary, Stack } from '@mui/material';
+import { AccordionWrapper, OrderWrapper, Total, TotalValue, Wrapper, WrapperItem } from './styles';
+import { IOrderFormValues } from './comonents/Delivery/interfaces';
+import { orderApi } from '../../../services/OrderService';
 import { OrderingPageContext } from './context';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { userReducerValues } from '../../../slices/User/user';
 import {
     cartReducerValues,
     storeCartItems,
     storeCartItemsRefetchObject,
     storeDeliveryCost,
 } from '../../../slices/Cart/cart';
-import { useDispatch, useSelector } from 'react-redux';
-import { userReducerValues } from '../../../slices/User/user';
-import { Wrapper, WrapperItem } from './styles';
-import Order from './comonents/Order/Order';
-import { orderApi } from '../../../services/OrderService';
-import { IOrderFormValues } from './comonents/Delivery/interfaces';
-import generateOrderQueryData from './tools/generateOrderQueryData';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 
 /**
  * Компонент для отображения страницы оформления заказа
@@ -24,6 +26,7 @@ import { useRouter } from 'next/router';
 const OrderingPage = () => {
     const [createOrder, { data, isLoading }] = orderApi.useCreateOrderMutation();
     const { totalSum, cartItems, deliveryCost, totalSumWithDelivery } = useSelector(cartReducerValues);
+    const [accordionExpanded, setAccordionExpanded] = useState(false);
     const { user, authToken } = useSelector(userReducerValues);
     const router = useRouter();
 
@@ -36,6 +39,10 @@ const OrderingPage = () => {
             dispatch(storeCartItems([]));
         }
     }, [data]);
+
+    const toggleAccordionExpanded = () => {
+        setAccordionExpanded((prevState) => !prevState);
+    };
 
     const storeDeliveryCostTrans = (value: number) => {
         dispatch(storeDeliveryCost(value));
@@ -65,16 +72,36 @@ const OrderingPage = () => {
 
     return (
         <OrderingPageContext.Provider value={context}>
+            <PageTitle>
+                <div>Оформление заказа</div>
+            </PageTitle>
             <Wrapper>
                 <WrapperItem>
-                    <PageTitle>
-                        <div>Оформление заказа</div>
-                    </PageTitle>
                     {user && <UserInfo />}
                     <Delivery />
                 </WrapperItem>
                 <WrapperItem>
-                    <Order />
+                    <AccordionWrapper>
+                        <Accordion expanded={accordionExpanded} onChange={toggleAccordionExpanded}>
+                            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                                <Stack
+                                    flexGrow={1}
+                                    direction={'row'}
+                                    alignItems={'center'}
+                                    justifyContent={'space-between'}
+                                >
+                                    <Total>Ваш заказа</Total>
+                                    <TotalValue>{Math.floor(context?.totalSumWithDelivery || 0)} ₽</TotalValue>
+                                </Stack>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <Order />
+                            </AccordionDetails>
+                        </Accordion>
+                    </AccordionWrapper>
+                    <OrderWrapper>
+                        <Order />
+                    </OrderWrapper>
                 </WrapperItem>
             </Wrapper>
         </OrderingPageContext.Provider>

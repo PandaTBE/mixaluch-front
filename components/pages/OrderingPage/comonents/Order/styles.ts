@@ -3,6 +3,10 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     padding: 15px 0;
+
+    @media (max-width: 767px) {
+        padding: 0;
+    }
 `;
 
 export const StyledDivider = styled(Divider)`

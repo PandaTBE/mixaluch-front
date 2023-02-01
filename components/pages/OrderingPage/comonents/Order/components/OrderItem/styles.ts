@@ -11,3 +11,5 @@ export const QuantityWrapper = styled.div`
         font-weight: 700;
     }
 `;
+
+export const ProductTitle = styled.div``;

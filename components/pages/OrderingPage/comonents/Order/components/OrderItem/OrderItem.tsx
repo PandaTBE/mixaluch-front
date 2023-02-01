@@ -1,7 +1,7 @@
 import { Grid, Stack } from '@mui/material';
 import { FC } from 'react';
 import { IExtendedCartItem } from '../../../../../../../slices/Cart/interfaces';
-import { OrderItemImage, QuantityWrapper } from './styles';
+import { OrderItemImage, ProductTitle, QuantityWrapper } from './styles';
 
 interface IProps {
     /** Элемент заказа (продукт) */
@@ -17,9 +17,9 @@ const OrderItem: FC<IProps> = ({ orderItem }) => {
 
     return (
         <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'} spacing={2}>
-            <Stack direction={'row'} alignItems={'center'} spacing={2}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} alignItems={{ xs: 'flex-start', sm: 'center' }} spacing={2}>
                 <OrderItemImage src={productImage.image} alt={productImage.alt_text} />
-                <div>{orderItem.product.title}</div>
+                <ProductTitle>{orderItem.product.title}</ProductTitle>
             </Stack>
             <QuantityWrapper>
                 {orderItem.quantity} x <span>{orderItem.product.regular_price} ₽</span>

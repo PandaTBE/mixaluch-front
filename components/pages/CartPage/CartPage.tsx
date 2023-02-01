@@ -2,8 +2,9 @@ import { Grid } from '@mui/material';
 import { Stack } from '@mui/system';
 import { cloneDeep } from 'lodash';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { cartReducerValues } from '../../../slices/Cart/cart';
+import { storePageToSwitch } from '../../../slices/General/general';
 import Button from '../../Button/Button';
 import PageTitle from '../../PageTitle/PageTitle';
 import CartItem from './components/CartItem/CartItem';
@@ -14,9 +15,11 @@ import { ConfirmButtonWrapper, ContentWrapper, TotalValueTitle, TotalValueWrappe
  */
 const CartPage = () => {
     const { cartItems, totalSum } = useSelector(cartReducerValues);
+    const dispatch = useDispatch();
     const router = useRouter();
 
     const onOrderClick = () => {
+        dispatch(storePageToSwitch('/ordering'));
         router.push('/ordering');
     };
 
