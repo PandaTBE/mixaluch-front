@@ -1,3 +1,10 @@
+import type { AppProps } from 'next/app';
+import DataComponent from '../components/DataComponent/DataComponent';
+import Head from 'next/head';
+import { Provider } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
+import { theme } from '../contsants/theme';
+import { wrapper } from '../store';
 import '../styles/globals.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'swiper/css';
@@ -6,14 +13,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
-
-import type { AppProps } from 'next/app';
-import DataComponent from '../components/DataComponent/DataComponent';
-import Head from 'next/head';
-import { Provider } from 'react-redux';
-import { ThemeProvider } from 'styled-components';
-import { theme } from '../contsants/theme';
-import { wrapper } from '../store';
 
 function MyApp({ Component, ...rest }: AppProps) {
     const { store, props } = wrapper.useWrappedStore(rest);

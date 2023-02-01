@@ -10,6 +10,12 @@ export const Wrapper = styled.div`
 export const Logo = styled.img`
     width: 220px;
     cursor: pointer;
+    margin-left: 0px !important;
+
+    @media (max-width: 767px) {
+        margin-left: 16px !important;
+    }
+
     @media (max-width: 575px) {
         width: 150px;
     }
