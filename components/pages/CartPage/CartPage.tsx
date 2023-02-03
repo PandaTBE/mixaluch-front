@@ -24,7 +24,7 @@ const CartPage = () => {
     };
 
     const onCartItemTitleClick = (productId: number) => {
-        // dispatch(storePageToSwitch(''));
+        dispatch(storePageToSwitch('/catalog/[id]'));
         router.push(`/catalog/${productId}`);
     };
 
