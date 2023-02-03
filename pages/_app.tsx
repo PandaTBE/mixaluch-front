@@ -13,9 +13,15 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
+import { useEffect, useState } from 'react';
 
 function MyApp({ Component, ...rest }: AppProps) {
     const { store, props } = wrapper.useWrappedStore(rest);
+    const [hydrated, setHydrated] = useState(false);
+
+    useEffect(() => {
+        setHydrated(true);
+    }, []);
 
     return (
         <Provider store={store}>
@@ -25,9 +31,7 @@ function MyApp({ Component, ...rest }: AppProps) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <DataComponent />
-            <ThemeProvider theme={theme}>
-                <Component {...props.pageProps} />
-            </ThemeProvider>
+            <ThemeProvider theme={theme}>{hydrated && <Component {...props.pageProps} />}</ThemeProvider>
         </Provider>
     );
 }

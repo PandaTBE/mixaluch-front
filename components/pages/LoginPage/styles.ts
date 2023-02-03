@@ -12,8 +12,14 @@ export const InputsWrapper = styled.form`
 `;
 
 export const StyledInput = styled(TextField)`
-    margin-top: 20px;
+    margin-top: 20px !important;
     width: 50%;
+    @media (max-width: 991px) {
+        width: 75%;
+    }
+    @media (max-width: 575px) {
+        width: 100%;
+    }
 `;
 
 export const ButtonsWrapper = styled.div`

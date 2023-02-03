@@ -55,6 +55,4 @@ export const CheckboxSubLabel = styled.div`
     }
 `;
 
-export const StyledTextField = styled(TextField)`
-    margin-top: 15px;
-`;
+export const StyledTextField = styled(TextField)``;

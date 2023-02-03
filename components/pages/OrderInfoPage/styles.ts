@@ -11,6 +11,6 @@ export const SubTitle = styled.div`
 `;
 
 export const StyledDivider = styled(Divider)`
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
 `;

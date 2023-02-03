@@ -80,7 +80,7 @@ const Delivery = () => {
     return (
         <Wrapper>
             <Form onSubmit={formik.handleSubmit}>
-                <Stack>
+                <Stack spacing={2}>
                     <Title>Доставка</Title>
                     <CheckboxWrapper onClick={onSelfDeliveryChange(formik.setFieldValue)}>
                         <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={1}>

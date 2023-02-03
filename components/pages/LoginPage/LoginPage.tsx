@@ -81,7 +81,7 @@ const LoginPage = () => {
                             <InputAdornment position="end">
                                 <IconButton
                                     aria-label="toggle password visibility"
-                                    onMouseDown={toggleShowPassword}
+                                    // onMouseDown={toggleShowPassword}
                                     onClick={toggleShowPassword}
                                     edge="end"
                                 >
@@ -92,7 +92,7 @@ const LoginPage = () => {
                     }}
                 />
                 <ButtonsWrapper>
-                    <Stack alignItems="center" direction={'row'} spacing={2}>
+                    <Stack alignItems="center" direction={'row'} flexWrap={'wrap'} gap={2}>
                         <Button type={'submit'} disabled={isLoading} width={'75px'}>
                             <LoginButtonText>Войти</LoginButtonText>
                         </Button>
