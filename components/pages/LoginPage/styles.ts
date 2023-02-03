@@ -39,4 +39,11 @@ export const LinkText = styled.div`
 export const ErrorWrapper = styled.div`
     margin-top: 20px;
     width: 50%;
+
+    @media (max-width: 991px) {
+        width: 75%;
+    }
+    @media (max-width: 575px) {
+        width: 100%;
+    }
 `;

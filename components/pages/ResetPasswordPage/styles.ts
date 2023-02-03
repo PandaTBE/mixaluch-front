@@ -8,11 +8,18 @@ export const Wrapper = styled.div`
 export const Form = styled.form`
     display: flex;
     flex-direction: column;
-    margin-top: 15px;
+    margin-top: 20px;
 `;
 
 export const StyledInput = styled(TextField)`
     width: 50%;
+
+    @media (max-width: 991px) {
+        width: 75%;
+    }
+    @media (max-width: 575px) {
+        width: 100%;
+    }
 `;
 
 export const ButtonsWrapper = styled.div`
@@ -27,4 +34,11 @@ export const ResetButtonWrapper = styled.span`
 export const MessageWrapper = styled.div`
     margin-top: 15px;
     width: 50%;
+
+    @media (max-width: 991px) {
+        width: 75%;
+    }
+    @media (max-width: 575px) {
+        width: 100%;
+    }
 `;

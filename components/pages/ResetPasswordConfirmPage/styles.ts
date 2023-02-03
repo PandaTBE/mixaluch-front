@@ -12,8 +12,15 @@ export const Wrapper = styled.div`
 `;
 
 export const StyledInput = styled(TextField)`
-    margin-top: 15px;
+    margin-top: 15px !important;
     width: 50%;
+
+    @media (max-width: 991px) {
+        width: 75%;
+    }
+    @media (max-width: 575px) {
+        width: 100%;
+    }
 `;
 
 export const ButtonWrapper = styled.div`
@@ -28,4 +35,11 @@ export const ResetConfirmButtonWrapper = styled.span`
 export const MessageWrapper = styled.div`
     margin-top: 15px;
     width: 50%;
+
+    @media (max-width: 991px) {
+        width: 75%;
+    }
+    @media (max-width: 575px) {
+        width: 100%;
+    }
 `;
