@@ -81,7 +81,6 @@ const LoginPage = () => {
                             <InputAdornment position="end">
                                 <IconButton
                                     aria-label="toggle password visibility"
-                                    // onMouseDown={toggleShowPassword}
                                     onClick={toggleShowPassword}
                                     edge="end"
                                 >

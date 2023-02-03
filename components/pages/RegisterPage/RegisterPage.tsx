@@ -1,5 +1,15 @@
-import { Stack } from '@mui/system';
+import * as yup from 'yup';
+import Button from '../../Button/Button';
+import ErrorMessage from '../../ErrorMessage/ErrorMessage';
+import Link from 'next/link';
 import PageTitle from '../../PageTitle/PageTitle';
+import SuccessMessage from '../../SuccessMessage/SuccessMessage';
+import { IconButton, InputAdornment } from '@mui/material';
+import { Stack } from '@mui/system';
+import { useFormik } from 'formik';
+import { useMemo, useState } from 'react';
+import { userApi } from '../../../services/UserService';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
     ButtonsWrapper,
     MessageWrapper,
@@ -8,22 +18,25 @@ import {
     StyledForm,
     StyledInput,
     Wrapper,
+    NameWrapper,
 } from './styles';
-import * as yup from 'yup';
-import { useFormik } from 'formik';
-import Button from '../../Button/Button';
-import Link from 'next/link';
-import { userApi } from '../../../services/UserService';
-import ErrorMessage from '../../ErrorMessage/ErrorMessage';
-import { useMemo } from 'react';
-import SuccessMessage from '../../SuccessMessage/SuccessMessage';
 
 /**
  * Страница регистрации
  */
 const RegisterPage = () => {
     const [register, { isLoading, error, data }] = userApi.useRegisterMutation();
+    const [showRePassword, setShowRePassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const initialValues = { name: '', second_name: '', email: '', phone_number: '', password: '', re_password: '' };
+
+    const toggleShowRePassword = () => {
+        setShowRePassword((prevState) => !prevState);
+    };
+
+    const toggleShowPassword = () => {
+        setShowPassword((prevState) => !prevState);
+    };
 
     const errorMessage = useMemo(() => {
         if (error && 'data' in error) {
@@ -80,7 +93,7 @@ const RegisterPage = () => {
                 </MessageWrapper>
             )}
             <StyledForm onSubmit={formik.handleSubmit}>
-                <Stack direction={'row'} width={'50%'} spacing={2}>
+                <NameWrapper>
                     <StyledInput
                         error={formik.touched.name && Boolean(formik.errors.name)}
                         helperText={formik.touched.name && formik.errors.name}
@@ -98,7 +111,7 @@ const RegisterPage = () => {
                         name={'second_name'}
                         label={'Фамилия'}
                     />
-                </Stack>
+                </NameWrapper>
                 <StyledInput
                     error={formik.touched.phone_number && Boolean(formik.errors.phone_number)}
                     helperText={formik.touched.phone_number && formik.errors.phone_number}
@@ -120,23 +133,42 @@ const RegisterPage = () => {
                 <StyledInput
                     error={formik.touched.password && Boolean(formik.errors.password)}
                     helperText={formik.touched.password && formik.errors.password}
+                    type={showPassword ? 'text' : 'password'}
                     onChange={formik.handleChange}
                     value={formik.values.password}
-                    required
                     name={'password'}
                     label={'Пароль'}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton onClick={toggleShowPassword} edge="end">
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        ),
+                    }}
                 />
                 <StyledInput
                     error={formik.touched.re_password && Boolean(formik.errors.re_password)}
                     helperText={formik.touched.re_password && formik.errors.re_password}
+                    type={showRePassword ? 'text' : 'password'}
                     onChange={formik.handleChange}
                     value={formik.values.re_password}
-                    required
                     name={'re_password'}
                     label={'Повторите пароль'}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton onClick={toggleShowRePassword} edge="end">
+                                    {showRePassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        ),
+                    }}
                 />
+
                 <ButtonsWrapper>
-                    <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                    <Stack direction={'row'} flexWrap={{ xs: 'wrap' }} gap={2} alignItems={'center'}>
                         <RegisterButtonWrapper>
                             <Button loading={isLoading} type={'submit'}>
                                 <div>Зарегистрироваться</div>
