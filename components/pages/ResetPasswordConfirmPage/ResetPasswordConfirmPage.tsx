@@ -7,15 +7,19 @@ import { ButtonWrapper, Form, MessageWrapper, ResetConfirmButtonWrapper, StyledI
 import { storePageToSwitch } from '../../../slices/General/general';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { userApi } from '../../../services/UserService';
 import { useRouter } from 'next/router';
+import { IconButton, InputAdornment } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 /**
  * Компонент для отображения страницы подтверждения сброса пароля
  */
 const ResetPasswordConfirmPage = () => {
     const [resetPasswordConfirm, { isLoading, error, status }] = userApi.useResetPasswordConfirmMutation();
+    const [showReNewPassword, setShowReNewPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
     const router = useRouter();
     const {
         query: { uid, token },
@@ -30,6 +34,14 @@ const ResetPasswordConfirmPage = () => {
 
         return null;
     }, [error]);
+
+    const toggleShowNewPassword = () => {
+        setShowNewPassword((prevState) => !prevState);
+    };
+
+    const toggleShowReNewPassword = () => {
+        setShowReNewPassword((prevState) => !prevState);
+    };
 
     const validationSchema = yup.object({
         new_password: yup.string().min(8, 'Минимальная длина пароля 8 символов').required('Это обязательное поле'),
@@ -81,20 +93,39 @@ const ResetPasswordConfirmPage = () => {
                 <StyledInput
                     error={formik.touched.new_password && Boolean(formik.errors.new_password)}
                     helperText={formik.touched.new_password && formik.errors.new_password}
-                    value={formik.values.new_password}
+                    type={showNewPassword ? 'text' : 'password'}
                     onChange={formik.handleChange}
-                    label={'Новый пароль'}
+                    value={formik.values.new_password}
                     name={'new_password'}
-                    required
+                    label={'Пароль'}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton onClick={toggleShowNewPassword} edge="end">
+                                    {showNewPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        ),
+                    }}
                 />
+
                 <StyledInput
                     error={formik.touched.re_new_password && Boolean(formik.errors.re_new_password)}
                     helperText={formik.touched.re_new_password && formik.errors.re_new_password}
-                    value={formik.values.re_new_password}
+                    type={showReNewPassword ? 'text' : 'password'}
                     onChange={formik.handleChange}
-                    label={'Повторите пароль'}
+                    value={formik.values.re_new_password}
                     name={'re_new_password'}
-                    required
+                    label={'Повторите пароль'}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton onClick={toggleShowReNewPassword} edge="end">
+                                    {showReNewPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        ),
+                    }}
                 />
                 <ButtonWrapper>
                     <ResetConfirmButtonWrapper>
