@@ -19,12 +19,14 @@ import {
 interface IProps {
     /** Элемент коризны */
     cartItem: IExtendedCartItem;
+    /** Обработчик нажатия на название товара */
+    onCartItemTitleClick: (productId: number) => void;
 }
 
 /**
  * Компонент для отображения товара в корзине
  */
-const CartItem: FC<IProps> = ({ cartItem }) => {
+const CartItem: FC<IProps> = ({ cartItem, onCartItemTitleClick }) => {
     const { deleteCartItem } = useFecthData();
 
     const onRemoveClick = () => {
@@ -33,6 +35,10 @@ const CartItem: FC<IProps> = ({ cartItem }) => {
 
     const image =
         cartItem.product.product_image.find((element) => element.is_feature) || cartItem.product.product_image[0];
+
+    const onTitleClick = () => {
+        onCartItemTitleClick(cartItem.product.id);
+    };
 
     return (
         <Wrapper>
@@ -45,7 +51,7 @@ const CartItem: FC<IProps> = ({ cartItem }) => {
                             direction={'column'}
                             justifyContent={{ xs: 'flex-start', sm: 'space-between' }}
                         >
-                            <ProductTitle>{cartItem.product.title}</ProductTitle>
+                            <ProductTitle onClick={onTitleClick}>{cartItem.product.title}</ProductTitle>
                             <Price>{cartItem.product.regular_price} ₽</Price>
                             <QuantityInputWrapper>
                                 <QuantityInput

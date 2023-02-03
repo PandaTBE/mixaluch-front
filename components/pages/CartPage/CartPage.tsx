@@ -23,6 +23,11 @@ const CartPage = () => {
         router.push('/ordering');
     };
 
+    const onCartItemTitleClick = (productId: number) => {
+        // dispatch(storePageToSwitch(''));
+        router.push(`/catalog/${productId}`);
+    };
+
     return (
         <Wrapper>
             <PageTitle>
@@ -37,7 +42,13 @@ const CartPage = () => {
                                     {cloneDeep(cartItems)
                                         .sort((a, b) => (a.product.title < b.product.title ? -1 : 1))
                                         .map((element) => {
-                                            return <CartItem cartItem={element} key={element.product.id} />;
+                                            return (
+                                                <CartItem
+                                                    onCartItemTitleClick={onCartItemTitleClick}
+                                                    cartItem={element}
+                                                    key={element.product.id}
+                                                />
+                                            );
                                         })}
                                 </Stack>
                             </Grid>
