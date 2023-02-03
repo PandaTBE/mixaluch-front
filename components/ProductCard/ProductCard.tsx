@@ -13,11 +13,12 @@ import {
 import Button from '../Button/Button';
 import { FC, useMemo } from 'react';
 import { IProps } from './interfaces';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { cartReducerValues } from '../../slices/Cart/cart';
 import QuantityInput from '../QuantityInput/QuantityInput';
 import useFetchData from './hooks/useFetchData';
 import { useRouter } from 'next/router';
+import { storePageToSwitch } from '../../slices/General/general';
 
 /**
  * Компонент для отображения карточки продукта
@@ -25,6 +26,7 @@ import { useRouter } from 'next/router';
 const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
     const { cartItems } = useSelector(cartReducerValues);
     const { addCartItem } = useFetchData();
+    const dispatch = useDispatch();
     const router = useRouter();
 
     const onProductAdd = () => {
@@ -32,6 +34,7 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
     };
 
     const onProductClick = () => {
+        dispatch(storePageToSwitch('/catalog/[id]'));
         router.push(`/catalog/${product.id}`);
     };
 

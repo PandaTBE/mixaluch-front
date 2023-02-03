@@ -11,4 +11,5 @@ export type TPageToSwitch =
     | '/contacts'
     | '/delivery'
     | '/ordering'
-    | '/orders';
+    | '/orders'
+    | '/catalog/[id]';

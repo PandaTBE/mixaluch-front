@@ -54,53 +54,57 @@ const ProductInfoPage = () => {
 
     return (
         <Wrapper>
-            <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                    <Stack direction={'row'} spacing={2}>
-                        <SideSwiper
-                            onSwiper={setThumbsSwiper}
-                            direction={'vertical'}
-                            spaceBetween={10}
-                            slidesPerView={3}
-                            modules={[Navigation, Thumbs]}
-                        >
-                            {slides}
-                        </SideSwiper>
-                        <MainSwiper
-                            navigation={true}
-                            slidesPerView={1}
-                            thumbs={{ swiper: thumbsSwiper }}
-                            modules={[Navigation, Thumbs]}
-                        >
-                            {slides}
-                        </MainSwiper>
-                    </Stack>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <ProductTitle>{selectedProduct?.title}</ProductTitle>
-                    <BoxWrapper>
-                        <Stack justifyContent={'space-between'} direction={'row'} spacing={2}>
-                            <Price>{selectedProduct?.regular_price} ₽</Price>
-                            <ButtonWrapper>
-                                {cartItem && selectedProduct ? (
-                                    <QuantityInput
-                                        defaultValue={cartItem.quantity}
-                                        cartItemId={cartItem.id}
-                                        productId={selectedProduct.id}
-                                    />
-                                ) : (
-                                    <Button width={'100%'} clickHandler={onProductAdd}>
-                                        <ButtonContentWrapper>
-                                            <ButtonText>В корзину</ButtonText>
-                                        </ButtonContentWrapper>
-                                    </Button>
-                                )}
-                            </ButtonWrapper>
+            {selectedProduct ? (
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                        <Stack direction={'row'} spacing={2}>
+                            <SideSwiper
+                                onSwiper={setThumbsSwiper}
+                                direction={'vertical'}
+                                spaceBetween={10}
+                                slidesPerView={3}
+                                modules={[Navigation, Thumbs]}
+                            >
+                                {slides}
+                            </SideSwiper>
+                            <MainSwiper
+                                navigation={true}
+                                slidesPerView={1}
+                                thumbs={{ swiper: thumbsSwiper }}
+                                modules={[Navigation, Thumbs]}
+                            >
+                                {slides}
+                            </MainSwiper>
                         </Stack>
-                    </BoxWrapper>
-                    {selectedProduct?.description && <BoxWrapper>{selectedProduct.description}</BoxWrapper>}
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <ProductTitle>{selectedProduct?.title}</ProductTitle>
+                        <BoxWrapper>
+                            <Stack justifyContent={'space-between'} direction={'row'} spacing={2}>
+                                <Price>{selectedProduct?.regular_price} ₽</Price>
+                                <ButtonWrapper>
+                                    {cartItem && selectedProduct ? (
+                                        <QuantityInput
+                                            defaultValue={cartItem.quantity}
+                                            cartItemId={cartItem.id}
+                                            productId={selectedProduct.id}
+                                        />
+                                    ) : (
+                                        <Button width={'100%'} clickHandler={onProductAdd}>
+                                            <ButtonContentWrapper>
+                                                <ButtonText>В корзину</ButtonText>
+                                            </ButtonContentWrapper>
+                                        </Button>
+                                    )}
+                                </ButtonWrapper>
+                            </Stack>
+                        </BoxWrapper>
+                        {selectedProduct?.description && <BoxWrapper>{selectedProduct.description}</BoxWrapper>}
+                    </Grid>
                 </Grid>
-            </Grid>
+            ) : (
+                <div>Товар не найден</div>
+            )}
         </Wrapper>
     );
 };
