@@ -18,4 +18,11 @@ export const Text = styled.div`
 export const MessageWrapper = styled.div`
     margin-top: 15px;
     width: 50%;
+
+    @media (max-width: 991px) {
+        width: 75%;
+    }
+    @media (max-width: 575px) {
+        width: 100%;
+    }
 `;
