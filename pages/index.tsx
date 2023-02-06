@@ -32,7 +32,9 @@ export const getServerSideProps = wrapper.getStaticProps((store) => async () => 
             store.dispatch(storeMainCategories(mainCategories));
         });
     } catch (error) {
-        console.log('error accured while getting initial data');
+        return {
+            props: {},
+        };
     }
 
     return {
