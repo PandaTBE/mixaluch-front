@@ -10,9 +10,9 @@ export const Wrapper = styled.section`
 export const ContentWrapper = styled.div`
     min-height: 320px;
     padding: 15px 40px;
-    background-image: url('/kebab/kebab.jpeg');
+    /* background-image: url('/kebab/kebab.jpeg');
     background-size: cover;
-    background-position: 50% 50%;
+    background-position: 50% 50%; */
     position: relative;
     display: flex;
     flex-direction: column;

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Button from '../../../../Button/Button';
 import { ButtonWrapper, ContentWrapper, Layout, SubTitle, Title, Wrapper } from './styles';
 
@@ -8,6 +9,7 @@ const Kebab = () => {
     return (
         <Wrapper>
             <ContentWrapper>
+                <Image objectFit={'cover'} src={'/kebab/kebab.jpeg'} alt={'kebab'} layout={'fill'} />
                 <Layout />
                 <Title>Шашлык на заказ</Title>
                 <SubTitle>

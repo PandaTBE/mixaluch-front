@@ -8,19 +8,18 @@ export const Wrapper = styled.section`
     }
 `;
 
-export const SlideWrapper = styled.div<{ image: string }>`
+export const SlideWrapper = styled.div`
     width: 100%;
     height: 500px;
-    position: relative;
-    background-image: ${(p) => `url(${p.image})`};
+    /* position: relative;
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
+    /* background-position: 50% 50%; */
     display: flex;
     text-align: center;
     padding: 0px 50px;
     justify-content: center;
     align-items: center;
-    background-position: 50% 50%;
     @media (max-width: 1400px) {
         height: 450px;
     }

@@ -5,6 +5,7 @@ import { promoCarouselSlidesContent } from './constants/constants';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useState } from 'react';
+import Image from 'next/image';
 
 /**
  * Компонент для отображения промо карусели
@@ -15,16 +16,15 @@ const PromoCarousel = () => {
     return (
         <Wrapper>
             <Swiper onSwiper={(swiper) => setSwiperInstance(swiper)} slidesPerView={1} modules={[A11y]} loop={true}>
-                {promoCarouselSlidesContent.map((element) => {
-                    return (
-                        <SwiperSlide key={element.id}>
-                            <SlideWrapper image={element.image}>
-                                <Layout />
-                                <SlideText>{element.text}</SlideText>
-                            </SlideWrapper>
-                        </SwiperSlide>
-                    );
-                })}
+                {promoCarouselSlidesContent.map((element) => (
+                    <SwiperSlide key={element.id}>
+                        <SlideWrapper>
+                            <Image objectFit={'cover'} src={element.image} alt={element.text} layout={'fill'} />
+                            <Layout />
+                            <SlideText>{element.text}</SlideText>
+                        </SlideWrapper>
+                    </SwiperSlide>
+                ))}
             </Swiper>
             <SlideArrowWrapper onClick={() => swiperInstance?.slidePrev()} side="left">
                 <ArrowBackIosNewIcon htmlColor="white" />
