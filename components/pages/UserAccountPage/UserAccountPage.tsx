@@ -3,7 +3,6 @@ import { ContentWrapper, UserData } from './styles';
 import PageTitle from '../../PageTitle/PageTitle';
 import { useSelector } from 'react-redux';
 import { userReducerValues } from '../../../slices/User/user';
-import { withUserAccountSidebar } from '../../../layouts/UserAccountSidebarLayout/UserAccountSidebarLayout';
 
 /**
  * Компонент для обновления данных пользователя
