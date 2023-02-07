@@ -27,7 +27,7 @@ const PromoCarousel = () => {
                             <Image
                                 priority={true}
                                 objectFit={'cover'}
-                                src={element.image}
+                                src={'/static/promoCarousel/promoSlide2.jpeg'}
                                 alt={element.text}
                                 layout={'fill'}
                             />
