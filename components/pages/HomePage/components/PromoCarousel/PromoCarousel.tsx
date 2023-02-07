@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { A11y } from 'swiper';
 import { Layout, SlideArrowWrapper, SlideText, SlideWrapper, Wrapper } from './styles';
-import { promoCarouselSlidesContent } from './constants/constants';
+// import { promoCarouselSlidesContent } from './constants/constants';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useState } from 'react';
@@ -12,6 +12,11 @@ import Image from 'next/image';
  */
 const PromoCarousel = () => {
     const [swiperInstance, setSwiperInstance] = useState<null | SwiperCore>(null);
+
+    const promoCarouselSlidesContent = [
+        { id: 1, text: 'Продукты высокого качества', image: '/static/promoCarousel/promoSlide1.jpeg' },
+        { id: 2, text: 'Широкий ассортимент', image: '/static/promoCarousel/promoSlide2.jpeg' },
+    ];
 
     return (
         <Wrapper>
