@@ -1,4 +1,5 @@
 import { Stack } from '@mui/material';
+import Image from 'next/image';
 import { FC } from 'react';
 import { IExtendedCartItem } from '../../../../../slices/Cart/interfaces';
 import QuantityInput from '../../../../QuantityInput/QuantityInput';
@@ -7,7 +8,7 @@ import {
     FooterQuantityInputWrapper,
     FooterWrapper,
     Price,
-    ProductImage,
+    ProductImageWrapper,
     ProductTitle,
     QuantityInputWrapper,
     StyledCloseIcon,
@@ -45,7 +46,9 @@ const CartItem: FC<IProps> = ({ cartItem, onCartItemTitleClick }) => {
             <Stack direction={'row'} spacing={2} justifyContent={'space-between'}>
                 <div>
                     <Stack direction={'row'} spacing={2}>
-                        <ProductImage src={image.image} alt={image.alt_text} />
+                        <ProductImageWrapper>
+                            <Image layout="fill" src={image.image} alt={image.alt_text} />
+                        </ProductImageWrapper>
                         <Stack
                             spacing={2}
                             direction={'column'}

@@ -5,11 +5,11 @@ export const Wrapper = styled.div`
     padding: 20px 0;
 `;
 
-export const Image = styled.img`
+export const ImageWrapper = styled.div`
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: scale-down;
+    position: relative;
 `;
 
 export const SideSwiper = styled(Swiper)`
@@ -29,6 +29,7 @@ export const SideSwiper = styled(Swiper)`
 `;
 
 export const MainSwiper = styled(Swiper)`
+    flex: 0 0 80%;
     .swiper-button-prev,
     .swiper-button-next {
         display: none;

@@ -3,7 +3,7 @@ import {
     ButtonContentWrapper,
     ButtonText,
     ButtonWrapper,
-    Image,
+    ImageWrapper,
     MainSwiper,
     Price,
     BoxWrapper,
@@ -21,6 +21,7 @@ import Button from '../../Button/Button';
 import QuantityInput from '../../QuantityInput/QuantityInput';
 import { cartReducerValues } from '../../../slices/Cart/cart';
 import useFetchData from '../../ProductCard/hooks/useFetchData';
+import Image from 'next/image';
 
 /**
  * Компонент для отображения страницы информации о товаре
@@ -44,7 +45,9 @@ const ProductInfoPage = () => {
             return selectedProduct?.product_image.map((image) => {
                 return (
                     <SwiperSlide key={image.id}>
-                        <Image src={image.image} alt={image.alt_text} />
+                        <ImageWrapper>
+                            <Image objectFit={'scale-down'} src={image.image} alt={image.alt_text} layout="fill" />
+                        </ImageWrapper>
                     </SwiperSlide>
                 );
             });
@@ -57,7 +60,7 @@ const ProductInfoPage = () => {
             {selectedProduct ? (
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
-                        <Stack direction={'row'} spacing={2}>
+                        <Stack direction={'row'} spacing={2} height={'100%'}>
                             <SideSwiper
                                 onSwiper={setThumbsSwiper}
                                 direction={'vertical'}

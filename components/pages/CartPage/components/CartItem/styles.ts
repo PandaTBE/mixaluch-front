@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import CloseIcon from '@mui/icons-material/Close';
 
-export const ProductImage = styled.img`
+export const ProductImageWrapper = styled.div`
     width: 165px;
     height: 165px;
+    position: relative;
 
     @media (max-width: 599px) {
         width: 80px;

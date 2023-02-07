@@ -1,8 +1,9 @@
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { ICategory } from '../../../../../../../models/Category';
 import { TPageToSwitch } from '../../../../../../../slices/General/interfaces';
-import { CategoryImage, NameWrapper, Wrapper } from './styles';
+import { CategoryImageWrapper, NameWrapper, Wrapper } from './styles';
 
 interface IProps {
     /** Данные категории */
@@ -27,7 +28,9 @@ const CategoryCard: FC<IProps> = ({ category, storeSelectedCategoryIdTrans, stor
 
     return (
         <Wrapper onClick={onCardClick}>
-            <CategoryImage src={category.image} />
+            <CategoryImageWrapper>
+                <Image objectFit={'cover'} src={category.image} alt={category.name} layout={'fill'} />
+            </CategoryImageWrapper>
             <NameWrapper>{category.name}</NameWrapper>
         </Wrapper>
     );

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
-export const OrderItemImage = styled.img`
+export const OrderItemImageWrapper = styled.div`
     width: 60px;
     height: 60px;
+    position: relative;
 `;
 
 export const QuantityWrapper = styled.div`

@@ -8,10 +8,11 @@ export const Wrapper = styled.div`
     cursor: pointer;
 `;
 
-export const CategoryImage = styled.img`
+export const CategoryImageWrapper = styled.div`
     width: 100%;
     height: 300px;
-    object-fit: cover;
+    overflow: hidden;
+    position: relative;
 `;
 
 export const NameWrapper = styled.div`
