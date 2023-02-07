@@ -1,4 +1,5 @@
 import { Stack } from '@mui/material';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
@@ -6,7 +7,7 @@ import Container from '../../../../components/Container/Container';
 import { storePageToSwitch } from '../../../../slices/General/general';
 import { TPageToSwitch } from '../../../../slices/General/interfaces';
 import { navigationListItems } from '../constants/constants';
-import { ContentWrapper, StyledLink, Wrapper, Delivery, Logo } from './styles';
+import { ContentWrapper, StyledLink, Wrapper, Delivery, LogoWrapper } from './styles';
 
 /**
  * Компонент для отображения подвала страницы
@@ -38,7 +39,9 @@ const Footer = () => {
                         })}
                     </Stack>
                     <Delivery>Доставка с 9:00 до 19:00</Delivery>
-                    <Logo onClick={onLinkClick('/')} src={'/logo.png'} alt={'Mixaluch logo'} />
+                    <LogoWrapper onClick={onLinkClick('/')}>
+                        <Image src={'/logo.png'} alt={'Mixaluch logo'} layout={'fill'} />
+                    </LogoWrapper>
                 </ContentWrapper>
             </Container>
         </Wrapper>

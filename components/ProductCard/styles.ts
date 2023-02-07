@@ -9,8 +9,6 @@ export const Wrapper = styled.div`
     flex-direction: column;
 `;
 
-export const ImageWrapper = styled.div``;
-
 export const ContentWrapper = styled.div`
     padding: 0px 10px 10px 10px;
     margin-top: 10px;
@@ -34,11 +32,11 @@ export const Price = styled.div`
     font-size: 28px;
 `;
 
-export const Image = styled.img<{ height?: string }>`
+export const ImageWrapper = styled.div<{ height?: string }>`
     width: 100%;
     height: ${(p) => p.height || 'auto'};
     cursor: pointer;
-    object-fit: contain;
+    position: relative;
 `;
 
 export const ButtonWrapper = styled.div`

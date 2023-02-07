@@ -40,9 +40,11 @@ export const Delivery = styled.div`
     margin-top: 15px;
 `;
 
-export const Logo = styled.img`
+export const LogoWrapper = styled.div`
     width: 120px;
     cursor: pointer;
+    height: 19px;
+    position: relative;
 `;
 
 export const StyledDrawer = styled(Drawer)`

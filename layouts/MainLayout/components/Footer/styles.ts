@@ -23,12 +23,15 @@ export const Delivery = styled.div`
     margin-top: 15px;
 `;
 
-export const Logo = styled.img`
+export const LogoWrapper = styled.div`
     width: 220px;
     cursor: pointer;
     margin-top: 15px;
+    position: relative;
+    height: 32px;
 
     @media (max-width: 575px) {
         width: 150px;
+        height: 22px;
     }
 `;

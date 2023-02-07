@@ -14,12 +14,13 @@ import {
     CartIconWrapper,
     CartWrapper,
     LoginIcon,
-    Logo,
+    LogoWrapper,
     MenuIconWrapper,
     TotalItems,
     TotalSum,
     Wrapper,
 } from './styles';
+import Image from 'next/image';
 
 /**
  * Компонент для отображения сабхеддера
@@ -49,7 +50,9 @@ const SubHeader = () => {
                     </MenuIconWrapper>
 
                     <Link href={'/'}>
-                        <Logo onClick={onLinkClick('/')} src={'/logo.png'} alt={'Mixaluch logo'} />
+                        <LogoWrapper onClick={onLinkClick('/')}>
+                            <Image src={'/logo.png'} alt={'Mixaluch logo'} layout={'fill'} />
+                        </LogoWrapper>
                     </Link>
 
                     <Stack direction="row" spacing={2} alignItems="center">

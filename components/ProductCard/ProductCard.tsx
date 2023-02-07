@@ -3,7 +3,6 @@ import {
     ButtonText,
     ButtonWrapper,
     ContentWrapper,
-    Image,
     ImageWrapper,
     Price,
     Title,
@@ -19,6 +18,7 @@ import QuantityInput from '../QuantityInput/QuantityInput';
 import useFetchData from './hooks/useFetchData';
 import { useRouter } from 'next/router';
 import { storePageToSwitch } from '../../slices/General/general';
+import Image from 'next/image';
 
 /**
  * Компонент для отображения карточки продукта
@@ -42,15 +42,14 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
         return cartItems.find((element) => element.product.id === product.id);
     }, [cartItems, product]);
 
+    const mainImage = useMemo(() => {
+        return product.product_image.find((image) => image.is_feature) || product.product_image[0];
+    }, [product]);
+
     return (
         <Wrapper>
-            <ImageWrapper onClick={onProductClick}>
-                <Image
-                    height={imageHeight}
-                    src={
-                        product.product_image.find((image) => image.is_feature)?.image || product.product_image[0].image
-                    }
-                />
+            <ImageWrapper height={imageHeight} onClick={onProductClick}>
+                <Image src={mainImage.image} alt={mainImage.alt_text} layout={'fill'} objectFit={'contain'} />
             </ImageWrapper>
             <ContentWrapper>
                 <Title onClick={onProductClick}>{product.title}</Title>

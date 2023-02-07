@@ -29,7 +29,7 @@ export const SideSwiper = styled(Swiper)`
 `;
 
 export const MainSwiper = styled(Swiper)`
-    flex: 0 0 80%;
+    flex: 0 0 75%;
     .swiper-button-prev,
     .swiper-button-next {
         display: none;

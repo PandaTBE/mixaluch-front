@@ -60,7 +60,7 @@ const ProductInfoPage = () => {
             {selectedProduct ? (
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
-                        <Stack direction={'row'} spacing={2} height={'100%'}>
+                        <Stack direction={'row'} spacing={2} minHeight={'150px'}>
                             <SideSwiper
                                 onSwiper={setThumbsSwiper}
                                 direction={'vertical'}

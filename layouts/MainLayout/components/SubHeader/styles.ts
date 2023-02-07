@@ -7,10 +7,12 @@ export const Wrapper = styled.div`
     padding: 15px 0;
 `;
 
-export const Logo = styled.img`
+export const LogoWrapper = styled.div`
     width: 220px;
     cursor: pointer;
     margin-left: 0px !important;
+    height: 32px;
+    position: relative;
 
     @media (max-width: 767px) {
         margin-left: 16px !important;
@@ -18,6 +20,7 @@ export const Logo = styled.img`
 
     @media (max-width: 575px) {
         width: 150px;
+        height: 22px;
     }
 `;
 

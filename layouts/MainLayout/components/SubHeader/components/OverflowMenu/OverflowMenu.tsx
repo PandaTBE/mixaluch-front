@@ -5,7 +5,7 @@ import {
     BodyWrapper,
     Delivery,
     HeaderWrapper,
-    Logo,
+    LogoWrapper,
     Nav,
     StyledDrawer,
     StyledLink,
@@ -18,6 +18,7 @@ import { TPageToSwitch } from '../../../../../../slices/General/interfaces';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface IProps {
     isDrawerOpen: boolean;
@@ -47,7 +48,9 @@ const OverflowMenu: FC<IProps> = ({ isDrawerOpen, toggleDrawerOpen }) => {
             <Wrapper>
                 <HeaderWrapper>
                     <Link href={'/'}>
-                        <Logo onClick={onLinkClick('/')} src={'/logo.png'} alt={'Mixaluch logo'} />
+                        <LogoWrapper onClick={onLinkClick('/')}>
+                            <Image src={'/logo.png'} alt={'Mixaluch logo'} layout={'fill'} />
+                        </LogoWrapper>
                     </Link>
                     <IconButton color={'inherit'} onClick={toggleDrawerOpen}>
                         <ChevronLeftIcon />
