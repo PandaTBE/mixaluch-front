@@ -49,7 +49,7 @@ const OverflowMenu: FC<IProps> = ({ isDrawerOpen, toggleDrawerOpen }) => {
                 <HeaderWrapper>
                     <Link href={'/'}>
                         <LogoWrapper onClick={onLinkClick('/')}>
-                            <Image src={'/logo.png'} alt={'Mixaluch logo'} layout={'fill'} />
+                            <Image src={'/static/logo.png'} alt={'Mixaluch logo'} layout={'fill'} />
                         </LogoWrapper>
                     </Link>
                     <IconButton color={'inherit'} onClick={toggleDrawerOpen}>
