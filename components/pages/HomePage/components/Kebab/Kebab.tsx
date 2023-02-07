@@ -9,7 +9,7 @@ const Kebab = () => {
     return (
         <Wrapper>
             <ContentWrapper>
-                <Image priority={true} objectFit={'cover'} src={'/kebab/kebab.jpeg'} alt={'kebab'} layout={'fill'} />
+                {/* <Image priority={true} objectFit={'cover'} src={'/kebab/kebab.jpeg'} alt={'kebab'} layout={'fill'} /> */}
                 <Layout />
                 <Title>Шашлык на заказ</Title>
                 <SubTitle>
