@@ -11,13 +11,10 @@ export const Wrapper = styled.section`
 export const SlideWrapper = styled.div`
     width: 100%;
     height: 500px;
-    /* position: relative;
-    background-size: cover;
-    background-repeat: no-repeat; */
-    /* background-position: 50% 50%; */
     display: flex;
     text-align: center;
     padding: 0px 50px;
+    position: relative;
     justify-content: center;
     align-items: center;
     @media (max-width: 1400px) {

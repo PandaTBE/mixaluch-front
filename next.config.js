@@ -4,7 +4,7 @@ const nextConfig = {
     swcMinify: true,
 
     images: {
-        domains: ['127.0.0.1'],
+        domains: ['127.0.0.1', 'https://www.mixaluch-shop-dev.ru/'],
     },
 };
 

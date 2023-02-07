@@ -19,7 +19,13 @@ const PromoCarousel = () => {
                 {promoCarouselSlidesContent.map((element) => (
                     <SwiperSlide key={element.id}>
                         <SlideWrapper>
-                            <Image objectFit={'cover'} src={element.image} alt={element.text} layout={'fill'} />
+                            <Image
+                                priority={true}
+                                objectFit={'cover'}
+                                src={element.image}
+                                alt={element.text}
+                                layout={'fill'}
+                            />
                             <Layout />
                             <SlideText>{element.text}</SlideText>
                         </SlideWrapper>
