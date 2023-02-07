@@ -15,7 +15,7 @@ const PromoCarousel = () => {
 
     return (
         <Wrapper>
-            <Swiper onSwiper={(swiper) => setSwiperInstance(swiper)} slidesPerView={1} modules={[A11y]} loop={true}>
+            {/* <Swiper onSwiper={(swiper) => setSwiperInstance(swiper)} slidesPerView={1} modules={[A11y]} loop={true}>
                 {promoCarouselSlidesContent.map((element) => (
                     <SwiperSlide key={element.id}>
                         <SlideWrapper>
@@ -37,7 +37,7 @@ const PromoCarousel = () => {
             </SlideArrowWrapper>
             <SlideArrowWrapper onClick={() => swiperInstance?.slideNext()} side="right">
                 <ArrowForwardIosIcon htmlColor="white" />
-            </SlideArrowWrapper>
+            </SlideArrowWrapper> */}
         </Wrapper>
     );
 };
