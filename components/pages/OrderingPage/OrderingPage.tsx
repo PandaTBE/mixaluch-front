@@ -35,6 +35,7 @@ const OrderingPage = () => {
     useEffect(() => {
         if (data) {
             router.push(`/orders/${data.id}`);
+            localStorage.setItem('cartItems', '[]');
             dispatch(storeCartItemsRefetchObject());
             dispatch(storeCartItems([]));
         }
