@@ -1,13 +1,26 @@
 import { useFormik } from 'formik';
-import { ButtonWrapper, ContentWrapper, Form, FormWrapper, TextWrapper, Title, Wrapper } from './styles';
+import {
+    ButtonWrapper,
+    ContentWrapper,
+    Form,
+    FormWrapper,
+    MessageWrapper,
+    TextWrapper,
+    Title,
+    Wrapper,
+} from './styles';
 import * as yup from 'yup';
 import { Stack, TextField } from '@mui/material';
 import Button from '../../../../Button/Button';
+import { telegramApi } from '../../../../../services/TelegramService';
+import SuccessMessage from '../../../../SuccessMessage/SuccessMessage';
+import ErrorMessage from '../../../../ErrorMessage/ErrorMessage';
 
 /**
  * Компонент для отображения секции с обратной связью
  */
 const Feedback = () => {
+    const [sendMessage, { data, isLoading, isError }] = telegramApi.useSendMessageMutation();
     const initialValues = { name: '', email: '', text: '' };
 
     const validationSchema = yup.object({
@@ -17,7 +30,7 @@ const Feedback = () => {
     });
 
     const onSubmit = (values: { name: string; email: string; text: string }) => {
-        console.log(values);
+        sendMessage(values.text);
     };
 
     const formik = useFormik({
@@ -30,6 +43,10 @@ const Feedback = () => {
         <Wrapper>
             <ContentWrapper>
                 <Title>Обратнаяа связь</Title>
+                <MessageWrapper>
+                    {data && <SuccessMessage text={'Сообщение успешно отправлено!'} />}
+                    {isError && <ErrorMessage text={'Возникла ошибка, попробуйте еще раз!'} />}
+                </MessageWrapper>
                 <FormWrapper>
                     <Form onSubmit={formik.handleSubmit}>
                         <Stack direction="row" spacing={2}>
@@ -66,7 +83,7 @@ const Feedback = () => {
                             />
                         </TextWrapper>
                         <ButtonWrapper>
-                            <Button type={'submit'} width={'35%'}>
+                            <Button loading={isLoading} type={'submit'} width={'35%'}>
                                 <div>Отправить</div>
                             </Button>
                         </ButtonWrapper>

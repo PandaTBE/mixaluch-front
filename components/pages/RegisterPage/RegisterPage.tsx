@@ -40,7 +40,11 @@ const RegisterPage = () => {
 
     const errorMessage = useMemo(() => {
         if (error && 'data' in error) {
-            return JSON.stringify(Object.values(error.data || {})[0]);
+            if (typeof error.data !== 'string') {
+                return JSON.stringify(Object.values(error.data || { error: 'error' })[0]);
+            }
+
+            return 'Что-то пошло не так, возможно у Вас уже есть аккаунт';
         }
 
         return null;

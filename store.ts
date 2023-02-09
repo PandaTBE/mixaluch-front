@@ -10,10 +10,12 @@ import { cartApi } from './services/CartService';
 import { createWrapper } from 'next-redux-wrapper';
 import { orderApi } from './services/OrderService';
 import { userApi } from './services/UserService';
+import { telegramApi } from './services/TelegramService';
 
 const makeStore = () =>
     configureStore({
         reducer: {
+            [telegramApi.reducerPath]: telegramApi.reducer,
             [orderApi.reducerPath]: orderApi.reducer,
             [userApi.reducerPath]: userApi.reducer,
             [cartApi.reducerPath]: cartApi.reducer,
@@ -27,9 +29,10 @@ const makeStore = () =>
         },
         middleware: (getDefaultMiddleware) => {
             return getDefaultMiddleware()
+                .concat(telegramApi.middleware)
+                .concat(orderApi.middleware)
                 .concat(userApi.middleware)
-                .concat(cartApi.middleware)
-                .concat(orderApi.middleware);
+                .concat(cartApi.middleware);
         },
         devTools: true,
     });

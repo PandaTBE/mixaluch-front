@@ -56,7 +56,7 @@ export const MessageWrapper = styled.div`
     width: 50%;
 
     @media (max-width: 991px) {
-        width: 75%;
+        width: 80%;
     }
     @media (max-width: 575px) {
         width: 100%;
