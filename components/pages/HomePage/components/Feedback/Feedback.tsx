@@ -15,6 +15,8 @@ import Button from '../../../../Button/Button';
 import { telegramApi } from '../../../../../services/TelegramService';
 import SuccessMessage from '../../../../SuccessMessage/SuccessMessage';
 import ErrorMessage from '../../../../ErrorMessage/ErrorMessage';
+import transformTextToHtmlFormat from './tools/transformTextToHtmlFormat';
+import { useEffect } from 'react';
 
 /**
  * Компонент для отображения секции с обратной связью
@@ -23,6 +25,10 @@ const Feedback = () => {
     const [sendMessage, { data, isLoading, isError }] = telegramApi.useSendMessageMutation();
     const initialValues = { name: '', email: '', text: '' };
 
+    useEffect(() => {
+        if (data?.ok) formik.resetForm();
+    }, [data]);
+
     const validationSchema = yup.object({
         email: yup.string().email('Введите корректный email').required('Это обязательное поле'),
         name: yup.string().required('Это обязательное поле'),
@@ -30,7 +36,7 @@ const Feedback = () => {
     });
 
     const onSubmit = (values: { name: string; email: string; text: string }) => {
-        sendMessage(values.text);
+        sendMessage(transformTextToHtmlFormat('Новое сообщение от пользователя', values));
     };
 
     const formik = useFormik({
