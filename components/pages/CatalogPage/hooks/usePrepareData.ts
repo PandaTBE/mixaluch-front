@@ -22,9 +22,11 @@ const usePrepareData = (filter: string) => {
         if (products) {
             if (selectedCategoryId && categories && categoriesByParentId) {
                 if (categoriesByParentId[selectedCategoryId]) {
-                    const availableCategoriesIds = categoriesByParentId[selectedCategoryId].children.map(
-                        (category) => category.id,
-                    );
+                    const availableCategoriesIds = [
+                        selectedCategoryId,
+                        ...categoriesByParentId[selectedCategoryId].children.map((category) => category.id),
+                    ];
+
                     setFilteredProductsByCategory(
                         products.filter((product) => availableCategoriesIds.includes(product.category)),
                     );
