@@ -1,3 +1,4 @@
+import { TextField } from '@mui/material';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -20,4 +21,9 @@ export const ListSubHeader = styled.div`
     font-size: 20px;
     font-weight: 600;
     padding-bottom: 8px;
+    margin-top: 15px;
+`;
+
+export const StyledInput = styled(TextField)`
+    width: 100%;
 `;

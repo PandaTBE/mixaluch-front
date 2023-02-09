@@ -1,4 +1,4 @@
-import { ContentWrapper, ListSubHeader, Wrapper } from './styles';
+import { ContentWrapper, ListSubHeader, StyledInput, Wrapper } from './styles';
 
 import { Grid } from '@mui/material';
 import List from '@mui/material/List';
@@ -9,17 +9,23 @@ import { catalogReducerValues, storeSelectedCategoryId } from '../../../slices/C
 import usePrepareData from './hooks/usePrepareData';
 import { useDispatch, useSelector } from 'react-redux';
 import { CatalogContext, ICatalogContext } from './context';
+import { ChangeEvent, useState } from 'react';
 
 /**
  * Компонент для отображения страницы с каталогом товаров
  */
 const Catalog = () => {
+    const [filter, setFilter] = useState('');
     const { categoriesByParentId, selectedCategoryId } = useSelector(catalogReducerValues);
-    const { filteredProducts } = usePrepareData();
+    const { filteredProducts } = usePrepareData(filter);
     const dispatch = useDispatch();
 
     const storeSelectedCategoryIdTrans = (id: number | null) => {
         dispatch(storeSelectedCategoryId(id));
+    };
+
+    const onFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setFilter(e.target.value);
     };
 
     const context: ICatalogContext = {
@@ -37,7 +43,8 @@ const Catalog = () => {
                 </section>
                 <ContentWrapper>
                     <aside>
-                        <List component="nav" subheader={<ListSubHeader>Фильтры</ListSubHeader>}>
+                        <StyledInput onChange={onFilterChange} value={filter} label={'Фильтр'} />
+                        <List component="nav" subheader={<ListSubHeader>Категории</ListSubHeader>}>
                             {categoriesByParentId &&
                                 Object.values(categoriesByParentId).map((element) => (
                                     <CategoryItem key={element.parent.id} item={element} />

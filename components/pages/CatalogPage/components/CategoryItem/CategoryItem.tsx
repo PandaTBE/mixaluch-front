@@ -32,20 +32,14 @@ const CategoryItem: FC<IProps> = ({ item }) => {
 
     return (
         <Wrapper>
-            <ParentWrapper>
+            <ParentWrapper onClick={toggleOpen}>
                 <Text
                     isSelected={context?.selectedCategoryId === item.parent.id}
                     onClick={onCategorySelect(item.parent.id)}
                 >
                     {item.parent.name}
                 </Text>
-                {item.children.length ? (
-                    open ? (
-                        <ExpandLess onClick={toggleOpen} />
-                    ) : (
-                        <ExpandMore onClick={toggleOpen} />
-                    )
-                ) : null}
+                {item.children.length ? open ? <ExpandLess /> : <ExpandMore /> : null}
             </ParentWrapper>
 
             <Collapse in={open} timeout="auto" unmountOnExit>

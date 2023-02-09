@@ -9,7 +9,8 @@ import { IProduct } from '../../../../models/Product';
 import { cloneDeep } from 'lodash';
 
 /** Кастомный хук для подготовки данных */
-const usePrepareData = () => {
+const usePrepareData = (filter: string) => {
+    const [filteredProductsByCategory, setFilteredProductsByCategory] = useState<IProduct[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
     const { selectedCategoryId, categoriesByParentId } = useSelector(catalogReducerValues);
     const { categories } = useSelector(categoryReducerValues);
@@ -24,17 +25,32 @@ const usePrepareData = () => {
                     const availableCategoriesIds = categoriesByParentId[selectedCategoryId].children.map(
                         (category) => category.id,
                     );
-                    setFilteredProducts(
+                    setFilteredProductsByCategory(
                         products.filter((product) => availableCategoriesIds.includes(product.category)),
                     );
                 } else {
-                    setFilteredProducts(products.filter((product) => product.category === selectedCategoryId));
+                    setFilteredProductsByCategory(
+                        products.filter((product) => product.category === selectedCategoryId),
+                    );
                 }
             } else {
-                setFilteredProducts(cloneDeep(products));
+                setFilteredProductsByCategory(cloneDeep(products));
             }
         }
     }, [products, selectedCategoryId, categories, categoriesByParentId]);
+
+    /** фильтрация продуктов по значению из фильтра */
+    useEffect(() => {
+        if (filter) {
+            setFilteredProducts(
+                filteredProductsByCategory.filter((element) =>
+                    element.title.toLowerCase().includes(filter.toLowerCase()),
+                ),
+            );
+        } else {
+            setFilteredProducts(filteredProductsByCategory);
+        }
+    }, [filter, filteredProductsByCategory]);
 
     /** Получение объекта категорий где ключ это id главной категории */
     useEffect(() => {
