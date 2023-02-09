@@ -23,13 +23,13 @@ const Home: NextPage = () => {
  */
 export const getServerSideProps = wrapper.getStaticProps((store) => async () => {
     try {
-        // const mainCategoriesRequest = CategoryApi.getMainCategories();
-        // const popularProdcutsRequest = ProductApi.getPopularProducts();
-        // await axios.all<IProduct[] | ICategory[]>([mainCategoriesRequest, popularProdcutsRequest]).then((responses) => {
-        //     const [mainCategories, popularProducts] = responses as [ICategory[], IProduct[]];
-        //     store.dispatch(storePopularProducts(popularProducts));
-        //     store.dispatch(storeMainCategories(mainCategories));
-        // });
+        const mainCategoriesRequest = CategoryApi.getMainCategories();
+        const popularProdcutsRequest = ProductApi.getPopularProducts();
+        await axios.all<IProduct[] | ICategory[]>([mainCategoriesRequest, popularProdcutsRequest]).then((responses) => {
+            const [mainCategories, popularProducts] = responses as [ICategory[], IProduct[]];
+            store.dispatch(storePopularProducts(popularProducts));
+            store.dispatch(storeMainCategories(mainCategories));
+        });
     } catch (error) {
         return {
             props: {},
