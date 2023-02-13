@@ -21,7 +21,7 @@ const Home: NextPage = () => {
 /**
  * Получение данных на сервере
  */
-export const getServerSideProps = wrapper.getStaticProps((store) => async () => {
+export const getStaticProps = wrapper.getStaticProps((store) => async () => {
     try {
         const mainCategoriesRequest = CategoryApi.getMainCategories();
         const popularProdcutsRequest = ProductApi.getPopularProducts();

@@ -14,10 +14,21 @@ const OrderInfo: NextPage = () => {
 
 export default withMainLayout(OrderInfo);
 
+export async function getStaticPaths() {
+    const allOrders = await OrderApi.getOrders();
+
+    const paths = allOrders.map((element) => ({ params: { id: element.id.toString() } }));
+
+    return {
+        paths,
+        fallback: false, // can also be true or 'blocking'
+    };
+}
+
 /**
  * Получение данных на сервере
  */
-export const getServerSideProps = wrapper.getServerSideProps((store) => async (context) => {
+export const getStaticProps = wrapper.getStaticProps((store) => async (context) => {
     if (context?.params?.id) {
         try {
             const orderInfo = await OrderApi.getOrderInfo(Number(context?.params.id));

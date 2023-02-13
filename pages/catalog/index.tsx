@@ -20,7 +20,7 @@ const Catalog: NextPage = () => {
 /**
  * Получение данных на сервере
  */
-export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
+export const getStaticProps = wrapper.getStaticProps((store) => async () => {
     try {
         const productsRequest = ProductApi.getProducts();
         const categoriesRequest = CategoryApi.getCategories();

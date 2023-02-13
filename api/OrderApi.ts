@@ -14,9 +14,9 @@ export const OrderApi = {
     },
 
     /**
-     * Получение всех заказов для данного пользователя
+     * Получение всех заказов
      */
-    async getOrders(authToken: string) {
+    async getOrders(authToken?: string) {
         const data = await instance
             .get<IOrder[]>('/orders/', { headers: { Authorization: `Token ${authToken}` } })
             .then((response) => response.data);
