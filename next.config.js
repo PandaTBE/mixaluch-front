@@ -5,7 +5,8 @@ const nextConfig = {
 
     images: {
         domains: ['127.0.0.1', 'www.mixaluch-back.ru'],
-        loader: 'akamai',
+        loader: 'default',
+        unoptimized: true,
     },
 };
 
