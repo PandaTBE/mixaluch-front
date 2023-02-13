@@ -16,7 +16,6 @@ export default withMainLayout(OrderInfo);
 
 export async function getStaticPaths() {
     const allOrders = await OrderApi.getOrders();
-
     const paths = allOrders.map((element) => ({ params: { id: element.id.toString() } }));
 
     return {
