@@ -13,21 +13,10 @@ const ProductInfo = () => {
 
 export default withMainLayout(ProductInfo);
 
-export async function getStaticPaths() {
-    const productsRequest = await ProductApi.getProducts();
-
-    const paths = productsRequest.map((element) => ({ params: { id: element.id.toString() } }));
-
-    return {
-        paths,
-        fallback: false, // can also be true or 'blocking'
-    };
-}
-
 /**
  * Получение данных на сервере
  */
-export const getStaticProps = wrapper.getStaticProps((store) => async (context) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async (context) => {
     if (context?.params?.id) {
         try {
             const productInfo = await ProductApi.getProductInfo(Number(context.params.id));
