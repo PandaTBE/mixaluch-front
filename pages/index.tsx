@@ -21,11 +21,11 @@ const Home: NextPage = () => {
 /**
  * Получение данных на сервере
  */
-export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
+export const getStaticProps = wrapper.getStaticProps((store) => async () => {
     try {
         const mainCategoriesRequest = CategoryApi.getMainCategories();
-        const popularProdcutsRequest = ProductApi.getPopularProducts();
-        await axios.all<IProduct[] | ICategory[]>([mainCategoriesRequest, popularProdcutsRequest]).then((responses) => {
+        const popularProductsRequest = ProductApi.getPopularProducts();
+        await axios.all<IProduct[] | ICategory[]>([mainCategoriesRequest, popularProductsRequest]).then((responses) => {
             const [mainCategories, popularProducts] = responses as [ICategory[], IProduct[]];
             store.dispatch(storePopularProducts(popularProducts));
             store.dispatch(storeMainCategories(mainCategories));
@@ -33,11 +33,13 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
     } catch (error) {
         return {
             props: {},
+            revalidate: 10,
         };
     }
 
     return {
         props: {},
+        revalidate: 10,
     };
 });
 
