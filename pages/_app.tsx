@@ -40,6 +40,7 @@ function MyApp({ Component, ...rest }: AppProps) {
                 <link rel="mask-icon" href="/favico/safari-pinned-tab.svg" color="#5bbad5" />
                 <meta name="viewport" content="width=device-width" />
                 <meta charSet="utf-8" />
+                <meta name="robots" content="all" />
             </Head>
             <DataComponent />
             <ThemeProvider theme={theme}>{hydrated && <Component {...props.pageProps} />}</ThemeProvider>
