@@ -5,4 +5,5 @@ export interface IState {
     orders: IOrder[] | null;
     ordersFetching: boolean;
     ordersFetchingError: boolean;
+    lastOrderId: number | null;
 }

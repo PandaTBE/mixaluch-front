@@ -11,7 +11,7 @@ const ProductInfo = () => {
     return <ProductInfoPage />;
 };
 
-export default withMainLayout(ProductInfo);
+export default withMainLayout(ProductInfo, 'Информация о товаре');
 
 /**
  * Получение данных на сервере

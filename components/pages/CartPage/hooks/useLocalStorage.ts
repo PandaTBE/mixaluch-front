@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { CART_ITEMS_LOCAL_STORAGE_KEY } from '../../../../constants/constants';
 import { cartReducerValues, storeCartItems } from '../../../../slices/Cart/cart';
 import { userReducerValues } from '../../../../slices/User/user';
 import getCartItemsFromLocalStorage from '../tools/getCartItemsFromLocalStorage';
@@ -18,7 +19,7 @@ export const useLocalStorage = () => {
     useEffect(() => {
         if (cartItems.length && !authToken) {
             const cartItemsForLocalStorage = JSON.stringify(cartItems);
-            localStorage.setItem('cartItems', cartItemsForLocalStorage);
+            localStorage.setItem(CART_ITEMS_LOCAL_STORAGE_KEY, cartItemsForLocalStorage);
         }
     }, [cartItems, authToken]);
 

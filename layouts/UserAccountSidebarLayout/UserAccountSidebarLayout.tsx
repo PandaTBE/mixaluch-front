@@ -10,6 +10,7 @@ import { userApi } from '../../services/UserService';
 import { useRouter } from 'next/router';
 import { storePageToSwitch } from '../../slices/General/general';
 import { TPageToSwitch } from '../../slices/General/interfaces';
+import { AUTH_TOKEN_LOCAL_STORAGE_KEY } from '../../constants/constants';
 
 interface IProps {
     /** контент, который нужно отобразить внутри макета */
@@ -35,7 +36,7 @@ const UserAccountSidebarLayout: FC<IProps> = ({ children }) => {
     const onLogoutClick = () => {
         if (authToken) {
             logout(authToken);
-            localStorage.setItem('authToken', '');
+            localStorage.setItem(AUTH_TOKEN_LOCAL_STORAGE_KEY, '');
             dispatch(resetUserReducer());
             dispatch(storeRawCartItems([]));
         }

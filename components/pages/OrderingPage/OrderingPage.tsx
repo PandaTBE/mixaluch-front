@@ -19,6 +19,7 @@ import {
     storeCartItemsRefetchObject,
     storeDeliveryCost,
 } from '../../../slices/Cart/cart';
+import { CART_ITEMS_LOCAL_STORAGE_KEY } from '../../../constants/constants';
 
 /**
  * Компонент для отображения страницы оформления заказа
@@ -35,7 +36,7 @@ const OrderingPage = () => {
     useEffect(() => {
         if (data) {
             router.push(`/orders/${data.id}`);
-            localStorage.setItem('cartItems', '[]');
+            localStorage.setItem(CART_ITEMS_LOCAL_STORAGE_KEY, '[]');
             dispatch(storeCartItemsRefetchObject());
             dispatch(storeCartItems([]));
         }

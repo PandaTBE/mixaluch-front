@@ -9,6 +9,7 @@ import {
     storeTotalSum,
     storeTotalSumWithDeliivery,
 } from '../../../../slices/Cart/cart';
+import { CART_ITEMS_LOCAL_STORAGE_KEY } from '../../../../constants/constants';
 
 /**
  * Касстомный хук для подготовки данных
@@ -46,7 +47,7 @@ export const usePrepareData = () => {
     /** Получение товаров для корзины из сырых данных */
     useEffect(() => {
         if (rawCartItems.length) {
-            localStorage.setItem('cartItems', '[]');
+            localStorage.setItem(CART_ITEMS_LOCAL_STORAGE_KEY, '[]');
             const result = rawCartItems.map((element) => {
                 return {
                     id: element.id,

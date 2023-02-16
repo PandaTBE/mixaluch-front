@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { CART_ITEMS_LOCAL_STORAGE_KEY } from '../../../../constants/constants';
 import { cartApi } from '../../../../services/CartService';
 import {
     cartReducerValues,
@@ -44,7 +45,7 @@ export const useGetRawData = () => {
                             body: { quantity: element.quantity, product: element.product.id },
                         });
                     });
-                    localStorage.setItem('cartItems', '[]');
+                    localStorage.setItem(CART_ITEMS_LOCAL_STORAGE_KEY, '[]');
                 }
                 dispatch(storeCartItems(cartItemsFromLocalStorage));
             }

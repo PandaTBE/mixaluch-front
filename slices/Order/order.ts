@@ -9,6 +9,7 @@ const initialState: IState = {
     orders: null,
     ordersFetching: false,
     ordersFetchingError: false,
+    lastOrderId: null,
 };
 
 const order = createSlice({
@@ -42,6 +43,13 @@ const order = createSlice({
         toggleOrdersFetchingError: (state, action: PayloadAction<boolean>) => {
             state.ordersFetchingError = action.payload;
         },
+
+        /**
+         * Запись id последнего заказа
+         */
+        storeLastOrderId: (state, action: PayloadAction<number | null>) => {
+            state.lastOrderId = action.payload;
+        },
     },
     /**
      * Гидрация необходимо для коннекта стора сервера и стора клиента
@@ -56,7 +64,8 @@ const order = createSlice({
     },
 });
 
-export const { storeSelectedOrder, storeOrders, toggleOrdersFetching, toggleOrdersFetchingError } = order.actions;
+export const { storeLastOrderId, storeSelectedOrder, storeOrders, toggleOrdersFetching, toggleOrdersFetchingError } =
+    order.actions;
 
 export const orderReducerValues = (state: AppState) => state.order;
 

@@ -9,4 +9,4 @@ const ResetPasswordConfirm: NextPage = () => {
     return <ResetPasswordConfirmPage />;
 };
 
-export default withMainLayout(ResetPasswordConfirm);
+export default withMainLayout(ResetPasswordConfirm, 'Сброс пароля');

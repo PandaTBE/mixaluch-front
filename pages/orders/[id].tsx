@@ -12,7 +12,7 @@ const OrderInfo: NextPage = () => {
     return <OrderInfoPage />;
 };
 
-export default withMainLayout(OrderInfo);
+export default withMainLayout(OrderInfo, 'Информация о заказе');
 
 /**
  * Получение данных на сервере
