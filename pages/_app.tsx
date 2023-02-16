@@ -41,6 +41,7 @@ function MyApp({ Component, ...rest }: AppProps) {
                 <meta name="viewport" content="width=device-width" />
                 <meta charSet="utf-8" />
                 <meta name="robots" content="all" />
+                <meta name="yandex-verification" content="85e904ecac9751c9" />
             </Head>
             <DataComponent />
             <ThemeProvider theme={theme}>{hydrated && <Component {...props.pageProps} />}</ThemeProvider>
