@@ -49,17 +49,17 @@ const SubHeader = () => {
                         </IconButton>
                     </MenuIconWrapper>
 
-                    <Link rel="canonical" href={'/'}>
+                    <Link href={'/'}>
                         <LogoWrapper onClick={onLinkClick('/')}>
                             <Image src={'/static/logo.png'} alt={'Mixaluch logo'} layout={'fill'} />
                         </LogoWrapper>
                     </Link>
 
                     <Stack direction="row" spacing={2} alignItems="center">
-                        <Link rel="canonical" href={authToken ? '/user-account' : '/login'}>
+                        <Link href={authToken ? '/user-account' : '/login'}>
                             <LoginIcon onClick={onLinkClick('/user-account')} />
                         </Link>
-                        <Link rel="canonical" href={'/cart'}>
+                        <Link href={'/cart'}>
                             <CartWrapper>
                                 <Stack direction="row" spacing={1} alignItems="center" onClick={onLinkClick('/cart')}>
                                     <CartIconWrapper>

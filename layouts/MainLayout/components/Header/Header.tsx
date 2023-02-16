@@ -37,9 +37,7 @@ const Header = () => {
                                                     onClick={onLinkClick(element.href as TPageToSwitch)}
                                                     active={router.pathname === element.href}
                                                 >
-                                                    <Link rel="canonical" href={element.href}>
-                                                        {element.name}
-                                                    </Link>
+                                                    <Link href={element.href}>{element.name}</Link>
                                                 </StyledLink>
                                             );
                                         }) as JSX.Element[]

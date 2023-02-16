@@ -15,14 +15,20 @@ import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
 import { useEffect, useState } from 'react';
 import Meta from '../components/Meta/Meta';
+import { useRouter } from 'next/router';
 
 function MyApp({ Component, ...rest }: AppProps) {
     const { store, props } = wrapper.useWrappedStore(rest);
     const [hydrated, setHydrated] = useState(false);
+    const router = useRouter();
+
+    const site = 'https://mixaluch-shop-dev.ru/';
 
     useEffect(() => {
         setHydrated(true);
     }, []);
+
+    const canonicalURL = site + router.asPath;
 
     return (
         <Provider store={store}>
@@ -42,6 +48,7 @@ function MyApp({ Component, ...rest }: AppProps) {
                 <meta charSet="utf-8" />
                 <meta name="robots" content="all" />
                 <meta name="yandex-verification" content="85e904ecac9751c9" />
+                <link rel="canonical" href={canonicalURL} />
             </Head>
             <DataComponent />
             <ThemeProvider theme={theme}>{hydrated && <Component {...props.pageProps} />}</ThemeProvider>
