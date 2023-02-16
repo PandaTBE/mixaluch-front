@@ -29,9 +29,7 @@ const PopularProducts: FC<IProps> = ({ isSkeleton = false }) => {
     return (
         <Wrapper>
             <Stack direction="row" alignItems="center" spacing={2} justifyContent={'space-between'}>
-                <PageTitle>
-                    <div>Популярные товары</div>
-                </PageTitle>
+                <PageTitle text={'Популярные товары'} />
                 <Stack direction="row" spacing={1}>
                     <StyledArrowBackIcon onClick={() => swiperInstance?.slidePrev()} />
                     <StyledArrowForwardIcon onClick={() => swiperInstance?.slideNext()} />

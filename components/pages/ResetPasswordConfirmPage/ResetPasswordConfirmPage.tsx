@@ -74,9 +74,7 @@ const ResetPasswordConfirmPage = () => {
 
     return (
         <Wrapper>
-            <PageTitle>
-                <div>Восстановление пароля</div>
-            </PageTitle>
+            <PageTitle text={'Восстановление пароля'} />
 
             {errorMessage && (
                 <MessageWrapper>

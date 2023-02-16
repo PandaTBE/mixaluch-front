@@ -9,9 +9,7 @@ import { Stack } from '@mui/material';
 const OrderingPageSkeleton = () => {
     return (
         <>
-            <PageTitle>
-                <div>Оформление заказа</div>
-            </PageTitle>
+            <PageTitle text={'Оформление заказа'} />
             <Wrapper>
                 <WrapperItem>
                     <Stack spacing={2}>

@@ -12,9 +12,7 @@ const UserAccountPage = () => {
 
     return (
         <div>
-            <PageTitle>
-                <div>Контактные данные</div>
-            </PageTitle>
+            <PageTitle text={'Контактные данные'} />
             <ContentWrapper>
                 {userFetching && <div>Загрузка данных...</div>}
                 {userFetchingError && <div>Ошибка получения данных пользователя</div>}

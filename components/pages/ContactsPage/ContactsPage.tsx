@@ -8,9 +8,7 @@ import { Wrapper, Text, ScheduleWrapper, ScheduleItem, ScheduleWeekDay } from '.
 const ContactsPage = () => {
     return (
         <Wrapper>
-            <PageTitle>
-                <div>Контакты</div>
-            </PageTitle>
+            <PageTitle text={'Контакты'} />
             <Text>Вы можете найти нас по адресу: г. Подольск, ул. Правды, дом 28</Text>
             <Text>
                 Телефоны для связи: <a href="tel:+79269376840">+7 (926) 937-68-40</a>,{' '}

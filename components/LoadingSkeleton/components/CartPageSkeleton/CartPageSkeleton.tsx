@@ -7,9 +7,7 @@ import { ContentWrapper, Wrapper } from './styles';
 const CartPageSkeleton = () => {
     return (
         <Wrapper>
-            <PageTitle>
-                <div>Корзина</div>
-            </PageTitle>
+            <PageTitle text={'Корзина'} />
             <ContentWrapper>
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={8} xl={9}>

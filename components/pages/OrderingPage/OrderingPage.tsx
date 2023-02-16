@@ -73,9 +73,7 @@ const OrderingPage = () => {
 
     return (
         <OrderingPageContext.Provider value={context}>
-            <PageTitle>
-                <div>Оформление заказа</div>
-            </PageTitle>
+            <PageTitle text={'Оформление заказа'} />
             <Wrapper>
                 <WrapperItem>
                     {user && <UserInfo />}

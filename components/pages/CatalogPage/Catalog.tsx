@@ -37,9 +37,7 @@ const Catalog = () => {
         <CatalogContext.Provider value={context}>
             <Wrapper>
                 <section>
-                    <PageTitle>
-                        <div>Каталог</div>
-                    </PageTitle>
+                    <PageTitle text={'Каталог'} />
                 </section>
                 <ContentWrapper>
                     <aside>

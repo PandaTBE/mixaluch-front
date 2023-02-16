@@ -82,9 +82,7 @@ const RegisterPage = () => {
 
     return (
         <Wrapper>
-            <PageTitle>
-                <div>Регистрация</div>
-            </PageTitle>
+            <PageTitle text={'Регистрация'} />
             {errorMessage && (
                 <MessageWrapper>
                     <ErrorMessage text={errorMessage} />

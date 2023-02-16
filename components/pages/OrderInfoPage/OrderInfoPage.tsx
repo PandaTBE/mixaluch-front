@@ -26,9 +26,7 @@ const OrderInfoPage = () => {
         <Wrapper>
             {selectedOrder ? (
                 <>
-                    <PageTitle>
-                        <div>Заказ № {selectedOrder.id}</div>
-                    </PageTitle>
+                    <PageTitle text={`Заказ № ${selectedOrder.id}`} />
                     <SubTitle>Информация о заказе</SubTitle>
                     <StyledDivider />
                     <OrderInfo order={selectedOrder} />

@@ -50,9 +50,7 @@ const LoginPage = () => {
 
     return (
         <Wrapper>
-            <PageTitle>
-                <div>Вход в кабинет покупателя</div>
-            </PageTitle>
+            <PageTitle text={'Вход в кабинет покупателя'} />
             {isError && (
                 <ErrorWrapper>
                     <ErrorMessage text={'Сочетание логина и пароля не подходит'} />

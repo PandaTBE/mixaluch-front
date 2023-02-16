@@ -30,9 +30,7 @@ const CartPage = () => {
 
     return (
         <Wrapper>
-            <PageTitle>
-                <div>Корзина</div>
-            </PageTitle>
+            <PageTitle text={'Корзина'} />
             <ContentWrapper>
                 <Grid container spacing={2}>
                     {cartItems.length ? (

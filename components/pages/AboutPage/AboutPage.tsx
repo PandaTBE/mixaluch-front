@@ -7,9 +7,7 @@ import { Text, Title, Wrapper } from './styles';
 const AboutPage = () => {
     return (
         <Wrapper>
-            <PageTitle>
-                <div>О компании</div>
-            </PageTitle>
+            <PageTitle text={'О компании'} />
             <Title>Интернет-магазин "mixaluch-shop.ru" – лучшие продукты по низким ценам!</Title>
             <Text>
                 Мы рады предложить вам недорогие, но качественные товары с подробным описанием и фотографиями. У нас Вы

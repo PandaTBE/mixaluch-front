@@ -41,9 +41,7 @@ const ActivatePage = () => {
 
     return (
         <Wrapper>
-            <PageTitle>
-                <div>Подтвердите Вашу почту</div>
-            </PageTitle>
+            <PageTitle text={'Подтвердите Вашу почту'} />
             {errorMessage && (
                 <MessageWrapper>
                     <ErrorMessage text={errorMessage} />

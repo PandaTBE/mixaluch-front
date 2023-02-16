@@ -18,9 +18,7 @@ const OrdersPage = () => {
     useFetchData();
     return (
         <Wrapper>
-            <PageTitle>
-                <div>История заказов</div>
-            </PageTitle>
+            <PageTitle text={'История заказов'} />
             <OrdersTableWrapper>
                 {ordersFetching && <Skeleton height={200} />}
                 {ordersFetchingError && (

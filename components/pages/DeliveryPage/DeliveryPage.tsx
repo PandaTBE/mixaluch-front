@@ -7,9 +7,7 @@ import { Wrapper, Text } from './styles';
 const DeliveryPage = () => {
     return (
         <Wrapper>
-            <PageTitle>
-                <div>Доставка</div>
-            </PageTitle>
+            <PageTitle text={'Доставка'} />
             <Text fontWeight={700}>При заказе от 5000 ₽ - доставка бесплатно!</Text>
             <Text>Пожалуйста, проверяйте соответствие товара заказанному.</Text>
             <Text>
