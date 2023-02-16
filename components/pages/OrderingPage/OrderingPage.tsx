@@ -19,7 +19,8 @@ import {
     storeCartItemsRefetchObject,
     storeDeliveryCost,
 } from '../../../slices/Cart/cart';
-import { CART_ITEMS_LOCAL_STORAGE_KEY } from '../../../constants/constants';
+import { CART_ITEMS_LOCAL_STORAGE_KEY, LAST_ORDER_ID_LOCAL_STORAGE_KEY } from '../../../constants/constants';
+import { storeLastOrderId } from '../../../slices/Order/order';
 
 /**
  * Компонент для отображения страницы оформления заказа
@@ -36,8 +37,10 @@ const OrderingPage = () => {
     useEffect(() => {
         if (data) {
             router.push(`/orders/${data.id}`);
+            localStorage.setItem(LAST_ORDER_ID_LOCAL_STORAGE_KEY, data.id.toString());
             localStorage.setItem(CART_ITEMS_LOCAL_STORAGE_KEY, '[]');
             dispatch(storeCartItemsRefetchObject());
+            dispatch(storeLastOrderId(data.id));
             dispatch(storeCartItems([]));
         }
     }, [data]);

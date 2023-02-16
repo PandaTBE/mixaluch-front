@@ -19,13 +19,14 @@ export const orderApi = createApi({
         /** Получение информации о конкретном заказе */
         getOrderInfo: build.query<IOrder, number | undefined>({
             query: (id) => {
-                if (!id) {
-                    throw new Error('ID is required.');
+                if (id) {
+                    return {
+                        url: `order-info/${id}/`,
+                        method: 'GET',
+                    };
                 }
-                return {
-                    url: `order-info/${id}/`,
-                    method: 'GET',
-                };
+
+                throw new Error('ID is required.');
             },
         }),
 

@@ -2,11 +2,12 @@ import { Stack } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { MouseEvent, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Container from '../../../../components/Container/Container';
 import { storePageToSwitch } from '../../../../slices/General/general';
 import { TPageToSwitch } from '../../../../slices/General/interfaces';
+import { orderReducerValues } from '../../../../slices/Order/order';
 import { navigationListItems } from '../constants/constants';
 import {
     ContentWrapper,
@@ -23,9 +24,12 @@ import {
  * Компонент для отображения подвала страницы
  */
 const Footer = () => {
+    const { lastOrderId } = useSelector(orderReducerValues);
     const [lastOrderClicked, setLastOrderClicked] = useState(false);
     const dispatch = useDispatch();
     const router = useRouter();
+
+    const urlsForHideLastOrder = ['/ordering', '/orders/[id]'];
 
     const onLinkClick = (link: TPageToSwitch) => () => {
         dispatch(storePageToSwitch(link));
@@ -33,6 +37,11 @@ const Footer = () => {
 
     const toggleLastOrderCLicked = () => {
         setLastOrderClicked((prevState) => !prevState);
+    };
+
+    const redirectToLastOrder = (e: MouseEvent) => {
+        e.stopPropagation();
+        lastOrderId && router.push(`/orders/${lastOrderId}`);
     };
 
     return (
@@ -61,10 +70,12 @@ const Footer = () => {
                     </LogoWrapper>
                 </ContentWrapper>
             </Container>
-            <LastOrderWrapper clicked={lastOrderClicked} onClick={toggleLastOrderCLicked}>
-                {lastOrderClicked && <LastOrderText>Ваш заказ</LastOrderText>}
-                <StyledLocalMallOutlinedIcon />
-            </LastOrderWrapper>
+            {lastOrderId && !urlsForHideLastOrder.includes(router.pathname) && (
+                <LastOrderWrapper clicked={lastOrderClicked} onClick={toggleLastOrderCLicked}>
+                    {lastOrderClicked && <LastOrderText onClick={redirectToLastOrder}>Ваш заказ</LastOrderText>}
+                    <StyledLocalMallOutlinedIcon />
+                </LastOrderWrapper>
+            )}
         </Wrapper>
     );
 };
