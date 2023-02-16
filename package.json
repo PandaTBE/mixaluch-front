@@ -8,6 +8,7 @@
         "export": "next build && next export",
         "start": "next start",
         "lint": "next lint",
+        "postbuild": "next-sitemap",
         "debug": "NODE_OPTIONS='--inspect' next dev"
     },
     "dependencies": {
@@ -23,6 +24,7 @@
         "luxon": "^3.2.1",
         "next": "12.3.1",
         "next-redux-wrapper": "^8.0.0",
+        "next-sitemap": "^3.1.52",
         "react": "18.2.0",
         "react-dom": "18.2.0",
         "react-loading-skeleton": "^3.1.0",

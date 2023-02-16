@@ -1,8 +1,0 @@
-User-agent: *
-Disallow: /cart
-Disallow: /register
-Disallow: /login
-Disallow: /orders
-Disallow: /catalog
-Disallow: /orders/
-Disallow: /user-account
