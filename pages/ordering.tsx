@@ -9,4 +9,4 @@ const Ordering: NextPage = () => {
     return <OrderingPage />;
 };
 
-export default withMainLayout(Ordering);
+export default withMainLayout(Ordering, 'Оформление заказа');

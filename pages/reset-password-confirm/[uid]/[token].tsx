@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import { withMainLayout } from '../../../layouts/MainLayout/MainLayout';
 
 /**
- * Страница активации аккаунта после регистрации
+ * Страница подтверждения сброса пароля
  */
 const ResetPasswordConfirm: NextPage = () => {
     return <ResetPasswordConfirmPage />;

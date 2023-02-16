@@ -9,4 +9,4 @@ const Register: NextPage = () => {
     return <RegisterPage />;
 };
 
-export default withMainLayout(Register);
+export default withMainLayout(Register, 'Регистрация');

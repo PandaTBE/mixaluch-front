@@ -9,4 +9,4 @@ const Delivery: NextPage = () => {
     return <DeliveryPage />;
 };
 
-export default withMainLayout(Delivery);
+export default withMainLayout(Delivery, 'Информация о доставке');

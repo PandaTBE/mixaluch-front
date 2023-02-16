@@ -9,4 +9,4 @@ const Activate: NextPage = () => {
     return <ActivatePage />;
 };
 
-export default withMainLayout(Activate);
+export default withMainLayout(Activate, 'Активация аккаунта');

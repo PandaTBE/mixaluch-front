@@ -10,4 +10,4 @@ const Orders: NextPage = () => {
     return <OrdersPage />;
 };
 
-export default withMainLayout(withUserAccountSidebar(Orders));
+export default withMainLayout(withUserAccountSidebar(Orders), 'История заказов');

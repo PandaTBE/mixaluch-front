@@ -8,7 +8,7 @@ import {
 } from '../models/User';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { urls } from '../contsants/urls';
+import { urls } from '../constants/urls';
 
 export const userApi = createApi({
     reducerPath: 'userApi',

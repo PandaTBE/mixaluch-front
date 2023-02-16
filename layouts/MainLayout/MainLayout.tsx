@@ -12,12 +12,13 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { storePageToSwitch } from '../../slices/General/general';
 import { TPageToSwitch } from '../../slices/General/interfaces';
+import Meta from '../../components/Meta/Meta';
 
 /**
  * Layot для оборачивания контена
  * @param children компонент, который необходимо обернуть
  */
-const MainLayout: FC<IProps> = ({ children }) => {
+const MainLayout: FC<IProps> = ({ children, title = 'У Михалыча', description }) => {
     const { loading } = usePageLoading();
     const dispatch = useDispatch();
     const router = useRouter();
@@ -28,6 +29,7 @@ const MainLayout: FC<IProps> = ({ children }) => {
 
     return (
         <Wrapper>
+            <Meta title={title} description={description} />
             <header>
                 <Header />
                 <SubHeader />
@@ -49,10 +51,14 @@ const MainLayout: FC<IProps> = ({ children }) => {
 };
 
 /** HOC для отображения компонент с главным лэйаутом */
-export const withMainLayout = <T extends Record<string, unknown>>(Component: FC<T>) => {
+export const withMainLayout = <T extends Record<string, unknown>>(
+    Component: FC<T>,
+    title?: string,
+    description?: string,
+) => {
     return function withLayoutComponent(props: T): JSX.Element {
         return (
-            <MainLayout>
+            <MainLayout title={title} description={description}>
                 <Component {...props} />
             </MainLayout>
         );

@@ -43,4 +43,4 @@ export const getStaticProps = wrapper.getStaticProps((store) => async () => {
     };
 });
 
-export default withMainLayout(Catalog);
+export default withMainLayout(Catalog, 'Каталог товаров');

@@ -9,4 +9,4 @@ const ResetPassword: NextPage = () => {
     return <ResetPasswordPage />;
 };
 
-export default withMainLayout(ResetPassword);
+export default withMainLayout(ResetPassword, 'Восстановление пароля');

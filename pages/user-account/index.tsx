@@ -10,4 +10,4 @@ const UserAccount: NextPage = () => {
     return <UserAccountPage />;
 };
 
-export default withMainLayout(withUserAccountSidebar(UserAccount));
+export default withMainLayout(withUserAccountSidebar(UserAccount), 'Личный кабинет');

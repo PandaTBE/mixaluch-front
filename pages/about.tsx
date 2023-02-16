@@ -9,4 +9,4 @@ const About: NextPage = () => {
     return <AboutPage />;
 };
 
-export default withMainLayout(About);
+export default withMainLayout(About, 'О компании');

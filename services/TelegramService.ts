@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { telegramChatData } from '../contsants/telegram';
+import { telegramChatData } from '../constants/telegram';
 
-import { urls } from '../contsants/urls';
+import { urls } from '../constants/urls';
 
 export const telegramApi = createApi({
     reducerPath: 'telegramApi',

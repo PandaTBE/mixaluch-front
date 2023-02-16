@@ -9,4 +9,4 @@ const Cart: NextPage = () => {
     return <CartPage />;
 };
 
-export default withMainLayout(Cart);
+export default withMainLayout(Cart, 'Корзина');

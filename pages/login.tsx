@@ -9,4 +9,4 @@ const Login: NextPage = () => {
     return <LoginPage />;
 };
 
-export default withMainLayout(Login);
+export default withMainLayout(Login, 'Авторизация');
