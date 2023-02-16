@@ -1,4 +1,7 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { storePageToSwitch } from '../../../../../slices/General/general';
 import Button from '../../../../Button/Button';
 import { ButtonWrapper, ContentWrapper, Layout, SubTitle, Title, Wrapper } from './styles';
 
@@ -6,6 +9,14 @@ import { ButtonWrapper, ContentWrapper, Layout, SubTitle, Title, Wrapper } from 
  * Компонент для отображения секции с шашлыком
  */
 const Kebab = () => {
+    const dispatch = useDispatch();
+    const router = useRouter();
+
+    const onClick = () => {
+        dispatch(storePageToSwitch('/kebab'));
+        router.push('/kebab');
+    };
+
     return (
         <Wrapper>
             <ContentWrapper>
@@ -17,12 +28,12 @@ const Kebab = () => {
                     layout={'fill'}
                 />
                 <Layout />
-                <Title>Шашлык на заказ</Title>
+                <Title>Замариновать мясо для шашлыка</Title>
                 <SubTitle>
                     Вкусный шашлык. Индивидуальный выбор мяса, разнообразие маринада, индивидуальный подход!
                 </SubTitle>
                 <ButtonWrapper>
-                    <Button width={'auto'}>
+                    <Button clickHandler={onClick} width={'auto'}>
                         <div>Узнать подробнее</div>
                     </Button>
                 </ButtonWrapper>
