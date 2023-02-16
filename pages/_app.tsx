@@ -14,7 +14,6 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
 import { useEffect, useState } from 'react';
-import Meta from '../components/Meta/Meta';
 
 function MyApp({ Component, ...rest }: AppProps) {
     const { store, props } = wrapper.useWrappedStore(rest);
@@ -26,7 +25,6 @@ function MyApp({ Component, ...rest }: AppProps) {
 
     return (
         <Provider store={store}>
-            <Meta title={'У Михалыча'} />
             <Head>
                 <link rel="shortcut icon" href="/favico/favicon.ico" />
                 <link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-touch-icon.png" />
@@ -35,6 +33,7 @@ function MyApp({ Component, ...rest }: AppProps) {
                 <link rel="manifest" href="/favico/site.webmanifest" />
                 <link rel="mask-icon" href="/favico/safari-pinned-tab.svg" color="#5bbad5" />
                 <meta name="viewport" content="width=device-width" />
+                <meta charSet="utf-8" />
             </Head>
             <DataComponent />
             <ThemeProvider theme={theme}>{hydrated && <Component {...props.pageProps} />}</ThemeProvider>
