@@ -9,4 +9,4 @@ const Delivery: NextPage = () => {
     return <DeliveryPage />;
 };
 
-export default withMainLayout(Delivery, 'Информация о доставке');
+export default withMainLayout(Delivery, 'Доставка – Интернет-магазин У Михалыча');

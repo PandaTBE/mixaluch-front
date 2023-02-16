@@ -18,7 +18,7 @@ import Meta from '../../components/Meta/Meta';
  * Layot для оборачивания контена
  * @param children компонент, который необходимо обернуть
  */
-const MainLayout: FC<IProps> = ({ children, title = 'У Михалыча', description }) => {
+const MainLayout: FC<IProps> = ({ children, title, description }) => {
     const { loading } = usePageLoading();
     const dispatch = useDispatch();
     const router = useRouter();

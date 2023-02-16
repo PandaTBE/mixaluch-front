@@ -14,6 +14,7 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
 import { useEffect, useState } from 'react';
+import Meta from '../components/Meta/Meta';
 
 function MyApp({ Component, ...rest }: AppProps) {
     const { store, props } = wrapper.useWrappedStore(rest);
@@ -25,6 +26,11 @@ function MyApp({ Component, ...rest }: AppProps) {
 
     return (
         <Provider store={store}>
+            <Meta
+                title={
+                    'Интернет-магазин У Михалыча доставка продуктов по Подольску на дом или в офис, заказать продукты онлайн'
+                }
+            />
             <Head>
                 <link rel="shortcut icon" href="/favico/favicon.ico" />
                 <link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-touch-icon.png" />

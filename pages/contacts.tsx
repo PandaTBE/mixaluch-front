@@ -8,4 +8,4 @@ const Contacts = () => {
     return <ContactsPage />;
 };
 
-export default withMainLayout(Contacts, 'Контакты');
+export default withMainLayout(Contacts, 'Контакты – Информация о компании');
