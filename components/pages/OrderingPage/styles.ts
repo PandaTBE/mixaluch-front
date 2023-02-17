@@ -66,9 +66,6 @@ export const ErrorWrapper = styled.div`
     width: 50%;
 
     @media (max-width: 991px) {
-        width: 75%;
-    }
-    @media (max-width: 767px) {
         width: 100%;
     }
 `;

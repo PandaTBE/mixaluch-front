@@ -43,6 +43,11 @@ const Delivery = () => {
             .required('Это обязательное поле')
             .matches(phoneRegExp, 'Некорректный номер телефона'),
         name: yup.string().required('Это обязательное поле'),
+        courierDelivery: yup.boolean(),
+        address: yup.string().when('courierDelivery', {
+            is: true,
+            then: yup.string().required('Это обязательное поле'),
+        }),
     });
 
     const onSubmit = (formValues: IOrderFormValues) => {
@@ -122,6 +127,8 @@ const Delivery = () => {
 
                     {formik.values.courierDelivery && (
                         <StyledTextField
+                            error={formik.touched.address && Boolean(formik.errors.address)}
+                            helperText={formik.touched.address && formik.errors.address}
                             onChange={formik.handleChange}
                             value={formik.values.address}
                             name={'address'}
