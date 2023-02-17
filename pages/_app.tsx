@@ -38,7 +38,7 @@ function MyApp({ Component, ...rest }: AppProps) {
                 }
             />
             <Head>
-                <link rel="shortcut icon" href="/favico/favicon.ico" />
+                <link rel="icon" href="/favico/favicon.ico" type="image/x-icon" />
                 <link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-touch-icon.png" />
                 <link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png" />
                 <link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png" />
