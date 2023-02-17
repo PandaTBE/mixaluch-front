@@ -5,7 +5,7 @@ import Order from './comonents/Order/Order';
 import PageTitle from '../../PageTitle/PageTitle';
 import UserInfo from './comonents/UserInfo/UserInfo';
 import { Accordion, AccordionDetails, AccordionSummary, Stack } from '@mui/material';
-import { AccordionWrapper, OrderWrapper, Total, TotalValue, Wrapper, WrapperItem } from './styles';
+import { AccordionWrapper, ErrorWrapper, OrderWrapper, Total, TotalValue, Wrapper, WrapperItem } from './styles';
 import { IOrderFormValues } from './comonents/Delivery/interfaces';
 import { orderApi } from '../../../services/OrderService';
 import { OrderingPageContext } from './context';
@@ -21,12 +21,13 @@ import {
 } from '../../../slices/Cart/cart';
 import { CART_ITEMS_LOCAL_STORAGE_KEY, LAST_ORDER_ID_LOCAL_STORAGE_KEY } from '../../../constants/constants';
 import { storeLastOrderId } from '../../../slices/Order/order';
+import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 
 /**
  * Компонент для отображения страницы оформления заказа
  */
 const OrderingPage = () => {
-    const [createOrder, { data, isLoading }] = orderApi.useCreateOrderMutation();
+    const [createOrder, { data, isLoading, isError }] = orderApi.useCreateOrderMutation();
     const { totalSum, cartItems, deliveryCost, totalSumWithDelivery } = useSelector(cartReducerValues);
     const [accordionExpanded, setAccordionExpanded] = useState(false);
     const { user, authToken } = useSelector(userReducerValues);
@@ -78,6 +79,15 @@ const OrderingPage = () => {
     return (
         <OrderingPageContext.Provider value={context}>
             <PageTitle text={'Оформление заказа'} />
+            {isError && (
+                <ErrorWrapper>
+                    <ErrorMessage
+                        text={
+                            'При оформлении заказа возникла ошибка, попробуйте позже или свяжитесь с нами по телефону!'
+                        }
+                    />
+                </ErrorWrapper>
+            )}
             <Wrapper>
                 <WrapperItem>
                     {user && <UserInfo />}

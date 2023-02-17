@@ -60,3 +60,15 @@ export const TotalValue = styled.div`
     font-weight: 700;
     margin-right: 10px;
 `;
+
+export const ErrorWrapper = styled.div`
+    margin-top: 20px;
+    width: 50%;
+
+    @media (max-width: 991px) {
+        width: 75%;
+    }
+    @media (max-width: 767px) {
+        width: 100%;
+    }
+`;
