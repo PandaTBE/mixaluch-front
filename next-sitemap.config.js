@@ -12,11 +12,7 @@ module.exports = {
         policies: [
             {
                 userAgent: '*',
-                allow: '/',
-            },
-            {
-                userAgent: 'test-bot',
-                allow: ['/contacts', '/about', '/delivery'],
+                allow: ['/contacts', '/about', '/delivery', '/kebab'],
             },
             {
                 userAgent: 'black-listed-bot',
