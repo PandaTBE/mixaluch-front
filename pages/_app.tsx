@@ -1,6 +1,5 @@
 import type { AppProps } from 'next/app';
 import DataComponent from '../components/DataComponent/DataComponent';
-import Head from 'next/head';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../constants/theme';
@@ -14,42 +13,17 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
 import { useEffect, useState } from 'react';
-import Meta from '../components/Meta/Meta';
-import { useRouter } from 'next/router';
 
 function MyApp({ Component, ...rest }: AppProps) {
     const { store, props } = wrapper.useWrappedStore(rest);
     const [hydrated, setHydrated] = useState(false);
-    const router = useRouter();
-
-    const site = 'https://mixaluch-shop-dev.ru/';
 
     useEffect(() => {
         setHydrated(true);
     }, []);
 
-    const canonicalURL = site + router.asPath;
-
     return (
         <Provider store={store}>
-            <Meta
-                title={
-                    'Интернет-магазин У Михалыча доставка продуктов по Подольску на дом или в офис, заказать продукты онлайн'
-                }
-            />
-            <Head>
-                <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-                <link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-touch-icon.png" />
-                <link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png" />
-                <link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png" />
-                <link rel="manifest" href="/favico/site.webmanifest" />
-                <link rel="mask-icon" href="/favico/safari-pinned-tab.svg" color="#5bbad5" />
-                <meta name="viewport" content="width=device-width" />
-                <meta charSet="utf-8" />
-                <meta name="robots" content="all" />
-                <meta name="yandex-verification" content="85e904ecac9751c9" />
-                <link rel="canonical" href={canonicalURL} />
-            </Head>
             <DataComponent />
             <ThemeProvider theme={theme}>{hydrated && <Component {...props.pageProps} />}</ThemeProvider>
         </Provider>
