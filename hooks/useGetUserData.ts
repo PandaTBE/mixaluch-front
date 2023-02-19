@@ -1,8 +1,15 @@
-import { storeUser, toggleUserFetching, toggleUserFetchingError, userReducerValues } from '../slices/User/user';
+import {
+    storeAuthToken,
+    storeUser,
+    toggleUserFetching,
+    toggleUserFetchingError,
+    userReducerValues,
+} from '../slices/User/user';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useEffect } from 'react';
 import { userApi } from '../services/UserService';
+import { AUTH_TOKEN_LOCAL_STORAGE_KEY } from '../constants/constants';
 
 /**
  * Кастомный хук для получения данных
@@ -22,6 +29,11 @@ const useGetUserData = () => {
     /** Запись флага ошибки */
     useEffect(() => {
         dispatch(toggleUserFetchingError(isError));
+        if (isError) {
+            dispatch(storeUser(null));
+            dispatch(storeAuthToken(null));
+            localStorage.setItem(AUTH_TOKEN_LOCAL_STORAGE_KEY, '');
+        }
     }, [isError]);
 
     /** изменение флага загрузки */

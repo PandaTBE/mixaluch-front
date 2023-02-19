@@ -8,12 +8,12 @@ import { AUTH_TOKEN_LOCAL_STORAGE_KEY } from '../../../../constants/constants';
  * кастомный хук для работы с даными
  */
 const useData = () => {
-    const { authToken } = useSelector(userReducerValues);
+    const { authToken, user } = useSelector(userReducerValues);
     const router = useRouter();
 
     /** Запись токена в локал сторедж и редирект на страницу авторизованного пользователя */
     useEffect(() => {
-        if (authToken) {
+        if (authToken && user) {
             const tokenFromLocalStorage = localStorage.getItem(AUTH_TOKEN_LOCAL_STORAGE_KEY);
 
             if (tokenFromLocalStorage !== authToken) {
@@ -21,7 +21,7 @@ const useData = () => {
             }
             router.push('/user-account');
         }
-    }, [authToken]);
+    }, [authToken, user]);
 };
 
 export default useData;

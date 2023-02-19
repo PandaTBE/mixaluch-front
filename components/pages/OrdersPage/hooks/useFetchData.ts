@@ -9,7 +9,7 @@ import { userReducerValues } from '../../../../slices/User/user';
  */
 const useFetchData = () => {
     const [getOrders, { data, isLoading, isError }] = orderApi.useGetOrdersMutation();
-    const { authToken } = useSelector(userReducerValues);
+    const { authToken, user } = useSelector(userReducerValues);
     const dispatch = useDispatch();
 
     /**
@@ -39,10 +39,10 @@ const useFetchData = () => {
      * Получение всех заказов для данного пользователя
      */
     useEffect(() => {
-        if (authToken && !isLoading) {
+        if (authToken && !isLoading && user) {
             getOrders(authToken);
         }
-    }, [authToken]);
+    }, [authToken, user]);
 };
 
 export default useFetchData;

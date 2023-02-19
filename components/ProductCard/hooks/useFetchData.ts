@@ -10,7 +10,7 @@ import { userReducerValues } from '../../../slices/User/user';
  */
 const useFetchData = () => {
     const [addCartItemRequest, data] = cartApi.useAddCartItemMutation();
-    const { authToken } = useSelector(userReducerValues);
+    const { authToken, user } = useSelector(userReducerValues);
     const dispatch = useDispatch();
 
     /** Перезапрос товаров */
@@ -23,7 +23,7 @@ const useFetchData = () => {
     /** Функция для добавления товара в коризну */
     const addCartItemHandler = useCallback(
         (product: IProduct) => {
-            if (authToken) {
+            if (authToken && user) {
                 addCartItemRequest({ authToken, body: { quantity: 1, product: product.id } });
             }
 
@@ -34,7 +34,7 @@ const useFetchData = () => {
                 }),
             );
         },
-        [authToken],
+        [authToken, user],
     );
 
     return { addCartItem: addCartItemHandler };

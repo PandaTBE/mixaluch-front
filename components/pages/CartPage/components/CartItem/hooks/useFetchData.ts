@@ -8,7 +8,7 @@ import { deleteCartItem, storeCartItemsRefetchObject } from '../../../../../../s
  * Кастомный хук для работы с сервером
  */
 const useFecthData = () => {
-    const { authToken } = useSelector(userReducerValues);
+    const { authToken, user } = useSelector(userReducerValues);
     const [deleteCartItemRequest, data] = cartApi.useRemoveCartItemMutation();
     const dispatch = useDispatch();
 
@@ -22,13 +22,13 @@ const useFecthData = () => {
     /** Функция для удаления товара */
     const deleteHandler = useCallback(
         (productId: number, cartItemId?: number) => {
-            if (authToken && cartItemId) {
+            if (authToken && cartItemId && user) {
                 deleteCartItemRequest({ authToken, cartItemId });
             }
 
             dispatch(deleteCartItem(productId));
         },
-        [authToken],
+        [authToken, user],
     );
 
     return { deleteCartItem: deleteHandler };

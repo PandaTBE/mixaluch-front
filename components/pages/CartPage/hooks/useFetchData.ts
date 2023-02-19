@@ -19,7 +19,7 @@ import { usePrepareData } from './usePrepareData';
 export const useGetRawData = () => {
     const [addCartItemRequest, cartItemResponse] = cartApi.useAddCartItemMutation();
     const [getCartItems, { data }] = cartApi.useGetCartItemsMutation();
-    const { authToken } = useSelector(userReducerValues);
+    const { authToken, user } = useSelector(userReducerValues);
     const { refetchCartItems } = useSelector(cartReducerValues);
     const dispatch = useDispatch();
     useLocalStorage();
@@ -38,7 +38,7 @@ export const useGetRawData = () => {
             dispatch(storeRawCartItems(data));
             if (!data.length) {
                 const cartItemsFromLocalStorage = getCartItemsFromLocalStorage();
-                if (authToken) {
+                if (authToken && user) {
                     cartItemsFromLocalStorage.forEach((element) => {
                         addCartItemRequest({
                             authToken,
@@ -54,8 +54,8 @@ export const useGetRawData = () => {
 
     /** Получение сырых данных для корзины */
     useEffect(() => {
-        if (authToken) {
+        if (authToken && user) {
             getCartItems(authToken);
         }
-    }, [authToken, refetchCartItems]);
+    }, [authToken, user, refetchCartItems]);
 };

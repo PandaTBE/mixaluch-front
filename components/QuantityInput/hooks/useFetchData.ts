@@ -9,7 +9,7 @@ import { userReducerValues } from '../../../slices/User/user';
  */
 const useFetchData = () => {
     const [patchCartItem, data] = cartApi.usePatchCartItemMutation();
-    const { authToken } = useSelector(userReducerValues);
+    const { authToken, user } = useSelector(userReducerValues);
     const dispatch = useDispatch();
 
     /** Перезапрос товаров */
@@ -22,11 +22,11 @@ const useFetchData = () => {
     /** Обновление товара в корзине */
     const patchCartItemHandler = useCallback(
         (quantity: number, cartItemId?: number) => {
-            if (authToken && cartItemId) {
+            if (authToken && cartItemId && user) {
                 patchCartItem({ authToken, cartItemId, body: { quantity } });
             }
         },
-        [authToken],
+        [authToken, user],
     );
 
     return {
