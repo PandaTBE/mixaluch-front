@@ -1,3 +1,4 @@
+import Meta from '../../Meta/Meta';
 import Advantages from './components/Anvantages/Advantages';
 import Feedback from './components/Feedback/Feedback';
 import Kebab from './components/Kebab/Kebab';
@@ -11,6 +12,7 @@ import PromoCarousel from './components/PromoCarousel/PromoCarousel';
 const HomePage = () => {
     return (
         <div>
+            <Meta />
             <PromoCarousel />
             <PopularProducts />
             <MainCategories />
