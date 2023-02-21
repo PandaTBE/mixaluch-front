@@ -2,12 +2,12 @@ import styled from 'styled-components';
 import CloseIcon from '@mui/icons-material/Close';
 
 export const ProductImageWrapper = styled.div`
-    width: 165px;
+    flex: 0 0 165px;
     height: 165px;
     position: relative;
 
     @media (max-width: 599px) {
-        width: 80px;
+        flex: 0 0 80px;
         height: 80px;
     }
 `;
@@ -33,7 +33,7 @@ export const Price = styled.div`
 `;
 
 export const QuantityInputWrapper = styled.div`
-    width: 70%;
+    width: 200px;
     @media (max-width: 599px) {
         display: none;
     }
