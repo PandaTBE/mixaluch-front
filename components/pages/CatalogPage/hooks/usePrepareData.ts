@@ -12,6 +12,7 @@ import { cloneDeep } from 'lodash';
 const usePrepareData = (filter: string) => {
     const [filteredProductsByCategory, setFilteredProductsByCategory] = useState<IProduct[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
+    const [sortedProducts, setSortedProducts] = useState<IProduct[]>([]);
     const { selectedCategoryId, categoriesByParentId } = useSelector(catalogReducerValues);
     const { categories } = useSelector(categoryReducerValues);
     const { products } = useSelector(productReducerValues);
@@ -54,6 +55,12 @@ const usePrepareData = (filter: string) => {
         }
     }, [filter, filteredProductsByCategory]);
 
+    /** Сортировка продуктов по цене */
+    useEffect(() => {
+        const sortedProducts = cloneDeep(filteredProducts).sort((a, b) => (a.regular_price > b.regular_price ? -1 : 1));
+        setSortedProducts(sortedProducts);
+    }, [filteredProducts]);
+
     /** Получение объекта категорий где ключ это id главной категории */
     useEffect(() => {
         if (categories) {
@@ -71,7 +78,7 @@ const usePrepareData = (filter: string) => {
         }
     }, [categories]);
 
-    return { filteredProducts };
+    return { products: sortedProducts };
 };
 
 export default usePrepareData;

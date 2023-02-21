@@ -17,7 +17,7 @@ import { ChangeEvent, useState } from 'react';
 const Catalog = () => {
     const [filter, setFilter] = useState('');
     const { categoriesByParentId, selectedCategoryId } = useSelector(catalogReducerValues);
-    const { filteredProducts } = usePrepareData(filter);
+    const { products } = usePrepareData(filter);
     const dispatch = useDispatch();
 
     const storeSelectedCategoryIdTrans = (id: number | null) => {
@@ -50,9 +50,9 @@ const Catalog = () => {
                         </List>
                     </aside>
                     <main>
-                        {filteredProducts.length ? (
+                        {products.length ? (
                             <Grid container spacing={2}>
-                                {filteredProducts.map((product) => {
+                                {products.map((product) => {
                                     return (
                                         <Grid key={product.id} item xs={12} sm={6} md={4} xl={3}>
                                             <ProductCard imageHeight={'220px'} product={product} />
