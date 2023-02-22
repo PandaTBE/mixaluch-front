@@ -60,10 +60,21 @@ const ProductInfoPage = () => {
             {selectedProduct ? (
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
-                        <Stack direction={'row'} spacing={2} minHeight={'150px'}>
+                        <Stack
+                            direction={{ xs: 'column', sm: 'row' }}
+                            spacing={2}
+                            height={{ xs: 400, sm: 300, md: 500 }}
+                        >
                             <SideSwiper
                                 onSwiper={setThumbsSwiper}
-                                direction={'vertical'}
+                                breakpoints={{
+                                    0: {
+                                        direction: 'horizontal',
+                                    },
+                                    600: {
+                                        direction: 'vertical',
+                                    },
+                                }}
                                 spaceBetween={10}
                                 slidesPerView={3}
                                 modules={[Navigation, Thumbs]}

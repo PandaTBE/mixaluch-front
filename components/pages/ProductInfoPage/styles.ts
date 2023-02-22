@@ -16,6 +16,7 @@ export const SideSwiper = styled(Swiper)`
     box-sizing: border-box;
     flex: 0 0 20%;
 
+    width: 100%;
     .swiper-slide {
         opacity: 0.6;
         img {
