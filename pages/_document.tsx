@@ -49,6 +49,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         rel="stylesheet"
                     />
                     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+                    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+                    <link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-touch-icon.png" />
+                    <link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png" />
+                    <link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png" />
+                    <link rel="mask-icon" href="/favico/safari-pinned-tab.svg" color="#5bbad5" />
+                    <link rel="manifest" href="/favico/site.webmanifest" />
                 </Head>
                 <body>
                     <noscript

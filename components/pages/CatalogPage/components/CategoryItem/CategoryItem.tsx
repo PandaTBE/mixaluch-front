@@ -9,7 +9,7 @@ import { ICategory } from '../../../../../models/Category';
 import { CatalogContext } from '../../context';
 
 export interface IProps {
-    /** основаная категория с подкатегорями */
+    /** Основная категория с подкатегориями */
     item: { parent: ICategory; children: ICategory[] };
 }
 
@@ -18,7 +18,7 @@ export interface IProps {
  */
 const CategoryItem: FC<IProps> = ({ item }) => {
     const context = useContext(CatalogContext);
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     const toggleOpen = () => {
         setOpen((prevState) => !prevState);

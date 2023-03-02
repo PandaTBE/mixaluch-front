@@ -48,7 +48,7 @@ const Feedback = () => {
     return (
         <Wrapper>
             <ContentWrapper>
-                <Title>Обратнаяа связь</Title>
+                <Title>Обратная связь</Title>
                 <MessageWrapper>
                     {data && <SuccessMessage text={'Сообщение успешно отправлено!'} />}
                     {isError && <ErrorMessage text={'Возникла ошибка, попробуйте еще раз!'} />}
