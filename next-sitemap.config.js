@@ -2,7 +2,7 @@
 
 // eslint-disable-next-line no-undef
 module.exports = {
-    siteUrl: 'https://mixaluch-shop-dev.ru/',
+    siteUrl: 'https://mixaluch-shop.ru/',
     changefreq: 'daily',
     priority: 0.7,
     sitemapSize: 5000,
