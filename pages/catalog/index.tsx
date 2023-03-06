@@ -33,13 +33,11 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
     } catch (error) {
         return {
             props: {},
-            revalidate: 10,
         };
     }
 
     return {
         props: {},
-        revalidate: 10,
     };
 });
 
