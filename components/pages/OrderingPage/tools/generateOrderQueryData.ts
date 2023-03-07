@@ -39,6 +39,7 @@ const generateOrderQueryData = (args: IArgs): IOrderDTO => {
         payment_type: paymentType,
         name: formValues.name,
         total_sum: Math.floor(totalSum),
+        comment: formValues.comment,
         order_data: {
             products,
         },

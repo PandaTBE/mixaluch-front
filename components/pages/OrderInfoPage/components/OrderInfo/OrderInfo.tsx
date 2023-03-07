@@ -55,7 +55,7 @@ const OrderInfo: FC<IProps> = ({ order }) => {
             </InfoWrapper>
             {order.comment && (
                 <InfoWrapper>
-                    <OrderDataKey>комментарий</OrderDataKey>
+                    <OrderDataKey>Комментарий</OrderDataKey>
                     <div>{order.comment}</div>
                 </InfoWrapper>
             )}
