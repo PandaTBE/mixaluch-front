@@ -45,8 +45,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <Script
                         strategy="afterInteractive"
                         dangerouslySetInnerHTML={{
-                            __html: `<!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
+                            __html: `
    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
    m[i].l=1*new Date();
    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
@@ -57,8 +56,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         clickmap:true,
         trackLinks:true,
         accurateTrackBounce:true
-   });
-</script>
+   });`,
+                        }}
+                    ></Script>
+                    <Script
+                        strategy="afterInteractive"
+                        dangerouslySetInnerHTML={{
+                            __html: `
 <noscript><div><img src="https://mc.yandex.ru/watch/92745351" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->`,
                         }}
