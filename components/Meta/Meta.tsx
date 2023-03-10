@@ -17,14 +17,13 @@ const Meta: FC<IProps> = ({
 }) => {
     const router = useRouter();
 
-    const site = 'https://mixaluch-shop-dev.ru/';
+    const site = 'https://mixaluch-shop.ru/';
     const canonicalURL = site + router.asPath;
 
     return (
         <Head>
             <title>{title}</title>
             <meta name="description" content={description} />
-            <meta name="yandex-verification" content="2c5486f281db7b72" />
             <meta name="viewport" content="width=device-width" />
             <meta name="robots" content="all" />
             <meta charSet="utf-8" />

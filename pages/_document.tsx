@@ -80,6 +80,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png" />
                     <link rel="mask-icon" href="/favico/safari-pinned-tab.svg" color="#5bbad5" />
                     <link rel="manifest" href="/favico/site.webmanifest" />
+                    <meta name="yandex-verification" content="2c5486f281db7b72" />
                 </Head>
                 <body>
                     <noscript
