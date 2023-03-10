@@ -24,7 +24,7 @@ const Meta: FC<IProps> = ({
         <Head>
             <title>{title}</title>
             <meta name="description" content={description} />
-            <meta name="yandex-verification" content="85e904ecac9751c9" />
+            <meta name="yandex-verification" content="2c5486f281db7b72" />
             <meta name="viewport" content="width=device-width" />
             <meta name="robots" content="all" />
             <meta charSet="utf-8" />
