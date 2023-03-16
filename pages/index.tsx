@@ -31,6 +31,8 @@ export const getStaticProps = wrapper.getStaticProps((store) => async () => {
             store.dispatch(storeMainCategories(mainCategories));
         });
     } catch (error) {
+        console.log('Home page error>>>>   ', error);
+
         return {
             props: {},
             revalidate: 10,
