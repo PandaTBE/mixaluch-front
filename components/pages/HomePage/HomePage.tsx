@@ -12,7 +12,7 @@ import PromoCarousel from './components/PromoCarousel/PromoCarousel';
 const HomePage = () => {
     return (
         <div>
-            <Meta />
+            {/* <Meta /> */}
             <PromoCarousel />
             <PopularProducts />
             <MainCategories />
