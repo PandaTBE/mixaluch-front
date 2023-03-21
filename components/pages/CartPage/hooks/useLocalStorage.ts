@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CART_ITEMS_LOCAL_STORAGE_KEY } from '../../../../constants/constants';
 import { cartReducerValues, storeCartItems } from '../../../../slices/Cart/cart';
@@ -9,6 +9,7 @@ import getCartItemsFromLocalStorage from '../tools/getCartItemsFromLocalStorage'
  * Кастомный хук для работы с localStorage
  */
 export const useLocalStorage = () => {
+    const [isCartItemsLoaded, setIsCartItemsLoaded] = useState(false);
     const { cartItems } = useSelector(cartReducerValues);
     const { authToken } = useSelector(userReducerValues);
     const dispatch = useDispatch();
@@ -17,11 +18,11 @@ export const useLocalStorage = () => {
      * Обновление LocalStorage
      */
     useEffect(() => {
-        if (cartItems.length && !authToken) {
+        if (!authToken && isCartItemsLoaded) {
             const cartItemsForLocalStorage = JSON.stringify(cartItems);
             localStorage.setItem(CART_ITEMS_LOCAL_STORAGE_KEY, cartItemsForLocalStorage);
         }
-    }, [cartItems, authToken]);
+    }, [cartItems, authToken, isCartItemsLoaded]);
 
     /**
      * Получение данных из локал стореджа
@@ -29,5 +30,6 @@ export const useLocalStorage = () => {
     useEffect(() => {
         const cartItemsFromLocalStorage = getCartItemsFromLocalStorage();
         dispatch(storeCartItems(cartItemsFromLocalStorage));
+        setIsCartItemsLoaded(true);
     }, []);
 };

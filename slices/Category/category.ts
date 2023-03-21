@@ -44,10 +44,25 @@ export const category = createSlice({
          * Гидрация необходимо для коннекта стора сервера и стора клиента
          */
         [HYDRATE]: (state, action) => {
+            let categoriesById: {
+                [id: string]: ICategory;
+            } | null = null;
+
+            if (action.payload.category.categories) {
+                categoriesById = action.payload.category.categories.reduce(
+                    (acc: { [id: string]: ICategory }, value: ICategory) => {
+                        acc[value.id] = value;
+                        return acc;
+                    },
+                    {},
+                );
+            }
+
             return {
                 ...state,
                 categories: action.payload.category.categories,
                 mainCategories: action.payload.category.mainCategories,
+                categoriesById: categoriesById,
             };
         },
     },

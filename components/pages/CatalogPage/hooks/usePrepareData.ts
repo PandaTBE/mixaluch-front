@@ -7,6 +7,10 @@ import { ICategoriesByParentId } from '../../../../slices/Catalog/interfaces';
 import { productReducerValues } from '../../../../slices/Product/product';
 import { IProduct } from '../../../../models/Product';
 import { cloneDeep } from 'lodash';
+import {
+    googleAnalytics4DataLayers,
+    sendNewDataLayer,
+} from '../../../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
 
 /** Кастомный хук для подготовки данных */
 const usePrepareData = (filter: string) => {
@@ -14,7 +18,7 @@ const usePrepareData = (filter: string) => {
     const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
     const [sortedProducts, setSortedProducts] = useState<IProduct[]>([]);
     const { selectedCategoryId, categoriesByParentId } = useSelector(catalogReducerValues);
-    const { categories } = useSelector(categoryReducerValues);
+    const { categories, categoriesById } = useSelector(categoryReducerValues);
     const { products } = useSelector(productReducerValues);
     const dispatch = useDispatch();
 
@@ -60,6 +64,18 @@ const usePrepareData = (filter: string) => {
         const sortedProducts = cloneDeep(filteredProducts).sort((a, b) => (a.regular_price > b.regular_price ? -1 : 1));
         setSortedProducts(sortedProducts);
     }, [filteredProducts]);
+
+    /** Отправка аналитики */
+    useEffect(() => {
+        if (selectedCategoryId && categoriesById?.[selectedCategoryId]) {
+            sendNewDataLayer(
+                googleAnalytics4DataLayers.generateViewItemList({
+                    selectedCategory: categoriesById[selectedCategoryId],
+                    products: sortedProducts,
+                }),
+            );
+        }
+    }, [sortedProducts, selectedCategoryId, categoriesById]);
 
     /** Получение объекта категорий где ключ это id главной категории */
     useEffect(() => {
