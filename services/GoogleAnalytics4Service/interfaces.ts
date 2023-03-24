@@ -14,14 +14,38 @@ export interface IViewItem {
     price: string;
     item_brand: string;
     item_category: string;
-    item_category2: string;
-    item_category3: string;
-    item_category4: string;
-    item_variant: string;
+    item_category2?: string;
+    item_category3?: string;
+    item_category4?: string;
+    item_variant?: string;
     item_list_name: string;
     item_list_id: string;
     index: number;
     quantity: string;
+}
+
+export interface ISelectItem {
+    event: 'select_item';
+    ecommerce: {
+        items: {
+            item_name: string;
+            item_id: string;
+            price: string;
+            item_brand?: string;
+            item_category?: string;
+            item_category2?: string;
+            item_category3?: string;
+            item_category4?: string;
+            item_variant?: string;
+            promotion_id?: string;
+            promotion_name?: string;
+            creative_name?: string;
+            creative_slot?: string;
+            location_id?: string;
+            index: number;
+            quantity: string;
+        }[];
+    };
 }
 
 export interface IGenerateViewItemListArgs {
@@ -29,4 +53,4 @@ export interface IGenerateViewItemListArgs {
     selectedCategory?: ICategory;
 }
 
-export type TGA4Layers = IViewItemList;
+export type TGA4Layers = IViewItemList | ISelectItem;

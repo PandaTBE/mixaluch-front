@@ -19,6 +19,10 @@ import useFetchData from './hooks/useFetchData';
 import { useRouter } from 'next/router';
 import { storePageToSwitch } from '../../slices/General/general';
 import Image from 'next/image';
+import {
+    googleAnalytics4DataLayers,
+    sendNewDataLayer,
+} from '../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
 
 /**
  * Компонент для отображения карточки продукта
@@ -34,6 +38,7 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
     };
 
     const onProductClick = () => {
+        sendNewDataLayer(googleAnalytics4DataLayers.generateSelectItem(product));
         dispatch(storePageToSwitch('/catalog/[id]'));
         router.push(`/catalog/${product.id}`);
     };

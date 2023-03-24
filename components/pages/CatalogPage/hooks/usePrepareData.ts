@@ -67,15 +67,13 @@ const usePrepareData = (filter: string) => {
 
     /** Отправка аналитики */
     useEffect(() => {
-        if (selectedCategoryId && categoriesById?.[selectedCategoryId]) {
-            sendNewDataLayer(
-                googleAnalytics4DataLayers.generateViewItemList({
-                    selectedCategory: categoriesById[selectedCategoryId],
-                    products: sortedProducts,
-                }),
-            );
-        }
-    }, [sortedProducts, selectedCategoryId, categoriesById]);
+        sendNewDataLayer(
+            googleAnalytics4DataLayers.generateViewItemList({
+                selectedCategory: categoriesById?.[selectedCategoryId || ''],
+                products: sortedProducts,
+            }),
+        );
+    }, [sortedProducts]);
 
     /** Получение объекта категорий где ключ это id главной категории */
     useEffect(() => {

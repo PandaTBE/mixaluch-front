@@ -1,8 +1,9 @@
-import { IGenerateViewItemListArgs, IViewItemList, TGA4Layers } from './interfaces';
+import { IProduct } from '../../models/Product';
+import { IGenerateViewItemListArgs, ISelectItem, IViewItemList, TGA4Layers } from './interfaces';
 
 export const googleAnalytics4DataLayers = {
     /**
-     * Функция для получения структуры для отправки в GA4
+     * Функция для получения структуры view_item_list для отправки в GA4
      */
     generateViewItemList: (args: IGenerateViewItemListArgs): IViewItemList => {
         const { products, selectedCategory } = args;
@@ -15,15 +16,31 @@ export const googleAnalytics4DataLayers = {
                     price: element.regular_price.toString(),
                     item_brand: 'Mixaluch',
                     item_category: selectedCategory?.name || 'All products',
-                    item_category2: '-',
-                    item_category3: '-',
-                    item_category4: '-',
-                    item_variant: 'None',
                     item_list_name: selectedCategory?.name || 'All products',
                     item_list_id: selectedCategory?.id.toString() || 'AllProducts',
                     quantity: '1',
                     index,
                 })),
+            },
+        };
+    },
+
+    /**
+     * Функция для получения структуры select_item для отправки в GA4
+     */
+    generateSelectItem: (product: IProduct): ISelectItem => {
+        return {
+            event: 'select_item',
+            ecommerce: {
+                items: [
+                    {
+                        item_name: product.title,
+                        item_id: product.id.toString(),
+                        price: product.regular_price.toString(),
+                        index: 1,
+                        quantity: '1',
+                    },
+                ],
             },
         };
     },
