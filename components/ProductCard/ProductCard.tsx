@@ -34,6 +34,7 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
     const router = useRouter();
 
     const onProductAdd = () => {
+        sendNewDataLayer(googleAnalytics4DataLayers.generateAddToCart(product));
         addCartItem(product);
     };
 

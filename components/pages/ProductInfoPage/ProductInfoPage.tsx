@@ -42,7 +42,10 @@ const ProductInfoPage = () => {
     }, [selectedProduct]);
 
     const onProductAdd = () => {
-        selectedProduct && addCartItem(selectedProduct);
+        if (selectedProduct) {
+            sendNewDataLayer(googleAnalytics4DataLayers.generateAddToCart(selectedProduct));
+            addCartItem(selectedProduct);
+        }
     };
 
     const cartItem = useMemo(() => {
