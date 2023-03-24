@@ -1,5 +1,15 @@
+import { ICartItem } from '../../models/CartItem';
 import { IProduct } from '../../models/Product';
-import { IAddToCart, IGenerateViewItemListArgs, ISelectItem, IViewItem, IViewItemList, TGA4Layers } from './interfaces';
+import { IExtendedCartItem } from '../../slices/Cart/interfaces';
+import {
+    IAddToCart,
+    IGenerateViewItemListArgs,
+    IRemoveFromCart,
+    ISelectItem,
+    IViewItem,
+    IViewItemList,
+    TGA4Layers,
+} from './interfaces';
 
 export const googleAnalytics4DataLayers = {
     /**
@@ -79,6 +89,26 @@ export const googleAnalytics4DataLayers = {
                         price: product.regular_price.toString(),
                         index: 1,
                         quantity: '1',
+                    },
+                ],
+            },
+        };
+    },
+
+    /**
+     * Функция для получения структуры remove_from_cart для отправки в GA4
+     */
+    generateRemoveFromCart: (cartItem: IExtendedCartItem): IRemoveFromCart => {
+        return {
+            event: 'remove_from_cart',
+            ecommerce: {
+                items: [
+                    {
+                        item_name: cartItem.product.title,
+                        item_id: cartItem.product.id.toString(),
+                        price: cartItem.product.regular_price.toString(),
+                        index: 1,
+                        quantity: cartItem.quantity.toString(),
                     },
                 ],
             },

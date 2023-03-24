@@ -1,6 +1,10 @@
 import { Stack } from '@mui/material';
 import Image from 'next/image';
 import { FC } from 'react';
+import {
+    googleAnalytics4DataLayers,
+    sendNewDataLayer,
+} from '../../../../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
 import { IExtendedCartItem } from '../../../../../slices/Cart/interfaces';
 import QuantityInput from '../../../../QuantityInput/QuantityInput';
 import useFecthData from './hooks/useFetchData';
@@ -31,6 +35,7 @@ const CartItem: FC<IProps> = ({ cartItem, onCartItemTitleClick }) => {
     const { deleteCartItem } = useFecthData();
 
     const onRemoveClick = () => {
+        sendNewDataLayer(googleAnalytics4DataLayers.generateRemoveFromCart(cartItem));
         deleteCartItem(cartItem.product.id, cartItem.id);
     };
 
