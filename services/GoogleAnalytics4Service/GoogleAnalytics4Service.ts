@@ -1,5 +1,5 @@
 import { IProduct } from '../../models/Product';
-import { IGenerateViewItemListArgs, ISelectItem, IViewItemList, TGA4Layers } from './interfaces';
+import { IGenerateViewItemListArgs, ISelectItem, IViewItem, IViewItemList, TGA4Layers } from './interfaces';
 
 export const googleAnalytics4DataLayers = {
     /**
@@ -31,6 +31,26 @@ export const googleAnalytics4DataLayers = {
     generateSelectItem: (product: IProduct): ISelectItem => {
         return {
             event: 'select_item',
+            ecommerce: {
+                items: [
+                    {
+                        item_name: product.title,
+                        item_id: product.id.toString(),
+                        price: product.regular_price.toString(),
+                        index: 1,
+                        quantity: '1',
+                    },
+                ],
+            },
+        };
+    },
+
+    /**
+     * Функция для получения структуры view_item для отправки в GA4
+     */
+    generateViewItem: (product: IProduct): IViewItem => {
+        return {
+            event: 'view_item',
             ecommerce: {
                 items: [
                     {

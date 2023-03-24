@@ -13,7 +13,7 @@ import {
 } from './styles';
 
 import SwiperCore, { Navigation, Thumbs } from 'swiper';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { productReducerValues } from '../../../slices/Product/product';
 import { Grid, Stack } from '@mui/material';
@@ -22,6 +22,10 @@ import QuantityInput from '../../QuantityInput/QuantityInput';
 import { cartReducerValues } from '../../../slices/Cart/cart';
 import useFetchData from '../../ProductCard/hooks/useFetchData';
 import Image from 'next/image';
+import {
+    googleAnalytics4DataLayers,
+    sendNewDataLayer,
+} from '../../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
 
 /**
  * Компонент для отображения страницы информации о товаре
@@ -31,6 +35,11 @@ const ProductInfoPage = () => {
     const { selectedProduct } = useSelector(productReducerValues);
     const { cartItems } = useSelector(cartReducerValues);
     const [thumbsSwiper, setThumbsSwiper] = useState<null | SwiperCore>(null);
+
+    /** Отправка данных в гугл аналитику */
+    useEffect(() => {
+        selectedProduct && sendNewDataLayer(googleAnalytics4DataLayers.generateViewItem(selectedProduct));
+    }, [selectedProduct]);
 
     const onProductAdd = () => {
         selectedProduct && addCartItem(selectedProduct);
