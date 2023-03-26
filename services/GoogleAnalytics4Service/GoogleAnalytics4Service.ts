@@ -1,4 +1,3 @@
-import { ICartItem } from '../../models/CartItem';
 import { IProduct } from '../../models/Product';
 import { IExtendedCartItem } from '../../slices/Cart/interfaces';
 import {
