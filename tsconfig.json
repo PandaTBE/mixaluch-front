@@ -25,7 +25,7 @@
         "**/*.ts",
         "**/*.tsx",
         "next.config.js",
-        "components/pages/OrderingPage/comonents/Delivery/constants"
+        "components/pages/OrderingPage/components/Delivery/constants"
     ],
     "exclude": [
         "node_modules"

@@ -2,6 +2,7 @@ import { IProduct } from '../../models/Product';
 import { IExtendedCartItem } from '../../slices/Cart/interfaces';
 import {
     IAddToCart,
+    IBeginCheckout,
     IGenerateViewItemListArgs,
     IRemoveFromCart,
     ISelectItem,
@@ -127,6 +128,26 @@ export const googleAnalytics4DataLayers = {
                         item_name: element.product.title,
                         item_id: element.id?.toString() || element.product.id.toString(),
                         price: element.product.regular_price.toString(),
+                        quantity: element.quantity.toString(),
+                    };
+                }),
+            },
+        };
+    },
+
+    /**
+     * Функция для получения структуры begin_checkout для отправки в GA4
+     */
+    generateBeginCheckout: (cartItems: IExtendedCartItem[]): IBeginCheckout => {
+        return {
+            event: 'begin_checkout',
+            ecommerce: {
+                items: cartItems.map((element, index) => {
+                    return {
+                        item_name: element.product.title,
+                        item_id: element.id?.toString() || element.product.id.toString(),
+                        price: element.product.regular_price.toString(),
+                        index,
                         quantity: element.quantity.toString(),
                     };
                 }),

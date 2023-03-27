@@ -1,6 +1,6 @@
 import { IExtendedCartItem } from '../../../../slices/Cart/interfaces';
 import { IOrderDTO, TOrderDeliveryType, TOrderPaymentType } from '../../../../models/Order';
-import { IOrderFormValues } from '../comonents/Delivery/interfaces';
+import { IOrderFormValues } from '../components/Delivery/interfaces';
 import { omit } from 'lodash';
 
 interface IArgs {

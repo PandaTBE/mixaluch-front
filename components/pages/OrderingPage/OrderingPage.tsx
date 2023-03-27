@@ -1,12 +1,12 @@
-import Delivery from './comonents/Delivery/Delivery';
+import Delivery from './components/Delivery/Delivery';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import generateOrderQueryData from './tools/generateOrderQueryData';
-import Order from './comonents/Order/Order';
+import Order from './components/Order/Order';
 import PageTitle from '../../PageTitle/PageTitle';
-import UserInfo from './comonents/UserInfo/UserInfo';
+import UserInfo from './components/UserInfo/UserInfo';
 import { Accordion, AccordionDetails, AccordionSummary, Stack } from '@mui/material';
 import { AccordionWrapper, ErrorWrapper, OrderWrapper, Total, TotalValue, Wrapper, WrapperItem } from './styles';
-import { IOrderFormValues } from './comonents/Delivery/interfaces';
+import { IOrderFormValues } from './components/Delivery/interfaces';
 import { orderApi } from '../../../services/OrderService';
 import { OrderingPageContext } from './context';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,6 +22,10 @@ import {
 import { CART_ITEMS_LOCAL_STORAGE_KEY, LAST_ORDER_ID_LOCAL_STORAGE_KEY } from '../../../constants/constants';
 import { storeLastOrderId } from '../../../slices/Order/order';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
+import {
+    googleAnalytics4DataLayers,
+    sendNewDataLayer,
+} from '../../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
 
 /**
  * Компонент для отображения страницы оформления заказа
@@ -31,9 +35,13 @@ const OrderingPage = () => {
     const { totalSum, cartItems, deliveryCost, totalSumWithDelivery } = useSelector(cartReducerValues);
     const [accordionExpanded, setAccordionExpanded] = useState(false);
     const { user, authToken } = useSelector(userReducerValues);
+    const dispatch = useDispatch();
     const router = useRouter();
 
-    const dispatch = useDispatch();
+    /** Отправка события начала оформления заказа в аналитику */
+    useEffect(() => {
+        sendNewDataLayer(googleAnalytics4DataLayers.generateBeginCheckout(cartItems));
+    }, [cartItems]);
 
     useEffect(() => {
         if (data) {
