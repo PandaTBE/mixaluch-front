@@ -1,6 +1,7 @@
 import { IProduct } from '../../models/Product';
 import { IExtendedCartItem } from '../../slices/Cart/interfaces';
 import {
+    IAddShippingInfo,
     IAddToCart,
     IBeginCheckout,
     IGenerateViewItemListArgs,
@@ -148,6 +149,26 @@ export const googleAnalytics4DataLayers = {
                         item_id: element.id?.toString() || element.product.id.toString(),
                         price: element.product.regular_price.toString(),
                         index,
+                        quantity: element.quantity.toString(),
+                    };
+                }),
+            },
+        };
+    },
+
+    /**
+     * Функция для получения структуры add_shipping_info для отправки в GA4
+     */
+    generateAddShippingInfo: (cartItems: IExtendedCartItem[], shipping_tier: string): IAddShippingInfo => {
+        return {
+            event: 'add_shipping_info',
+            ecommerce: {
+                shipping_tier,
+                items: cartItems.map((element) => {
+                    return {
+                        item_name: element.product.title,
+                        item_id: element.id?.toString() || element.product.id.toString(),
+                        price: element.product.regular_price.toString(),
                         quantity: element.quantity.toString(),
                     };
                 }),

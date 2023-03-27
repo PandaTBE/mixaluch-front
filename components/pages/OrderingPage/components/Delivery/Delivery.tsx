@@ -18,6 +18,10 @@ import {
     Wrapper,
 } from './styles';
 import { IOrderFormValues } from './interfaces';
+import {
+    googleAnalytics4DataLayers,
+    sendNewDataLayer,
+} from '../../../../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
 
 /**
  * Компонент для отображения секции доставки
@@ -73,11 +77,13 @@ const Delivery = () => {
     };
 
     const onCashPaymentChange = (setFieldValue: (field: string, value: boolean) => void) => () => {
+        sendNewDataLayer(googleAnalytics4DataLayers.generateAddShippingInfo(context?.cartItems || [], 'cashPayment'));
         setFieldValue('cashPayment', true);
         setFieldValue('cardPayment', false);
     };
 
     const onCardPaymentChange = (setFieldValue: (field: string, value: boolean) => void) => () => {
+        sendNewDataLayer(googleAnalytics4DataLayers.generateAddShippingInfo(context?.cartItems || [], 'cardPayment'));
         setFieldValue('cardPayment', true);
         setFieldValue('cashPayment', false);
     };
