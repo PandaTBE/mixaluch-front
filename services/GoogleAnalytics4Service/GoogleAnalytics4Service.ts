@@ -5,6 +5,7 @@ import {
     IGenerateViewItemListArgs,
     IRemoveFromCart,
     ISelectItem,
+    IViewCart,
     IViewItem,
     IViewItemList,
     TGA4Layers,
@@ -110,6 +111,25 @@ export const googleAnalytics4DataLayers = {
                         quantity: cartItem.quantity.toString(),
                     },
                 ],
+            },
+        };
+    },
+
+    /**
+     * Функция для получения структуры view_cart для отправки в GA4
+     */
+    generateViewCart: (cartItems: IExtendedCartItem[]): IViewCart => {
+        return {
+            event: 'view_cart',
+            ecommerce: {
+                items: cartItems.map((element) => {
+                    return {
+                        item_name: element.product.title,
+                        item_id: element.id?.toString() || element.product.id.toString(),
+                        price: element.product.regular_price.toString(),
+                        quantity: element.quantity.toString(),
+                    };
+                }),
             },
         };
     },

@@ -2,7 +2,12 @@ import { Grid } from '@mui/material';
 import { Stack } from '@mui/system';
 import { cloneDeep } from 'lodash';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+    googleAnalytics4DataLayers,
+    sendNewDataLayer,
+} from '../../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
 import { cartReducerValues } from '../../../slices/Cart/cart';
 import { storePageToSwitch } from '../../../slices/General/general';
 import Button from '../../Button/Button';
@@ -17,6 +22,11 @@ const CartPage = () => {
     const { cartItems, totalSum } = useSelector(cartReducerValues);
     const dispatch = useDispatch();
     const router = useRouter();
+
+    /** Отправка события просмотра корзину в аналитику */
+    useEffect(() => {
+        sendNewDataLayer(googleAnalytics4DataLayers.generateViewCart(cartItems));
+    }, [cartItems]);
 
     const onOrderClick = () => {
         dispatch(storePageToSwitch('/ordering'));
