@@ -66,24 +66,26 @@ const Delivery = () => {
 
     const onSelfDeliveryChange = (setFieldValue: (field: string, value: boolean) => void) => () => {
         context && context.storeDeliveryCostTrans(0);
+        sendNewDataLayer(googleAnalytics4DataLayers.generateAddShippingInfo(context?.cartItems || [], 'selfDelivery'));
         setFieldValue('selfDelivery', true);
         setFieldValue('courierDelivery', false);
     };
 
     const onCourierDeliveryChange = (setFieldValue: (field: string, value: boolean) => void) => () => {
         context && context.totalSum < FREE_DELIVERY_BORDER && context.storeDeliveryCostTrans(DELIVERY_COST);
+        sendNewDataLayer(
+            googleAnalytics4DataLayers.generateAddShippingInfo(context?.cartItems || [], 'courierDelivery'),
+        );
         setFieldValue('courierDelivery', true);
         setFieldValue('selfDelivery', false);
     };
 
     const onCashPaymentChange = (setFieldValue: (field: string, value: boolean) => void) => () => {
-        sendNewDataLayer(googleAnalytics4DataLayers.generateAddShippingInfo(context?.cartItems || [], 'cashPayment'));
         setFieldValue('cashPayment', true);
         setFieldValue('cardPayment', false);
     };
 
     const onCardPaymentChange = (setFieldValue: (field: string, value: boolean) => void) => () => {
-        sendNewDataLayer(googleAnalytics4DataLayers.generateAddShippingInfo(context?.cartItems || [], 'cardPayment'));
         setFieldValue('cardPayment', true);
         setFieldValue('cashPayment', false);
     };
