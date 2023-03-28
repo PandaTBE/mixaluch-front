@@ -6,6 +6,7 @@ import {
     IAddToCart,
     IBeginCheckout,
     IGenerateViewItemListArgs,
+    IPurchase,
     IRemoveFromCart,
     ISelectItem,
     IViewCart,
@@ -191,6 +192,34 @@ export const googleAnalytics4DataLayers = {
                         item_id: element.id?.toString() || element.product.id.toString(),
                         price: element.product.regular_price.toString(),
                         quantity: element.quantity.toString(),
+                    };
+                }),
+            },
+        };
+    },
+
+    /**
+     * Функция для получения структуры purchase для отправки в GA4
+     */
+    generatePurchase: (args: {
+        cartItems: IExtendedCartItem[];
+        orderId: number;
+        currency: string;
+        totalSumWithDelivery: number;
+    }): IPurchase => {
+        const { cartItems, orderId, currency, totalSumWithDelivery } = args;
+        return {
+            event: 'purchase',
+            ecommerce: {
+                transaction_id: orderId.toString(),
+                currency,
+                value: totalSumWithDelivery.toString(),
+                items: cartItems.map((element) => {
+                    return {
+                        item_name: element.product.title,
+                        item_id: element.id?.toString() || element.product.id.toString(),
+                        price: element.product.regular_price.toString(),
+                        quantity: Math.round(element.quantity),
                     };
                 }),
             },

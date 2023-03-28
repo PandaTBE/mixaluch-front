@@ -185,6 +185,29 @@ export interface IAddPaymentInfo {
     };
 }
 
+export interface IPurchase {
+    event: 'purchase';
+    ecommerce: {
+        transaction_id: string;
+        currency: string;
+        value: string;
+        affiliation?: string;
+        tax?: string;
+        shipping?: string;
+        coupon?: string;
+        items: {
+            item_name: string;
+            item_id: string;
+            price: string;
+            item_brand?: string;
+            item_category?: string;
+            item_variant?: string;
+            /** Целое число */
+            quantity: number;
+        }[];
+    };
+}
+
 export interface IGenerateViewItemListArgs {
     products: IProduct[];
     selectedCategory?: ICategory;
@@ -199,4 +222,5 @@ export type TGA4Layers =
     | IViewCart
     | IBeginCheckout
     | IAddShippingInfo
-    | IAddPaymentInfo;
+    | IAddPaymentInfo
+    | IPurchase;

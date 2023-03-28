@@ -51,6 +51,14 @@ const OrderingPage = () => {
             dispatch(storeCartItemsRefetchObject());
             dispatch(storeLastOrderId(data.id));
             dispatch(storeCartItems([]));
+            sendNewDataLayer(
+                googleAnalytics4DataLayers.generatePurchase({
+                    totalSumWithDelivery: data.total_sum_with_delivery,
+                    orderId: data.id,
+                    currency: 'RUB',
+                    cartItems,
+                }),
+            );
         }
     }, [data]);
 
