@@ -166,6 +166,25 @@ export interface IAddShippingInfo {
     };
 }
 
+export interface IAddPaymentInfo {
+    event: 'add_payment_info';
+    ecommerce: {
+        payment_type: string;
+        items: {
+            item_name: string;
+            item_id: string;
+            price: string;
+            item_brand?: string;
+            item_category?: string;
+            item_category2?: string;
+            item_category3?: string;
+            item_category4?: string;
+            item_variant?: string;
+            quantity: string;
+        }[];
+    };
+}
+
 export interface IGenerateViewItemListArgs {
     products: IProduct[];
     selectedCategory?: ICategory;
@@ -179,4 +198,5 @@ export type TGA4Layers =
     | IRemoveFromCart
     | IViewCart
     | IBeginCheckout
-    | IAddShippingInfo;
+    | IAddShippingInfo
+    | IAddPaymentInfo;

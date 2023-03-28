@@ -1,6 +1,7 @@
 import { IProduct } from '../../models/Product';
 import { IExtendedCartItem } from '../../slices/Cart/interfaces';
 import {
+    IAddPaymentInfo,
     IAddShippingInfo,
     IAddToCart,
     IBeginCheckout,
@@ -164,6 +165,26 @@ export const googleAnalytics4DataLayers = {
             event: 'add_shipping_info',
             ecommerce: {
                 shipping_tier,
+                items: cartItems.map((element) => {
+                    return {
+                        item_name: element.product.title,
+                        item_id: element.id?.toString() || element.product.id.toString(),
+                        price: element.product.regular_price.toString(),
+                        quantity: element.quantity.toString(),
+                    };
+                }),
+            },
+        };
+    },
+
+    /**
+     * Функция для получения структуры add_payment_info для отправки в GA4
+     */
+    generateAddPaymentInfo: (cartItems: IExtendedCartItem[], payment_type: string): IAddPaymentInfo => {
+        return {
+            event: 'add_payment_info',
+            ecommerce: {
+                payment_type,
                 items: cartItems.map((element) => {
                     return {
                         item_name: element.product.title,

@@ -81,11 +81,13 @@ const Delivery = () => {
     };
 
     const onCashPaymentChange = (setFieldValue: (field: string, value: boolean) => void) => () => {
+        sendNewDataLayer(googleAnalytics4DataLayers.generateAddPaymentInfo(context?.cartItems || [], 'cashPayment'));
         setFieldValue('cashPayment', true);
         setFieldValue('cardPayment', false);
     };
 
     const onCardPaymentChange = (setFieldValue: (field: string, value: boolean) => void) => () => {
+        sendNewDataLayer(googleAnalytics4DataLayers.generateAddPaymentInfo(context?.cartItems || [], 'cardPayment'));
         setFieldValue('cardPayment', true);
         setFieldValue('cashPayment', false);
     };
