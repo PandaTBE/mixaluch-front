@@ -91,7 +91,11 @@ const RegisterPage = () => {
 
             {data && (
                 <MessageWrapper>
-                    <SuccessMessage text={'Для завершения регистрации подтвердите свою почту'} />
+                    <SuccessMessage
+                        text={
+                            'Для завершения регистрации подтвердите свою почту. Если Вы не получили сообщения - проверьте СПАМ'
+                        }
+                    />
                 </MessageWrapper>
             )}
             <StyledForm onSubmit={formik.handleSubmit}>
