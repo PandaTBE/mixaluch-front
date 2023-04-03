@@ -50,7 +50,11 @@ const ResetPasswordPage = () => {
 
             {status === 'fulfilled' && (
                 <MessageWrapper>
-                    <SuccessMessage text={'Вам на почту была направлена инструкция для изменения пароля'} />
+                    <SuccessMessage
+                        text={
+                            'Вам на почту была направлена инструкция для изменения пароля. Если Вы не видите сообщения, то проверьте СПАМ'
+                        }
+                    />
                 </MessageWrapper>
             )}
             <Form onSubmit={formik.handleSubmit}>
