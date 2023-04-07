@@ -27,3 +27,15 @@ export const ListSubHeader = styled.div`
 export const StyledInput = styled(TextField)`
     width: 100%;
 `;
+
+export const AllProducts = styled.div<{ isSelected: boolean }>`
+    width: 100%;
+    padding: 10px 0;
+    cursor: pointer;
+    color: ${(p) => (p.isSelected ? p.theme.colors.primary : 'inherit')};
+    :hover {
+        color: ${(p) => p.theme.colors.primary};
+    }
+
+    border-bottom: ${(p) => `1px solid ${p.theme.border.primary}`};
+`;

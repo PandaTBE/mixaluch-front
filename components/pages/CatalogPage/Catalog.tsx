@@ -1,4 +1,4 @@
-import { ContentWrapper, ListSubHeader, StyledInput, Wrapper } from './styles';
+import { AllProducts, ContentWrapper, ListSubHeader, StyledInput, Wrapper } from './styles';
 
 import { Grid } from '@mui/material';
 import List from '@mui/material/List';
@@ -10,6 +10,7 @@ import usePrepareData from './hooks/usePrepareData';
 import { useDispatch, useSelector } from 'react-redux';
 import { CatalogContext, ICatalogContext } from './context';
 import { ChangeEvent, useState } from 'react';
+import { isNull } from 'lodash';
 
 /**
  * Компонент для отображения страницы с каталогом товаров
@@ -41,8 +42,14 @@ const Catalog = () => {
                 </section>
                 <ContentWrapper>
                     <aside>
-                        <StyledInput onChange={onFilterChange} value={filter} label={'Фильтр'} />
+                        <StyledInput onChange={onFilterChange} value={filter} label={'Поиск'} />
                         <List component="nav" subheader={<ListSubHeader>Категории</ListSubHeader>}>
+                            <AllProducts
+                                onClick={() => storeSelectedCategoryIdTrans(null)}
+                                isSelected={isNull(selectedCategoryId)}
+                            >
+                                Все товары
+                            </AllProducts>
                             {categoriesByParentId &&
                                 Object.values(categoriesByParentId).map((element) => (
                                     <CategoryItem key={element.parent.id} item={element} />
