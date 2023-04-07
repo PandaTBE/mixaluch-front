@@ -54,3 +54,9 @@ export const ButtonText = styled.div`
     color: #ffff;
     margin-right: 5px;
 `;
+
+export const UnitWrapper = styled.div`
+    border-radius: 4px;
+    background-color: #f6f5f7;
+    padding: 6px 8px;
+`;

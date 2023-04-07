@@ -6,6 +6,7 @@ import {
     ImageWrapper,
     Price,
     Title,
+    UnitWrapper,
     Wrapper,
 } from './styles';
 
@@ -65,7 +66,7 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
 
                 <Stack direction={'row'} alignItems={'end'} spacing={1}>
                     <Price>{product.regular_price} ₽</Price>
-                    <div>{t(product.unit)}</div>
+                    <UnitWrapper>за 1 {t(product.unit)}</UnitWrapper>
                 </Stack>
                 <ButtonWrapper>
                     {cartItem ? (

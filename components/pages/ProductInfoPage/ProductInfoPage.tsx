@@ -26,6 +26,7 @@ import {
     googleAnalytics4DataLayers,
     sendNewDataLayer,
 } from '../../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Компонент для отображения страницы информации о товаре
@@ -35,6 +36,8 @@ const ProductInfoPage = () => {
     const { selectedProduct } = useSelector(productReducerValues);
     const { cartItems } = useSelector(cartReducerValues);
     const [thumbsSwiper, setThumbsSwiper] = useState<null | SwiperCore>(null);
+
+    const { t } = useTranslation();
 
     /** Отправка данных в гугл аналитику */
     useEffect(() => {
@@ -107,7 +110,10 @@ const ProductInfoPage = () => {
                         <ProductTitle>{selectedProduct?.title}</ProductTitle>
                         <BoxWrapper>
                             <Stack justifyContent={'space-between'} direction={'row'} spacing={2}>
-                                <Price>{selectedProduct?.regular_price} ₽</Price>
+                                <Stack direction={'column'} spacing={1}>
+                                    <Price>{selectedProduct?.regular_price} ₽</Price>
+                                    <div>за 1 {t(selectedProduct?.unit)}</div>
+                                </Stack>
                                 <ButtonWrapper>
                                     {cartItem && selectedProduct ? (
                                         <QuantityInput

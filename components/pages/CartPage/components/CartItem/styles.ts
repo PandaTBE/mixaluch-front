@@ -32,6 +32,7 @@ export const ProductTitle = styled.div`
 export const Price = styled.div`
     color: ${(p) => p.theme.colors.primary};
     font-size: 18px;
+    white-space: nowrap;
 `;
 
 export const QuantityInputWrapper = styled.div`
@@ -77,4 +78,11 @@ export const FooterWrapper = styled.div`
 
 export const FooterQuantityInputWrapper = styled.div`
     width: 150px;
+`;
+
+export const UnitWrapper = styled.div`
+    border-radius: 4px;
+    background-color: #f6f5f7;
+    padding: 6px 8px;
+    white-space: nowrap;
 `;

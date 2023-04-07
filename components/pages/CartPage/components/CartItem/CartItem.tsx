@@ -18,8 +18,10 @@ import {
     StyledCloseIcon,
     TotalPrice,
     TotalPriceWrapper,
+    UnitWrapper,
     Wrapper,
 } from './styles';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
     /** Элемент корзины */
@@ -33,6 +35,8 @@ interface IProps {
  */
 const CartItem: FC<IProps> = ({ cartItem, onCartItemTitleClick }) => {
     const { deleteCartItem } = useFetchData();
+
+    const { t } = useTranslation();
 
     const onRemoveClick = () => {
         sendNewDataLayer(googleAnalytics4DataLayers.generateRemoveFromCart(cartItem));
@@ -60,7 +64,10 @@ const CartItem: FC<IProps> = ({ cartItem, onCartItemTitleClick }) => {
                             justifyContent={{ xs: 'flex-start', sm: 'space-between' }}
                         >
                             <ProductTitle onClick={onTitleClick}>{cartItem.product.title}</ProductTitle>
-                            <Price>{cartItem.product.regular_price} ₽</Price>
+                            <Stack direction={'row'} spacing={1} alignItems={'center'}>
+                                <Price>{cartItem.product.regular_price} ₽</Price>
+                                <UnitWrapper>за 1 {t(cartItem.product.unit)}</UnitWrapper>
+                            </Stack>
                             <QuantityInputWrapper>
                                 <QuantityInput
                                     minQuantityValue={cartItem.product.min_quantity}

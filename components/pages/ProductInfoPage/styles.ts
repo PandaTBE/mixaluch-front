@@ -64,6 +64,7 @@ export const BoxWrapper = styled.div`
 export const Price = styled.div`
     font-size: 2rem;
     font-weight: 600;
+    line-height: 2rem;
     white-space: nowrap;
 `;
 
