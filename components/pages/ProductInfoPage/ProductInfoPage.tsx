@@ -111,9 +111,11 @@ const ProductInfoPage = () => {
                                 <ButtonWrapper>
                                     {cartItem && selectedProduct ? (
                                         <QuantityInput
+                                            minQuantityValue={selectedProduct.min_quantity}
                                             defaultValue={cartItem.quantity}
-                                            cartItemId={cartItem.id}
                                             productId={selectedProduct.id}
+                                            unit={cartItem.product.unit}
+                                            cartItemId={cartItem.id}
                                         />
                                     ) : (
                                         <Button width={'100%'} clickHandler={onProductAdd}>

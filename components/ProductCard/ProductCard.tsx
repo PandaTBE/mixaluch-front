@@ -23,6 +23,8 @@ import {
     googleAnalytics4DataLayers,
     sendNewDataLayer,
 } from '../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
+import { Stack } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Компонент для отображения карточки продукта
@@ -30,6 +32,7 @@ import {
 const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
     const { cartItems } = useSelector(cartReducerValues);
     const { addCartItem } = useFetchData();
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -59,13 +62,19 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
             </ImageWrapper>
             <ContentWrapper>
                 <Title onClick={onProductClick}>{product.title}</Title>
-                <Price>{product.regular_price} ₽</Price>
+
+                <Stack direction={'row'} alignItems={'end'} spacing={1}>
+                    <Price>{product.regular_price} ₽</Price>
+                    <div>{t(product.unit)}</div>
+                </Stack>
                 <ButtonWrapper>
                     {cartItem ? (
                         <QuantityInput
+                            minQuantityValue={product.min_quantity}
                             defaultValue={cartItem.quantity}
                             cartItemId={cartItem.id}
                             productId={product.id}
+                            unit={product.unit}
                         />
                     ) : (
                         <Button width={'100%'} clickHandler={onProductAdd}>

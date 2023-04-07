@@ -5,6 +5,7 @@ export const ProductImageWrapper = styled.div`
     flex: 0 0 165px;
     height: 165px;
     position: relative;
+    cursor: pointer;
 
     @media (max-width: 599px) {
         flex: 0 0 80px;
@@ -21,6 +22,7 @@ export const Wrapper = styled.div`
 export const ProductTitle = styled.div`
     font-size: 1.5rem;
     font-weight: bold;
+    cursor: pointer;
 
     @media (max-width: 599px) {
         font-size: 1rem;

@@ -7,7 +7,7 @@ import { deleteCartItem, storeCartItemsRefetchObject } from '../../../../../../s
 /**
  * Кастомный хук для работы с сервером
  */
-const useFecthData = () => {
+const useFetchData = () => {
     const { authToken, user } = useSelector(userReducerValues);
     const [deleteCartItemRequest, data] = cartApi.useRemoveCartItemMutation();
     const dispatch = useDispatch();
@@ -34,4 +34,4 @@ const useFecthData = () => {
     return { deleteCartItem: deleteHandler };
 };
 
-export default useFecthData;
+export default useFetchData;

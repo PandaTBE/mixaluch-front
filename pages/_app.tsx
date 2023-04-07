@@ -13,6 +13,7 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
 import { useEffect, useState } from 'react';
+import '../i18n';
 
 function MyApp({ Component, ...rest }: AppProps) {
     const { store, props } = wrapper.useWrappedStore(rest);

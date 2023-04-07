@@ -30,6 +30,7 @@ export const Price = styled.div`
     margin-top: 10px;
     font-weight: 600;
     font-size: 28px;
+    line-height: 28px;
 `;
 
 export const ImageWrapper = styled.div<{ height?: string }>`

@@ -1,59 +1,79 @@
-import { Stack } from '@mui/system';
-import { ChangeEvent, FC, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import useDebounce from '../../hooks/useDebounce';
-import { updateCartItem } from '../../slices/Cart/cart';
 import useFetchData from './hooks/useFetchData';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { MinusButton, PlusButton, StyledInput } from './styles';
+import { Stack } from '@mui/system';
+import { updateCartItem } from '../../slices/Cart/cart';
+import { useDispatch } from 'react-redux';
+import { TProductUnit } from '../../models/Product';
+import useDebounce from '../../hooks/useDebounce';
 
 interface IProps {
-    /** Id товара в коризне */
+    /** Id товара в корзине */
     cartItemId?: number;
-    /** Дефотное значение */
+    /** Дефолтное значение */
     defaultValue?: number;
     /** Id товара */
     productId: number;
+    /** Минимальное значение количества товара */
+    minQuantityValue: number;
+    /** Единица измерения товара */
+    unit: TProductUnit;
 }
 
 /**
  * Компонент для отображения поля ввода количества товара
  */
-const QuantityInput: FC<IProps> = ({ productId, defaultValue = 1, cartItemId }) => {
-    const [quantity, setQuantity] = useState<string | number>(defaultValue);
+const QuantityInput: FC<IProps> = ({ productId, cartItemId, unit, minQuantityValue, defaultValue = 1 }) => {
+    const [quantity, setQuantity] = useState<string | number>(
+        defaultValue > minQuantityValue ? defaultValue : minQuantityValue,
+    );
     const debouncedQuantityValue = useDebounce(quantity, 2000);
     const { patchCartItem } = useFetchData();
     const dispatch = useDispatch();
 
+    /** Патч элемента корзины на сервер */
     useEffect(() => {
-        if (quantity && !isNaN(Number(quantity)) && !Number(quantity < 0.2)) {
-            dispatch(updateCartItem({ productId, quantity: Number(quantity) }));
-        }
-    }, [quantity]);
-
-    useEffect(() => {
-        if (debouncedQuantityValue && (isNaN(Number(debouncedQuantityValue)) || Number(debouncedQuantityValue < 0.2))) {
-            setQuantity(1);
-            patchCartItem(1, cartItemId);
-        } else {
-            if (debouncedQuantityValue && debouncedQuantityValue !== defaultValue) {
-                patchCartItem(Number(debouncedQuantityValue), cartItemId);
-            }
+        if (isFinite(Number(debouncedQuantityValue)) && !(Number(debouncedQuantityValue) < minQuantityValue)) {
+            patchCartItem(Number(debouncedQuantityValue), cartItemId);
         }
     }, [debouncedQuantityValue]);
 
+    /** Изменение значения в стейте */
+    useEffect(() => {
+        if (isFinite(Number(quantity)) && !(Number(quantity) < minQuantityValue)) {
+            dispatch(updateCartItem({ productId, quantity: Number(quantity) }));
+        }
+    }, [quantity, unit, minQuantityValue]);
+
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setQuantity(e.target.value.replace(',', '.'));
+        let value: string | number = e.target.value.replace(',', '.');
+
+        if (isFinite(Number(value)) && unit === 'PC' && value) {
+            value = Math.round(Number(value));
+        }
+        setQuantity(value);
+    };
+
+    /** Срабатывает при анфокусе поля ввода */
+    const onBlur = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = Number(e.target.value);
+
+        if (!isFinite(value) || value < minQuantityValue) {
+            setQuantity(minQuantityValue);
+            // patchCartItem(minQuantityValue, cartItemId);
+        }
     };
 
     const onButtonClick = (type: 'minus' | 'plus', currentQuantity: number) => () => {
+        const value = unit === 'PC' ? 1 : 0.1;
         switch (type) {
             case 'minus':
-                if (Number(currentQuantity) > 0.3) {
-                    setQuantity((currentQuantity - 0.1).toFixed(1));
+                if (Number(currentQuantity) - value >= minQuantityValue) {
+                    setQuantity((currentQuantity - value).toFixed(1));
                 }
                 break;
             case 'plus':
-                setQuantity((currentQuantity + 0.1).toFixed(1));
+                setQuantity((currentQuantity + value).toFixed(1));
                 break;
 
             default:
@@ -64,7 +84,7 @@ const QuantityInput: FC<IProps> = ({ productId, defaultValue = 1, cartItemId }) 
     return (
         <Stack direction="row">
             <MinusButton onClick={onButtonClick('minus', Number(quantity))}>-</MinusButton>
-            <StyledInput onChange={onChange} value={quantity} />
+            <StyledInput onBlur={onBlur} onChange={onChange} value={quantity} />
             <PlusButton onClick={onButtonClick('plus', Number(quantity))}>+</PlusButton>
         </Stack>
     );

@@ -1,14 +1,14 @@
-import { Stack } from '@mui/material';
+import Container from '../../../../components/Container/Container';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { MouseEvent, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Container from '../../../../components/Container/Container';
+import { navigationListItems } from '../constants/constants';
+import { orderReducerValues } from '../../../../slices/Order/order';
+import { Stack } from '@mui/material';
 import { storePageToSwitch } from '../../../../slices/General/general';
 import { TPageToSwitch } from '../../../../slices/General/interfaces';
-import { orderReducerValues } from '../../../../slices/Order/order';
-import { navigationListItems } from '../constants/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import {
     ContentWrapper,
     StyledLink,

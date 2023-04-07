@@ -7,7 +7,7 @@ import {
 } from '../../../../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
 import { IExtendedCartItem } from '../../../../../slices/Cart/interfaces';
 import QuantityInput from '../../../../QuantityInput/QuantityInput';
-import useFecthData from './hooks/useFetchData';
+import useFetchData from './hooks/useFetchData';
 import {
     FooterQuantityInputWrapper,
     FooterWrapper,
@@ -22,7 +22,7 @@ import {
 } from './styles';
 
 interface IProps {
-    /** Элемент коризны */
+    /** Элемент корзины */
     cartItem: IExtendedCartItem;
     /** Обработчик нажатия на название товара */
     onCartItemTitleClick: (productId: number) => void;
@@ -32,7 +32,7 @@ interface IProps {
  * Компонент для отображения товара в корзине
  */
 const CartItem: FC<IProps> = ({ cartItem, onCartItemTitleClick }) => {
-    const { deleteCartItem } = useFecthData();
+    const { deleteCartItem } = useFetchData();
 
     const onRemoveClick = () => {
         sendNewDataLayer(googleAnalytics4DataLayers.generateRemoveFromCart(cartItem));
@@ -51,7 +51,7 @@ const CartItem: FC<IProps> = ({ cartItem, onCartItemTitleClick }) => {
             <Stack direction={'row'} spacing={2} justifyContent={'space-between'}>
                 <div>
                     <Stack direction={'row'} spacing={2}>
-                        <ProductImageWrapper>
+                        <ProductImageWrapper onClick={onTitleClick}>
                             <Image layout="fill" src={image.image} alt={image.alt_text} />
                         </ProductImageWrapper>
                         <Stack
@@ -63,9 +63,11 @@ const CartItem: FC<IProps> = ({ cartItem, onCartItemTitleClick }) => {
                             <Price>{cartItem.product.regular_price} ₽</Price>
                             <QuantityInputWrapper>
                                 <QuantityInput
-                                    cartItemId={cartItem.id}
-                                    productId={cartItem.product.id}
+                                    minQuantityValue={cartItem.product.min_quantity}
                                     defaultValue={cartItem.quantity}
+                                    productId={cartItem.product.id}
+                                    unit={cartItem.product.unit}
+                                    cartItemId={cartItem.id}
                                 />
                             </QuantityInputWrapper>
                         </Stack>
@@ -82,9 +84,11 @@ const CartItem: FC<IProps> = ({ cartItem, onCartItemTitleClick }) => {
                 <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
                     <FooterQuantityInputWrapper>
                         <QuantityInput
-                            cartItemId={cartItem.id}
-                            productId={cartItem.product.id}
+                            minQuantityValue={cartItem.product.min_quantity}
                             defaultValue={cartItem.quantity}
+                            productId={cartItem.product.id}
+                            unit={cartItem.product.unit}
+                            cartItemId={cartItem.id}
                         />
                     </FooterQuantityInputWrapper>
 
