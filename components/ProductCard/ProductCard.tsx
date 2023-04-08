@@ -64,7 +64,7 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
             <ContentWrapper>
                 <Title onClick={onProductClick}>{product.title}</Title>
 
-                <Stack direction={'row'} alignItems={'end'} spacing={1}>
+                <Stack flexWrap={'wrap'} gap={'10px'} direction={'row'} alignItems={'end'}>
                     <Price>{product.regular_price} ₽</Price>
                     <UnitWrapper>за 1 {t(product.unit)}</UnitWrapper>
                 </Stack>

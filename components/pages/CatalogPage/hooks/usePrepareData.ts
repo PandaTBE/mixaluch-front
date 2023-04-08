@@ -11,15 +11,20 @@ import {
     googleAnalytics4DataLayers,
     sendNewDataLayer,
 } from '../../../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
+import useWindowSize from '../../../../hooks/useWindowSize';
 
 /** Кастомный хук для подготовки данных */
 const usePrepareData = (filter: string) => {
     const [filteredProductsByCategory, setFilteredProductsByCategory] = useState<IProduct[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
     const [sortedProducts, setSortedProducts] = useState<IProduct[]>([]);
+    const [productImageHeight, setProductImageHeight] = useState('220px');
+
     const { selectedCategoryId, categoriesByParentId } = useSelector(catalogReducerValues);
     const { categories, categoriesById } = useSelector(categoryReducerValues);
     const { products } = useSelector(productReducerValues);
+
+    const { width } = useWindowSize();
     const dispatch = useDispatch();
 
     /** Фильтрация товаров по выбранной категории */
@@ -92,7 +97,14 @@ const usePrepareData = (filter: string) => {
         }
     }, [categories]);
 
-    return { products: sortedProducts };
+    /** Для телефонов изменить размер картинки для карточки продуктов */
+    useEffect(() => {
+        if (width <= 575) {
+            setProductImageHeight('165px');
+        }
+    }, [width]);
+
+    return { products: sortedProducts, productImageHeight };
 };
 
 export default usePrepareData;

@@ -18,7 +18,7 @@ import { isNull } from 'lodash';
 const Catalog = () => {
     const [filter, setFilter] = useState('');
     const { categoriesByParentId, selectedCategoryId } = useSelector(catalogReducerValues);
-    const { products } = usePrepareData(filter);
+    const { products, productImageHeight } = usePrepareData(filter);
     const dispatch = useDispatch();
 
     const storeSelectedCategoryIdTrans = (id: number | null) => {
@@ -61,8 +61,8 @@ const Catalog = () => {
                             <Grid container spacing={2}>
                                 {products.map((product) => {
                                     return (
-                                        <Grid key={product.id} item xs={12} sm={6} md={4} xl={3}>
-                                            <ProductCard imageHeight={'220px'} product={product} />
+                                        <Grid key={product.id} item xs={6} sm={6} md={4} xl={3}>
+                                            <ProductCard imageHeight={productImageHeight} product={product} />
                                         </Grid>
                                     );
                                 })}
