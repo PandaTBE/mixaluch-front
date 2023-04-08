@@ -15,7 +15,7 @@ import { TPageToSwitch } from '../../slices/General/interfaces';
 import Meta from '../../components/Meta/Meta';
 
 /**
- * Layot для оборачивания контена
+ * Layout для оборачивания контента
  * @param children компонент, который необходимо обернуть
  */
 const MainLayout: FC<IProps> = ({ children, title, description }) => {
@@ -28,25 +28,26 @@ const MainLayout: FC<IProps> = ({ children, title, description }) => {
     }, []);
 
     return (
-        <Wrapper>
-            <Meta title={title} description={description} />
-            <header>
-                <Header />
-                <SubHeader />
-            </header>
-            <ContentWrapper>
-                {loading ? (
-                    <Container>
-                        <LoadingSkeleton />
-                    </Container>
-                ) : (
-                    <Container>{children}</Container>
-                )}
-            </ContentWrapper>
-            <footer>
-                <Footer />
-            </footer>
-        </Wrapper>
+        <Meta title={title} description={description}>
+            <Wrapper>
+                <header>
+                    <Header />
+                    <SubHeader />
+                </header>
+                <ContentWrapper>
+                    {loading ? (
+                        <Container>
+                            <LoadingSkeleton />
+                        </Container>
+                    ) : (
+                        <Container>{children}</Container>
+                    )}
+                </ContentWrapper>
+                <footer>
+                    <Footer />
+                </footer>
+            </Wrapper>
+        </Meta>
     );
 };
 
