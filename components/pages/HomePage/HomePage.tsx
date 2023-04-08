@@ -1,4 +1,4 @@
-import Meta from '../../Meta/Meta';
+// import Meta from '../../Meta/Meta';
 import Advantages from './components/Anvantages/Advantages';
 import Feedback from './components/Feedback/Feedback';
 import Kebab from './components/Kebab/Kebab';
