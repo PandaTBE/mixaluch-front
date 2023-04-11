@@ -1,12 +1,12 @@
 import ActivatePage from '../../../components/pages/ActivatePage/ActivatePage';
 import { NextPage } from 'next';
-import { withMainLayout } from '../../../layouts/MainLayout/MainLayout';
+import MainLayout from '../../../layouts/MainLayout/MainLayout';
 
 /**
  * Страница активации аккаунта после регистрации
  */
 const Activate: NextPage = () => {
-    return <ActivatePage />;
+    return <MainLayout title={'Активация аккаунта'}><ActivatePage /></MainLayout>;
 };
 
-export default withMainLayout(Activate, 'Активация аккаунта');
+export default Activate;

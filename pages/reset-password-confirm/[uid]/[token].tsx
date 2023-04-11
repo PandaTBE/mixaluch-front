@@ -1,12 +1,16 @@
 import ResetPasswordConfirmPage from '../../../components/pages/ResetPasswordConfirmPage/ResetPasswordConfirmPage';
 import { NextPage } from 'next';
-import { withMainLayout } from '../../../layouts/MainLayout/MainLayout';
+import MainLayout from '../../../layouts/MainLayout/MainLayout';
 
 /**
  * Страница подтверждения сброса пароля
  */
 const ResetPasswordConfirm: NextPage = () => {
-    return <ResetPasswordConfirmPage />;
+    return (
+        <MainLayout title={'Сброс пароля'}>
+            <ResetPasswordConfirmPage />
+        </MainLayout>
+    );
 };
 
-export default withMainLayout(ResetPasswordConfirm, 'Сброс пароля');
+export default ResetPasswordConfirm;

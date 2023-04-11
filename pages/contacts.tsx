@@ -1,11 +1,15 @@
 import ContactsPage from '../components/pages/ContactsPage/ContactsPage';
-import { withMainLayout } from '../layouts/MainLayout/MainLayout';
+import MainLayout from '../layouts/MainLayout/MainLayout';
 
 /**
  * Страница контактов
  */
 const Contacts = () => {
-    return <ContactsPage />;
+    return (
+        <MainLayout title={'Контакты – Информация о компании'}>
+            <ContactsPage />
+        </MainLayout>
+    );
 };
 
-export default withMainLayout(Contacts, 'Контакты – Информация о компании');
+export default Contacts;

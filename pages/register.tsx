@@ -1,12 +1,12 @@
 import { NextPage } from 'next';
 import RegisterPage from '../components/pages/RegisterPage/RegisterPage';
-import { withMainLayout } from '../layouts/MainLayout/MainLayout';
+import MainLayout from '../layouts/MainLayout/MainLayout';
 
 /**
  * Страница регистрации
  */
 const Register: NextPage = () => {
-    return <RegisterPage />;
+    return <MainLayout title={'Регистрация'}><RegisterPage /></MainLayout>;
 };
 
-export default withMainLayout(Register, 'Регистрация');
+export default Register;

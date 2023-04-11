@@ -1,6 +1,6 @@
 import { ProductApi } from '../../api/ProductApi';
 import ProductInfoPage from '../../components/pages/ProductInfoPage/ProductInfoPage';
-import { withMainLayout } from '../../layouts/MainLayout/MainLayout';
+import MainLayout from '../../layouts/MainLayout/MainLayout';
 import { storeSelectedProduct } from '../../slices/Product/product';
 import { wrapper } from '../../store';
 
@@ -8,10 +8,14 @@ import { wrapper } from '../../store';
  * Страница информации о товаре
  */
 const ProductInfo = () => {
-    return <ProductInfoPage />;
+    return (
+        <MainLayout title={'Информация о товаре'}>
+            <ProductInfoPage />
+        </MainLayout>
+    );
 };
 
-export default withMainLayout(ProductInfo, 'Информация о товаре');
+export default ProductInfo;
 
 /**
  * Получение данных на сервере

@@ -1,12 +1,12 @@
 import { NextPage } from 'next';
 import DeliveryPage from '../components/pages/DeliveryPage/DeliveryPage';
-import { withMainLayout } from '../layouts/MainLayout/MainLayout';
+import MainLayout from '../layouts/MainLayout/MainLayout';
 
 /**
  * Страница доставки
  */
 const Delivery: NextPage = () => {
-    return <DeliveryPage />;
+    return <MainLayout title={'Доставка – Интернет-магазин У Михалыча'}><DeliveryPage /></MainLayout>;
 };
 
-export default withMainLayout(Delivery, 'Доставка – Интернет-магазин У Михалыча');
+export default Delivery;

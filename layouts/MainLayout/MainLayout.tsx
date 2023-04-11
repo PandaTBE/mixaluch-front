@@ -51,17 +51,5 @@ const MainLayout: FC<IProps> = ({ children, title, description }) => {
     );
 };
 
-/** HOC для отображения компонент с главным лэйаутом */
-export const withMainLayout = <T extends Record<string, unknown>>(
-    Component: FC<T>,
-    title?: string,
-    description?: string,
-) => {
-    return function withLayoutComponent(props: T): JSX.Element {
-        return (
-            <MainLayout title={title} description={description}>
-                <Component {...props} />
-            </MainLayout>
-        );
-    };
-};
+export default MainLayout
+

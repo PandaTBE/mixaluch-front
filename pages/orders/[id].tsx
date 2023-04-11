@@ -1,18 +1,22 @@
 import { NextPage } from 'next';
 import { OrderApi } from '../../api/OrderApi';
 import OrderInfoPage from '../../components/pages/OrderInfoPage/OrderInfoPage';
-import { withMainLayout } from '../../layouts/MainLayout/MainLayout';
 import { storeSelectedOrder } from '../../slices/Order/order';
 import { wrapper } from '../../store';
+import MainLayout from '../../layouts/MainLayout/MainLayout';
 
 /**
  * Отображение страницы конкретного заказа
  */
 const OrderInfo: NextPage = () => {
-    return <OrderInfoPage />;
+    return (
+        <MainLayout title={'Информация о заказе'}>
+            <OrderInfoPage />
+        </MainLayout>
+    );
 };
 
-export default withMainLayout(OrderInfo, 'Информация о заказе');
+export default OrderInfo;
 
 /**
  * Получение данных на сервере

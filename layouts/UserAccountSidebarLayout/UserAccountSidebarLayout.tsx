@@ -67,13 +67,5 @@ const UserAccountSidebarLayout: FC<IProps> = ({ children }) => {
     );
 };
 
-/** HOC для отображения компонент с макетом бокового меню */
-export const withUserAccountSidebar = <T extends Record<string, unknown>>(Component: FC<T>) => {
-    return function withLayoutComponent(props: T): JSX.Element {
-        return (
-            <UserAccountSidebarLayout>
-                <Component {...props} />
-            </UserAccountSidebarLayout>
-        );
-    };
-};
+
+export default UserAccountSidebarLayout

@@ -7,15 +7,19 @@ import type { NextPage } from 'next';
 import { ProductApi } from '../api/ProductApi';
 import axios from 'axios';
 import { storeMainCategories } from '../slices/Category/category';
-import { withMainLayout } from '../layouts/MainLayout/MainLayout';
 import { wrapper } from '../store';
 import { ICategory } from '../models/Category';
+import MainLayout from '../layouts/MainLayout/MainLayout';
 
 /**
  * Компонент для отображения домашней страницы
  */
 const Home: NextPage = () => {
-    return <HomePage />;
+    return (
+        <MainLayout>
+            <HomePage />
+        </MainLayout>
+    );
 };
 
 /**
@@ -45,4 +49,4 @@ export const getStaticProps = wrapper.getStaticProps((store) => async () => {
     };
 });
 
-export default withMainLayout(Home);
+export default Home;

@@ -1,12 +1,16 @@
 import { NextPage } from 'next';
 import LoginPage from '../components/pages/LoginPage/LoginPage';
-import { withMainLayout } from '../layouts/MainLayout/MainLayout';
+import MainLayout from '../layouts/MainLayout/MainLayout';
 
 /**
  * Страница Входа
  */
 const Login: NextPage = () => {
-    return <LoginPage />;
+    return (
+        <MainLayout title={'Авторизация'}>
+            <LoginPage />
+        </MainLayout>
+    );
 };
 
-export default withMainLayout(Login, 'Авторизация');
+export default Login;

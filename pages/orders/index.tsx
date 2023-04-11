@@ -1,13 +1,19 @@
 import { NextPage } from 'next';
 import OrdersPage from '../../components/pages/OrdersPage/OrdersPage';
-import { withMainLayout } from '../../layouts/MainLayout/MainLayout';
-import { withUserAccountSidebar } from '../../layouts/UserAccountSidebarLayout/UserAccountSidebarLayout';
+import MainLayout from '../../layouts/MainLayout/MainLayout';
+import UserAccountSidebarLayout from '../../layouts/UserAccountSidebarLayout/UserAccountSidebarLayout';
 
 /**
  * Страница истории заказов
  */
 const Orders: NextPage = () => {
-    return <OrdersPage />;
+    return (
+        <MainLayout title={'История заказов'}>
+            <UserAccountSidebarLayout>
+                <OrdersPage />
+            </UserAccountSidebarLayout>
+        </MainLayout>
+    );
 };
 
-export default withMainLayout(withUserAccountSidebar(Orders), 'История заказов');
+export default Orders;
