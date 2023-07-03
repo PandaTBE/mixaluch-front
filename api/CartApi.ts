@@ -1,5 +1,5 @@
 import { ICartItem } from '../models/CartItem';
-import { instance } from './intex';
+import { instance } from '.';
 
 /**
  * Объект с методами, которые необходимы для работы с API корзины

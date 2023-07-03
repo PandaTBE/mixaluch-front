@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { storePageToSwitch } from '../../slices/General/general';
 import { TPageToSwitch } from '../../slices/General/interfaces';
 import Meta from '../../components/Meta/Meta';
+import ImportantNews from './components/ImportantNews/ImportantNews';
 
 /**
  * Layout для оборачивания контента
@@ -30,6 +31,7 @@ const MainLayout: FC<IProps> = ({ children, title, description }) => {
     return (
         <Meta title={title} description={description}>
             <Wrapper>
+                <ImportantNews />
                 <header>
                     <Header />
                     <SubHeader />
@@ -51,5 +53,4 @@ const MainLayout: FC<IProps> = ({ children, title, description }) => {
     );
 };
 
-export default MainLayout
-
+export default MainLayout;

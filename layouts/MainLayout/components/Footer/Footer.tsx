@@ -65,7 +65,9 @@ const Footer = () => {
                     <Delivery>Доставка с 9:00 до 19:00</Delivery>
                     <LogoWrapper onClick={onLinkClick('/')}>
                         <Link href={'/'}>
-                            <Image src={'/static/logo.png'} alt={'Mixaluch logo'} layout={'fill'} />
+                            <div>
+                                <Image src={'/static/logo.png'} alt={'Mixaluch logo'} layout={'fill'} />
+                            </div>
                         </Link>
                     </LogoWrapper>
                 </ContentWrapper>

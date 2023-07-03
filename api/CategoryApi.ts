@@ -1,5 +1,5 @@
 import { ICategory } from '../models/Category';
-import { instance } from './intex';
+import { instance } from '.';
 
 /**
  * Объект с методами, которые необходимы для работы с API категорий

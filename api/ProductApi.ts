@@ -1,5 +1,5 @@
 import { IProduct } from '../models/Product';
-import { instance } from './intex';
+import { instance } from '.';
 
 /**
  * Объект с методами, которые необходимы для работы с API продуктов

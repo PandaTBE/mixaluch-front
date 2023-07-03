@@ -1,6 +1,6 @@
 import { AxiosRequestHeaders } from 'axios';
 import { IOrder } from '../models/Order';
-import { instance } from './intex';
+import { instance } from '.';
 
 /**
  * Объект с методами для работы с АПИ заказов

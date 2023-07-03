@@ -5,11 +5,13 @@ import general from './slices/General/general';
 import order from './slices/Order/order';
 import product from './slices/Product/product';
 import user from './slices/User/user';
+import news from './slices/News/news';
 import { AnyAction, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { cartApi } from './services/CartService';
 import { createWrapper } from 'next-redux-wrapper';
 import { orderApi } from './services/OrderService';
 import { userApi } from './services/UserService';
+import { newsApi } from './services/NewsService';
 import { telegramApi } from './services/TelegramService';
 
 const makeStore = () =>
@@ -19,6 +21,7 @@ const makeStore = () =>
             [orderApi.reducerPath]: orderApi.reducer,
             [userApi.reducerPath]: userApi.reducer,
             [cartApi.reducerPath]: cartApi.reducer,
+            [newsApi.reducerPath]: newsApi.reducer,
             category,
             product,
             catalog,
@@ -26,13 +29,15 @@ const makeStore = () =>
             order,
             user,
             cart,
+            news,
         },
         middleware: (getDefaultMiddleware) => {
             return getDefaultMiddleware()
                 .concat(telegramApi.middleware)
                 .concat(orderApi.middleware)
                 .concat(userApi.middleware)
-                .concat(cartApi.middleware);
+                .concat(cartApi.middleware)
+                .concat(newsApi.middleware);
         },
         devTools: true,
     });
