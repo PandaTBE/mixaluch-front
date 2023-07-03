@@ -7,7 +7,7 @@ module.exports = {
     priority: 0.7,
     sitemapSize: 5000,
     generateRobotsTxt: true,
-    exclude: ['/cart', '/register', '/login', '/activate', '/orders', '/catalog', '/user-account'],
+    exclude: ['/cart', '/register', '/login', '/activate', '/orders', '/catalog', '/user-account', '/ordering'],
     robotsTxtOptions: {
         policies: [
             {
@@ -16,7 +16,16 @@ module.exports = {
             },
             {
                 userAgent: 'black-listed-bot',
-                disallow: ['/cart', '/register', '/login', '/activate', '/orders', '/catalog', '/user-account'],
+                disallow: [
+                    '/cart',
+                    '/register',
+                    '/login',
+                    '/activate',
+                    '/orders',
+                    '/catalog',
+                    '/user-account',
+                    '/ordering',
+                ],
             },
         ],
     },
