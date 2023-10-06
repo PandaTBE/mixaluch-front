@@ -13,11 +13,13 @@ import { orderApi } from './services/OrderService';
 import { userApi } from './services/UserService';
 import { newsApi } from './services/NewsService';
 import { telegramApi } from './services/TelegramService';
+import { productApi } from './services/ProductService';
 
 const makeStore = () =>
     configureStore({
         reducer: {
             [telegramApi.reducerPath]: telegramApi.reducer,
+            [productApi.reducerPath]: productApi.reducer,
             [orderApi.reducerPath]: orderApi.reducer,
             [userApi.reducerPath]: userApi.reducer,
             [cartApi.reducerPath]: cartApi.reducer,
@@ -34,6 +36,7 @@ const makeStore = () =>
         middleware: (getDefaultMiddleware) => {
             return getDefaultMiddleware()
                 .concat(telegramApi.middleware)
+                .concat(productApi.middleware)
                 .concat(orderApi.middleware)
                 .concat(userApi.middleware)
                 .concat(cartApi.middleware)
