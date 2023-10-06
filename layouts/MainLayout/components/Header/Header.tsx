@@ -3,22 +3,35 @@ import Container from '../../../../components/Container/Container';
 import { Grid } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { storePageToSwitch } from '../../../../slices/General/general';
 import { TPageToSwitch } from '../../../../slices/General/interfaces';
 import IntersectionObserverWrapper from './components/IntersectionObserverWrapper/IntersectionObserverWrapper';
 import { navigationListItems } from '../constants/constants';
+import { userReducerValues } from '../../../../slices/User/user';
+import { useMemo } from 'react';
+import { cloneDeep } from 'lodash';
 
 /**
  * Компонент для отображения шапки страницы
  */
 const Header = () => {
+    const { user } = useSelector(userReducerValues);
     const dispatch = useDispatch();
     const router = useRouter();
 
     const onLinkClick = (link: TPageToSwitch) => () => {
         dispatch(storePageToSwitch(link));
     };
+
+    const navigationLinks = useMemo(() => {
+        const result = cloneDeep(navigationListItems);
+        if (user?.is_staff) {
+            result.push({ id: 'admin', href: '/admin', name: 'Панель администратора' });
+        }
+
+        return result;
+    }, [user]);
 
     return (
         <Wrapper>
@@ -28,20 +41,18 @@ const Header = () => {
                         <Grid item xs={3} sm={6} md={7} lg={8}>
                             <Nav>
                                 <IntersectionObserverWrapper>
-                                    {
-                                        navigationListItems.map((element) => {
-                                            return (
-                                                <StyledLink
-                                                    key={element.id}
-                                                    data-targetid={element.id}
-                                                    onClick={onLinkClick(element.href as TPageToSwitch)}
-                                                    active={router.pathname === element.href}
-                                                >
-                                                    <Link href={element.href}>{element.name}</Link>
-                                                </StyledLink>
-                                            );
-                                        }) as JSX.Element[]
-                                    }
+                                    {navigationLinks.map((element) => {
+                                        return (
+                                            <StyledLink
+                                                key={element.id}
+                                                data-targetid={element.id}
+                                                onClick={onLinkClick(element.href as TPageToSwitch)}
+                                                active={router.pathname === element.href}
+                                            >
+                                                <Link href={element.href}>{element.name}</Link>
+                                            </StyledLink>
+                                        );
+                                    })}
                                 </IntersectionObserverWrapper>
                             </Nav>
                         </Grid>

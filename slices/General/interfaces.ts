@@ -13,4 +13,5 @@ export type TPageToSwitch =
     | '/ordering'
     | '/orders'
     | '/catalog/[id]'
-    | '/kebab';
+    | '/kebab'
+    | '/admin';
