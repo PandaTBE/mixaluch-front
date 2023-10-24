@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
     min-height: 100vh;
 `;
 
-export const ContentWrapper = styled.div`
+export const ContentWrapper = styled.main`
     flex-grow: 1;
     display: flex;
     flex-direction: column;

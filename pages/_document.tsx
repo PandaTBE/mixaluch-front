@@ -32,7 +32,7 @@ class MyDocument extends Document {
         return (
             <Html lang="ru">
                 <Head>
-                    <Script
+                    {/* <Script
                         strategy="afterInteractive"
                         dangerouslySetInnerHTML={{
                             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -59,7 +59,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         ecommerce:"dataLayer"
    });`,
                         }}
-                    />
+                    /> */}
                     <link rel="preconnect" href="https://fonts.googleapis.com" />
                     <link rel="preconnect" href="https://fonts.gstatic.com" />
                     <link
@@ -76,7 +76,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <meta name="yandex-verification" content="2c5486f281db7b72" />
                 </Head>
                 <body>
-                    <noscript
+                    {/* <noscript
                         dangerouslySetInnerHTML={{
                             __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5F5V3MX"
 height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
@@ -86,7 +86,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
                         dangerouslySetInnerHTML={{
                             __html: `<div><img src="https://mc.yandex.ru/watch/92745351" style="position:absolute; left:-9999px;" alt="" /></div>`,
                         }}
-                    ></noscript>
+                    ></noscript> */}
                     <Main />
                     <NextScript />
                 </body>
