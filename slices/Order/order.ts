@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { HYDRATE } from 'next-redux-wrapper';
 import { IOrder } from '../../models/Order';
 import { AppState } from '../../store';
 import { IState } from './interfaces';
@@ -49,17 +48,6 @@ const order = createSlice({
          */
         storeLastOrderId: (state, action: PayloadAction<number | null>) => {
             state.lastOrderId = action.payload;
-        },
-    },
-    /**
-     * Гидрация необходимо для коннекта стора сервера и стора клиента
-     */
-    extraReducers: {
-        [HYDRATE]: (state, action) => {
-            return {
-                ...state,
-                selectedOrder: action.payload.order.selectedOrder,
-            };
         },
     },
 });

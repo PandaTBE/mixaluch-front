@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { AppState } from './../../store';
-import { HYDRATE } from 'next-redux-wrapper';
 import { IProduct } from '../../models/Product';
 import { IState } from './interfaces';
 
@@ -34,20 +33,6 @@ export const product = createSlice({
          */
         storeSelectedProduct: (state, action: PayloadAction<null | IProduct>) => {
             state.selectedProduct = action.payload;
-        },
-    },
-
-    /**
-     * Гидрация необходимо для коннекта стора сервера и стора клиента
-     */
-    extraReducers: {
-        [HYDRATE]: (state, action) => {
-            return {
-                ...state,
-                popularProducts: action.payload.product.popularProducts,
-                products: action.payload.product.products,
-                selectedProduct: action.payload.product.selectedProduct,
-            };
         },
     },
 });
