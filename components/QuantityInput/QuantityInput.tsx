@@ -1,5 +1,5 @@
 import useFetchData from './hooks/useFetchData';
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
 import { MinusButton, PlusButton, StyledInput } from './styles';
 import { Stack } from '@mui/system';
 import { updateCartItem } from '../../slices/Cart/cart';
@@ -28,13 +28,18 @@ const QuantityInput: FC<IProps> = ({ productId, cartItemId, unit, minQuantityVal
         defaultValue > minQuantityValue ? defaultValue : minQuantityValue,
     );
     const debouncedQuantityValue = useDebounce(quantity, 2000);
+    const didMount = useRef(false);
     const { patchCartItem } = useFetchData();
     const dispatch = useDispatch();
 
     /** Патч элемента корзины на сервер */
     useEffect(() => {
-        if (isFinite(Number(debouncedQuantityValue)) && !(Number(debouncedQuantityValue) < minQuantityValue)) {
-            patchCartItem(Number(debouncedQuantityValue), cartItemId);
+        if (didMount.current) {
+            if (isFinite(Number(debouncedQuantityValue)) && !(Number(debouncedQuantityValue) < minQuantityValue)) {
+                patchCartItem(Number(debouncedQuantityValue), cartItemId);
+            }
+        } else {
+            didMount.current = true;
         }
     }, [debouncedQuantityValue]);
 
