@@ -19,7 +19,7 @@ import ImportantNews from './components/ImportantNews/ImportantNews';
  * Layout для оборачивания контента
  * @param children компонент, который необходимо обернуть
  */
-const MainLayout: FC<IProps> = ({ children, title, description, requireAuth }) => {
+const MainLayout: FC<IProps> = ({ children, title, description }) => {
     const { loading } = usePageLoading();
     const dispatch = useDispatch();
     const router = useRouter();

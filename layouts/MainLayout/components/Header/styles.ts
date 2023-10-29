@@ -24,7 +24,7 @@ export const Telephone = styled.a`
     white-space: nowrap;
 `;
 
-export const StyledLink = styled.li<{ active: boolean }>`
+export const StyledLink = styled.div<{ active: boolean }>`
     color: ${(props) => (props.active ? props.theme.colors.primary : props.theme.colors.black)};
     white-space: nowrap;
 `;

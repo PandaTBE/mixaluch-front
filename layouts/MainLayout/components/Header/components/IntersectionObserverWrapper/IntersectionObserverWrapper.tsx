@@ -4,7 +4,7 @@ import { Stack } from '@mui/material';
 import OverflowMenu from '../OverflowMenu/OverflowMenu';
 
 interface IProps {
-    children: JSX.Element[];
+    children: (JSX.Element | null)[];
 }
 
 /**
@@ -54,9 +54,9 @@ const IntersectionObserverWrapper: FC<IProps> = ({ children }) => {
             {children.map((child) => {
                 return (
                     <ChildWrapper
-                        {...child.props}
-                        key={child.props['data-targetid']}
-                        visible={!!visibilityMap[child.props['data-targetid']]}
+                        {...child?.props}
+                        key={child?.props?.['data-targetid']}
+                        visible={!!visibilityMap[child?.props?.['data-targetid']]}
                     >
                         {child}
                     </ChildWrapper>

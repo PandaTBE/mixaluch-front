@@ -4,6 +4,7 @@ export interface IUser {
     name: string;
     id: number;
     second_name: string | null;
+    is_staff: boolean;
 }
 
 export interface IUserLoginDTO {

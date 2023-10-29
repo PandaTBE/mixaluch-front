@@ -5,7 +5,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 interface IProps {
     visibilityMap: { [targetid: string]: boolean };
-    children: JSX.Element[];
+    children: (JSX.Element | null)[];
 }
 
 /**
@@ -38,10 +38,10 @@ const OverflowMenu: FC<IProps> = ({ visibilityMap, children }) => {
                 onClose={handleClose}
             >
                 {children
-                    .filter((child) => !visibilityMap[child.props['data-targetid']])
+                    .filter((child) => !visibilityMap[child?.props?.['data-targetid']])
                     .map((child) => {
                         return (
-                            <MenuItem key={child.props['data-targetid']} onClick={handleClose}>
+                            <MenuItem key={child?.props?.['data-targetid']} onClick={handleClose}>
                                 <div>{child}</div>
                             </MenuItem>
                         );

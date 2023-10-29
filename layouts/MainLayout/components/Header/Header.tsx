@@ -3,22 +3,35 @@ import Container from '../../../../components/Container/Container';
 import { Grid } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { storePageToSwitch } from '../../../../slices/General/general';
 import { TPageToSwitch } from '../../../../slices/General/interfaces';
 import IntersectionObserverWrapper from './components/IntersectionObserverWrapper/IntersectionObserverWrapper';
 import { navigationListItems } from '../constants/constants';
+import { userReducerValues } from '../../../../slices/User/user';
+import { FC, useMemo } from 'react';
+import { cloneDeep } from 'lodash';
 
 /**
  * Компонент для отображения шапки страницы
  */
-const Header = () => {
+const Header: FC = () => {
+    const store = useSelector(userReducerValues);
     const dispatch = useDispatch();
     const router = useRouter();
 
     const onLinkClick = (link: TPageToSwitch) => () => {
         dispatch(storePageToSwitch(link));
     };
+
+    const _navigationItems = useMemo(() => {
+        const result = cloneDeep(navigationListItems);
+
+        if (store.user?.is_staff && store.authToken) {
+            result.push({ id: 'admin', href: '/admin', name: 'Панель администратора' });
+        }
+        return result;
+    }, [store.user, store.authToken]);
 
     return (
         <Wrapper>
@@ -29,7 +42,7 @@ const Header = () => {
                             <Nav>
                                 <IntersectionObserverWrapper>
                                     {
-                                        navigationListItems.map((element) => {
+                                        _navigationItems.map((element) => {
                                             return (
                                                 <StyledLink
                                                     key={element.id}
