@@ -28,7 +28,12 @@ const Header: FC = () => {
         const result = cloneDeep(navigationListItems);
 
         if (store.user?.is_staff && store.authToken) {
-            result.push({ id: 'admin', href: '/admin', name: 'Панель администратора' });
+            result.push({
+                id: 'admin',
+                href: '/admin',
+                name: 'Панель администратора',
+                isActive: (pathname, href) => pathname.includes(href),
+            });
         }
         return result;
     }, [store.user, store.authToken]);
@@ -48,7 +53,7 @@ const Header: FC = () => {
                                                     key={element.id}
                                                     data-targetid={element.id}
                                                     onClick={onLinkClick(element.href as TPageToSwitch)}
-                                                    active={router.pathname === element.href}
+                                                    active={element.isActive(router.pathname, element.href)}
                                                 >
                                                     <Link href={element.href}>{element.name}</Link>
                                                 </StyledLink>
