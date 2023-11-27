@@ -21,10 +21,14 @@ export const ContentWrapper = styled.div`
     margin-top: 15px;
 `;
 
-export const ImageWrapper = styled.div`
+export const ImageWrapper = styled.div<{ isNoImage: boolean }>`
     width: 100%;
     height: 300px;
+    border: ${(p) => (p.isNoImage ? '1px dashed grey' : 'none')};
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 export const StyledCheckbox = styled(Checkbox)`
