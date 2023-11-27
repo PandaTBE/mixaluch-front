@@ -51,7 +51,7 @@ const SubHeader = () => {
 
                     <Link href={'/'}>
                         <LogoWrapper onClick={onLinkClick('/')}>
-                            <Image src={'/static/logo.png'} alt={'Mixaluch logo'} layout={'fill'} />
+                            <Image src={'/static/logo.png'} alt={'Mixaluch logo'} priority={true} layout={'fill'} />
                         </LogoWrapper>
                     </Link>
 

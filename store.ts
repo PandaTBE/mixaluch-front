@@ -7,6 +7,7 @@ import product from './slices/Product/product';
 import user from './slices/User/user';
 import news from './slices/News/news';
 import evotor from './slices/Evotor/evotor';
+import admin from './slices/Admin/admin';
 import { AnyAction, combineReducers, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { cartApi } from './services/CartService';
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
@@ -30,6 +31,7 @@ const combinedReducer = combineReducers({
     general,
     evotor,
     order,
+    admin,
     user,
     cart,
     news,
@@ -42,7 +44,6 @@ const reducer = (state: ReturnType<typeof combinedReducer>, action: AnyAction) =
             product: { popularProducts, products, selectedProduct },
             order: { selectedOrder },
             news: { importantNews },
-            evotor: { stores, storesById, productsByStoreId, productsByStoreIdByProductId },
         } = action.payload as ReturnType<typeof combinedReducer>;
         const stateCopy = cloneDeep(state);
 
@@ -69,15 +70,6 @@ const reducer = (state: ReturnType<typeof combinedReducer>, action: AnyAction) =
                 popularProducts: popularProducts?.length ? popularProducts : stateCopy.product.popularProducts,
                 products: products?.length ? products : stateCopy.product.products,
                 selectedProduct: selectedProduct || stateCopy.product.selectedProduct,
-            },
-            evotor: {
-                ...stateCopy.evotor,
-                stores: stores?.length ? stores : stateCopy.evotor.stores,
-                storesById: storesById ? storesById : stateCopy.evotor.storesById,
-                productsByStoreId: productsByStoreId ? productsByStoreId : stateCopy.evotor.productsByStoreId,
-                productsByStoreIdByProductId: productsByStoreIdByProductId
-                    ? productsByStoreIdByProductId
-                    : stateCopy.evotor.productsByStoreIdByProductId,
             },
         };
 

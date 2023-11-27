@@ -14,6 +14,7 @@ import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
 import { useEffect, useState } from 'react';
 import '../i18n';
+import Meta from '../components/Meta/Meta';
 
 function MyApp({ Component, ...rest }: AppProps) {
     const { store, props } = wrapper.useWrappedStore(rest);
@@ -25,8 +26,10 @@ function MyApp({ Component, ...rest }: AppProps) {
 
     return (
         <Provider store={store}>
-            <DataComponent />
-            <ThemeProvider theme={theme}>{hydrated && <Component {...props.pageProps} />}</ThemeProvider>
+            <Meta>
+                <DataComponent />
+                <ThemeProvider theme={theme}>{hydrated && <Component {...props.pageProps} />}</ThemeProvider>
+            </Meta>
         </Provider>
     );
 }
