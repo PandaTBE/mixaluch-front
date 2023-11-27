@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ADMIN_TABS } from '../../../constants/admin';
-import { LinkText } from './styles';
+import { LinkText, Wrapper } from './styles';
 import { Grid, Stack } from '@mui/material';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import { theme } from '../../../constants/theme';
@@ -13,7 +13,7 @@ const EditProductPage = () => {
     const { selectedProduct } = useSelector(productReducerValues);
 
     return (
-        <div>
+        <Wrapper>
             <Stack flexWrap="wrap" direction="row" alignItems="center" display="inline-flex" gap={2}>
                 <Link href={ADMIN_TABS[0].href}>
                     <Stack direction="row" alignItems="center" display="inline-flex" gap={1}>
@@ -34,7 +34,7 @@ const EditProductPage = () => {
                     </Grid>
                 </>
             ) : null}
-        </div>
+        </Wrapper>
     );
 };
 

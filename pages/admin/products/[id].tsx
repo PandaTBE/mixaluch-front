@@ -44,20 +44,20 @@ export default EditProduct;
  * Получение данных на сервере
  */
 export const getServerSideProps = async (context?: { params?: { id: string } }) => {
-    if (context?.params?.id) {
-        try {
+    try {
+        if (context?.params?.id) {
             const data = await AdminProductsApi.getAdminProductsPageData();
 
-            const product = data.products?.find((item) => item.id === Number(context.params?.id));
+            const product = data.products?.find((item) => item.id === Number(context.params?.id)) || null;
 
             return {
                 props: { ...data, product },
             };
-        } catch (error) {
-            return {
-                props: {},
-            };
         }
+    } catch (error) {
+        return {
+            props: {},
+        };
     }
 
     return {

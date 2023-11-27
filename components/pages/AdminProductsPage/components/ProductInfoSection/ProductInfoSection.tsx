@@ -12,6 +12,7 @@ import {
     InputLabel,
     ListSubheader,
     MenuItem,
+    Modal,
     Select,
     Stack,
     TextField,
@@ -20,12 +21,14 @@ import { IProductInfoDTO } from '../../../../../models/Product';
 import { slugify, transliterate } from '../../../../../tools/commonTools';
 import { StyledCheckbox } from './styles';
 import { PRODUCT_UNIT_OPTIONS } from '../../../../../constants/admin';
+import DeleteConfirmModal from './components/DeleteConfirmModal/DeleteConfirmModal';
 
 /**
  * Секция с информацией о товаре
  */
 const ProductInfoSection: FC<IProps> = ({ product }) => {
     const { categories } = useSelector(categoryReducerValues);
+    const [isDeleConfirmModalOpen, setDeleteConfirmModalOpen] = useState(false);
     const [isCancel, setIsCancel] = useState({});
 
     const initialValues: Omit<IProductInfoDTO, 'category'> & { category: string | number } = {
@@ -108,6 +111,14 @@ const ProductInfoSection: FC<IProps> = ({ product }) => {
         return [];
     }, []);
 
+    const toggleDeleteConfirmModal = () => {
+        setDeleteConfirmModalOpen((prevState) => !prevState);
+    };
+
+    const onDeleteConfirm = () => {
+        console.log('delete');
+    };
+
     const onCancel = () => {
         setIsCancel({});
         formik.resetForm();
@@ -115,6 +126,9 @@ const ProductInfoSection: FC<IProps> = ({ product }) => {
 
     return (
         <div>
+            <Modal onClose={toggleDeleteConfirmModal} open={isDeleConfirmModalOpen}>
+                <DeleteConfirmModal deleteConfirm={onDeleteConfirm} toggleOpen={toggleDeleteConfirmModal} />
+            </Modal>
             <form onSubmit={formik.handleSubmit}>
                 <Stack gap={2}>
                     <TextField
@@ -223,9 +237,11 @@ const ProductInfoSection: FC<IProps> = ({ product }) => {
                         <Button onClick={onCancel} variant={'contained'} color="warning">
                             Отменить изменения
                         </Button>
-                        <Button variant={'contained'} color="error">
-                            Удалить товар
-                        </Button>
+                        {Boolean(product) && (
+                            <Button onClick={toggleDeleteConfirmModal} variant={'contained'} color="error">
+                                Удалить товар
+                            </Button>
+                        )}
                     </Stack>
                 </Stack>
             </form>

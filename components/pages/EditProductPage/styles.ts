@@ -6,3 +6,7 @@ export const LinkText = styled.a`
     cursor: pointer;
     line-height: 16px;
 `;
+
+export const Wrapper = styled.div`
+    padding-bottom: 20px;
+`;
