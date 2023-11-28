@@ -9,11 +9,11 @@ import { useFormik } from 'formik';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
-import DeleteConfirmModal from './components/DeleteConfirmModal/DeleteConfirmModal';
 import { DEFAULT_MODAL_STYLES } from '../../../../../../../constants/modal';
 import PageTitle from '../../../../../../PageTitle/PageTitle';
 import { theme } from '../../../../../../../constants/theme';
 import HistoryIcon from '@mui/icons-material/History';
+import DeleteConfirmModal from '../../../DeleteConfirmModal/DeleteConfirmModal';
 
 /**
  * Компонент для отображения модального окна для редактирования картинки товара и добавления новой
@@ -86,7 +86,12 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
         <Modal onClose={toggleEditImageOpen(modalState.image)} open={modalState.open}>
             <Wrapper style={DEFAULT_MODAL_STYLES}>
                 <Modal onClose={toggleDeleteConfirmModal} open={isDeleConfirmModalOpen}>
-                    <DeleteConfirmModal deleteConfirm={onDeleteConfirm} toggleOpen={toggleDeleteConfirmModal} />
+                    <DeleteConfirmModal
+                        bodyText={'Вы уверены, что хотите удалить изображение?'}
+                        titleText={'Удаление изображения'}
+                        deleteConfirm={onDeleteConfirm}
+                        toggleOpen={toggleDeleteConfirmModal}
+                    />
                 </Modal>
                 <PageTitle text={modalState.image ? 'Редактирование изображения' : 'Добавление нового изображения'} />
                 <CloseIconWrapper onClick={toggleEditImageOpen(modalState.image)}>

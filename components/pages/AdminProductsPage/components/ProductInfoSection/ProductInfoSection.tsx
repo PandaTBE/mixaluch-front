@@ -19,9 +19,9 @@ import {
 } from '@mui/material';
 import { IProductInfoDTO } from '../../../../../models/Product';
 import { slugify, transliterate } from '../../../../../tools/commonTools';
-import { StyledCheckbox } from './styles';
+import { StyledCheckbox, StyledForm, Title } from './styles';
 import { PRODUCT_UNIT_OPTIONS } from '../../../../../constants/admin';
-import DeleteConfirmModal from './components/DeleteConfirmModal/DeleteConfirmModal';
+import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
 
 /**
  * Секция с информацией о товаре
@@ -126,10 +126,16 @@ const ProductInfoSection: FC<IProps> = ({ product }) => {
 
     return (
         <div>
+            <Title>Информация с сайта</Title>
             <Modal onClose={toggleDeleteConfirmModal} open={isDeleConfirmModalOpen}>
-                <DeleteConfirmModal deleteConfirm={onDeleteConfirm} toggleOpen={toggleDeleteConfirmModal} />
+                <DeleteConfirmModal
+                    bodyText={'Вы уверены, что хотите удалить товар?'}
+                    titleText={'Удаление товара'}
+                    deleteConfirm={onDeleteConfirm}
+                    toggleOpen={toggleDeleteConfirmModal}
+                />
             </Modal>
-            <form onSubmit={formik.handleSubmit}>
+            <StyledForm onSubmit={formik.handleSubmit}>
                 <Stack gap={2}>
                     <TextField
                         error={formik.touched.title && Boolean(formik.errors.title)}
@@ -244,7 +250,7 @@ const ProductInfoSection: FC<IProps> = ({ product }) => {
                         )}
                     </Stack>
                 </Stack>
-            </form>
+            </StyledForm>
         </div>
     );
 };

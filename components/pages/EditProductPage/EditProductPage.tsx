@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { productReducerValues } from '../../../slices/Product/product';
 import ProductInfoSection from '../AdminProductsPage/components/ProductInfoSection/ProductInfoSection';
 import ProductImagesSection from '../AdminProductsPage/components/ProductImagesSection/ProductImagesSection';
+import ProductExternalIdsSection from '../AdminProductsPage/components/ProductExternalIdsSection/ProductExternalIdsSection';
 
 const EditProductPage = () => {
     const { selectedProduct } = useSelector(productReducerValues);
@@ -16,7 +17,7 @@ const EditProductPage = () => {
         <Wrapper>
             <Stack flexWrap="wrap" direction="row" alignItems="center" display="inline-flex" gap={2}>
                 <Link href={ADMIN_TABS[0].href}>
-                    <Stack direction="row" alignItems="center" display="inline-flex" gap={1}>
+                    <Stack direction="row" alignItems="center" display="inline-flex" gap={1} marginBottom={2}>
                         <ArrowBackIosNewRoundedIcon fontSize={'small'} htmlColor={theme.colors.primary} />
                         <LinkText>Назад к товарам</LinkText>
                     </Stack>
@@ -27,6 +28,7 @@ const EditProductPage = () => {
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <ProductImagesSection product={selectedProduct} />
+                            <ProductExternalIdsSection product={selectedProduct} />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <ProductInfoSection product={selectedProduct} />

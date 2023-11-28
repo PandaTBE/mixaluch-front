@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { IState, TProductsByStoreId, TProductsByStoreIdByProductId, TStoresById } from './interfaces';
+import { IState, TProductsByStoreId } from './interfaces';
 import { IEvotorProduct, IEvotorStore } from '../../models/Evotor';
 import { AppState } from '../../store';
 

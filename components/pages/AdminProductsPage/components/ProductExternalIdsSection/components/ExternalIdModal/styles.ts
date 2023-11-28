@@ -9,6 +9,10 @@ export const Wrapper = styled.div`
     }
 `;
 
-export const Text = styled.div`
+export const ContentWrapper = styled.div`
+    margin-top: 20px;
+`;
+
+export const EvotorDataWrapper = styled.div`
     margin-top: 15px;
 `;

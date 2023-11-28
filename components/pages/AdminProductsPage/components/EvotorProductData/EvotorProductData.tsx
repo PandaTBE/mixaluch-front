@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { IProps } from './interfaces';
 import { DataWrapper, Title } from './styles';
-import { IEvotorProduct } from '../../../../models/Evotor';
+import { IEvotorProduct } from '../../../../../models/Evotor';
 
 const EvotorProductData: FC<IProps> = ({ evotorProduct }) => {
     const data: { key: keyof IEvotorProduct; text: string; additionalText?: string }[] = [

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const Title = styled.div`
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
+    margin-bottom: 15px;
 `;
 
 export const DataWrapper = styled.div`
