@@ -5,7 +5,7 @@ import {
     CREATE_EXTERNAL_ID_QUERY_KEY,
     DELETE_EXTERNAL_ID_QUERY_KEY,
     UPDATE_EXTERNAL_ID_QUERY_KEY,
-} from '../constants/constants';
+} from '../../../constants/constants';
 import { IProduct } from '../../../../../../../../../models/Product';
 import { useDispatch } from 'react-redux';
 import { storeProducts, storeSelectedProduct } from '../../../../../../../../../slices/Product/product';

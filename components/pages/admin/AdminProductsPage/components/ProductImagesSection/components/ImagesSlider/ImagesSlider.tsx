@@ -20,15 +20,15 @@ const ImagesSlider: FC<IProps> = ({ images, productId }) => {
     const [editImageModalState, setEditImageModalState] = useState<IImageModalState>({
         open: false,
         image: null,
-        productId: null,
+        productId,
     });
     const [newImageModalState, setNewImageModalState] = useState<IImageModalState>({
         open: false,
         image: null,
-        productId: null,
+        productId,
     });
 
-    const toggleEditImageOpen = (image: IProductImage | null) => () => {
+    const toggleEditImageOpen = (image: IProductImage | null) => {
         setEditImageModalState((prevState) => ({
             ...prevState,
             open: !prevState.open,
@@ -37,7 +37,7 @@ const ImagesSlider: FC<IProps> = ({ images, productId }) => {
         }));
     };
 
-    const toggleNewImageOpen = () => () => {
+    const toggleNewImageOpen = () => {
         setNewImageModalState((prevState) => ({
             ...prevState,
             open: !prevState.open,
@@ -66,7 +66,7 @@ const ImagesSlider: FC<IProps> = ({ images, productId }) => {
                 >
                     <AddNewWrapper>
                         <Tooltip title={'Добавить новое изображение'}>
-                            <IconButton onClick={toggleNewImageOpen()}>
+                            <IconButton onClick={toggleNewImageOpen}>
                                 <AddPhotoAlternateIcon fontSize="medium" htmlColor={theme.colors.primary} />
                             </IconButton>
                         </Tooltip>
@@ -75,7 +75,7 @@ const ImagesSlider: FC<IProps> = ({ images, productId }) => {
                         <SwiperSlide key={image.id}>
                             <EditWrapper>
                                 <Tooltip title={'Редактировать изображение'}>
-                                    <IconButton onClick={toggleEditImageOpen(image)}>
+                                    <IconButton onClick={() => toggleEditImageOpen(image)}>
                                         <EditRoundedIcon fontSize="medium" htmlColor={theme.colors.primary} />
                                     </IconButton>
                                 </Tooltip>
@@ -86,7 +86,7 @@ const ImagesSlider: FC<IProps> = ({ images, productId }) => {
                     ))}
                 </Swiper>
             ) : (
-                <NoImageWrapper onClick={toggleNewImageOpen()}>Добавить новое изображение</NoImageWrapper>
+                <NoImageWrapper onClick={() => toggleNewImageOpen()}>Добавить новое изображение</NoImageWrapper>
             )}
         </>
     );

@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useId, useState } from 'react';
 import { IProps } from './interfaces';
 import { FormControlLabel, Grid, IconButton, Modal, Stack, TextField, Button as MaterialButton } from '@mui/material';
 import { CloseIconWrapper, ContentWrapper, HiddenInput, ImageWrapper, StyledCheckbox, Wrapper } from './styles';
@@ -17,6 +17,13 @@ import DeleteConfirmModal from '../../../DeleteConfirmModal/DeleteConfirmModal';
 import { productApi } from '../../../../../../../../services/ProductService';
 import { isUndefined } from 'lodash';
 import { IProductImageDTO } from '../../../../../../../../models/Product';
+import {
+    CREATE_PRODUCT_IMAGE_QUERY_KEY,
+    DELETE_PRODUCT_IMAGE_QUERY_KEY,
+    UPDATE_PRODUCT_IMAGE_QUERY_KEY,
+} from '../../constants/constants';
+import { DS } from '../../../../../../../../constants/constants';
+import useHandleResults from './hooks/useHandleResults';
 
 /**
  * Компонент для отображения модального окна для редактирования картинки товара и добавления новой
@@ -25,7 +32,19 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
     const [isDeleConfirmModalOpen, setDeleteConfirmModalOpen] = useState(false);
     const [isCanceled, setIsCanceled] = useState({});
 
-    const [createProductImage, createProductImageResult] = productApi.useCreateProductImageMutation();
+    const requestsId = useId();
+
+    const [createProductImage, createProductImageResult] = productApi.useCreateProductImageMutation({
+        fixedCacheKey: `${CREATE_PRODUCT_IMAGE_QUERY_KEY}${DS}${requestsId}`,
+    });
+    const [updateProductImage, updateProductImageResult] = productApi.useUpdateProductImageMutation({
+        fixedCacheKey: `${UPDATE_PRODUCT_IMAGE_QUERY_KEY}${DS}${requestsId}`,
+    });
+    const [deleteProductImage, deleteProductImageResult] = productApi.useDeleteProductImageMutation({
+        fixedCacheKey: `${DELETE_PRODUCT_IMAGE_QUERY_KEY}${DS}${requestsId}`,
+    });
+
+    useHandleResults(requestsId, modalState.productId);
 
     const initialValues = {
         alt_text: '',
@@ -38,15 +57,14 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
     });
 
     const onSubmit = (formValues: { alt_text: string; is_feature: boolean; image?: File }) => {
-        console.log(formValues);
-
         if (modalState.image) {
-            console.log('edit');
+            updateProductImage({ data: { ...formValues, product: modalState.productId }, id: modalState.image.id });
         } else {
             if (!isUndefined(formValues.image)) {
                 createProductImage({ ...formValues, product: modalState.productId } as IProductImageDTO);
             }
         }
+        toggleEditImageOpen(null);
     };
 
     const formik = useFormik({
@@ -71,7 +89,10 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
     }, [formik.values.image]);
 
     const onDeleteConfirm = () => {
-        console.log('delete confirm');
+        if (modalState.image) {
+            deleteProductImage(modalState.image.id);
+        }
+        toggleEditImageOpen(null);
     };
 
     const toggleDeleteConfirmModal = () => {
@@ -80,7 +101,6 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
 
     const onCancel = () => {
         setIsCanceled({});
-        formik.resetForm();
     };
 
     const onImageChange =
@@ -90,8 +110,11 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
             }
         };
 
+    const isLoading =
+        createProductImageResult.isLoading || updateProductImageResult.isLoading || deleteProductImageResult.isLoading;
+
     return (
-        <Modal onClose={toggleEditImageOpen(modalState.image)} open={modalState.open}>
+        <Modal onClose={() => toggleEditImageOpen(modalState.image)} open={modalState.open}>
             <Wrapper style={DEFAULT_MODAL_STYLES}>
                 <Modal onClose={toggleDeleteConfirmModal} open={isDeleConfirmModalOpen}>
                     <DeleteConfirmModal
@@ -102,7 +125,7 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
                     />
                 </Modal>
                 <PageTitle text={modalState.image ? 'Редактирование изображения' : 'Добавление нового изображения'} />
-                <CloseIconWrapper onClick={toggleEditImageOpen(modalState.image)}>
+                <CloseIconWrapper onClick={() => toggleEditImageOpen(modalState.image)}>
                     <IconButton>
                         <CloseRoundedIcon htmlColor={theme.colors.primary} />
                     </IconButton>
@@ -131,6 +154,7 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
                             <form onSubmit={formik.handleSubmit}>
                                 <Stack gap={2}>
                                     <TextField
+                                        disabled={isLoading}
                                         error={formik.touched.alt_text && Boolean(formik.errors.alt_text)}
                                         helperText={formik.touched.alt_text && formik.errors.alt_text}
                                         onChange={formik.handleChange}
@@ -143,6 +167,7 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
                                     <FormControlLabel
                                         control={
                                             <StyledCheckbox
+                                                disabled={isLoading}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                                 onChange={formik.handleChange}
                                                 checked={formik.values.is_feature}
@@ -153,6 +178,7 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
                                     />
 
                                     <MaterialButton
+                                        disabled={isLoading}
                                         component="label"
                                         variant="contained"
                                         startIcon={<CloudUploadIcon />}
@@ -165,6 +191,7 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
                                         />
                                     </MaterialButton>
                                     <MaterialButton
+                                        disabled={isLoading}
                                         type="submit"
                                         variant="contained"
                                         startIcon={<SaveIcon />}
@@ -173,7 +200,7 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
                                         Сохранить изменения
                                     </MaterialButton>
                                     <MaterialButton
-                                        type="submit"
+                                        disabled={isLoading}
                                         variant="contained"
                                         startIcon={<HistoryIcon />}
                                         color="warning"
@@ -183,6 +210,7 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
                                     </MaterialButton>
                                     {modalState.image && (
                                         <MaterialButton
+                                            disabled={isLoading}
                                             component="label"
                                             variant="contained"
                                             startIcon={<DeleteIcon />}

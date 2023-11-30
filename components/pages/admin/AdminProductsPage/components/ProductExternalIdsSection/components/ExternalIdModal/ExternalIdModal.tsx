@@ -19,7 +19,7 @@ import {
     CREATE_EXTERNAL_ID_QUERY_KEY,
     DELETE_EXTERNAL_ID_QUERY_KEY,
     UPDATE_EXTERNAL_ID_QUERY_KEY,
-} from './constants/constants';
+} from '../../constants/constants';
 import { DS } from '../../../../../../../../constants/constants';
 import useHandleResults from './hooks/useHandleResults';
 import DeleteConfirmModal from '../../../DeleteConfirmModal/DeleteConfirmModal';
