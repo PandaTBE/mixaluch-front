@@ -26,6 +26,7 @@ import {
 } from '../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
 import { Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { IProductImage } from '../../models/Product';
 
 /**
  * Компонент для отображения карточки продукта
@@ -54,12 +55,12 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
 
     const mainImage = useMemo(() => {
         return product.product_image.find((image) => image.is_feature) || product.product_image[0];
-    }, [product]);
+    }, [product]) as IProductImage | undefined;
 
     return (
         <Wrapper>
             <ImageWrapper height={imageHeight} onClick={onProductClick}>
-                <Image src={mainImage.image} alt={mainImage.alt_text} layout={'fill'} objectFit={'contain'} />
+                <Image src={mainImage?.image || ''} alt={mainImage?.alt_text} layout={'fill'} objectFit={'contain'} />
             </ImageWrapper>
             <ContentWrapper>
                 <Title onClick={onProductClick}>{product.title}</Title>

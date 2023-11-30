@@ -22,6 +22,7 @@ import {
     Wrapper,
 } from './styles';
 import { useTranslation } from 'react-i18next';
+import { IProductImage } from '../../../../../models/Product';
 
 interface IProps {
     /** Элемент корзины */
@@ -44,7 +45,8 @@ const CartItem: FC<IProps> = ({ cartItem, onCartItemTitleClick }) => {
     };
 
     const image =
-        cartItem.product.product_image.find((element) => element.is_feature) || cartItem.product.product_image[0];
+        cartItem.product.product_image.find((element) => element.is_feature) ||
+        (cartItem.product.product_image[0] as IProductImage | undefined);
 
     const onTitleClick = () => {
         onCartItemTitleClick(cartItem.product.id);
@@ -56,7 +58,7 @@ const CartItem: FC<IProps> = ({ cartItem, onCartItemTitleClick }) => {
                 <div>
                     <Stack direction={'row'} spacing={2}>
                         <ProductImageWrapper onClick={onTitleClick}>
-                            <Image layout="fill" src={image.image} alt={image.alt_text} />
+                            <Image layout="fill" src={image?.image || ''} alt={image?.alt_text} />
                         </ProductImageWrapper>
                         <Stack
                             spacing={2}

@@ -6,7 +6,7 @@ import { storeProductsByStoreId, storeStores } from '../../../slices/Evotor/evot
 import MainLayout from '../../../layouts/MainLayout/MainLayout';
 import StaffOnlyPage from '../../../layouts/StaffOnlyPage/StaffOnlyPage';
 import AdminPageLayout from '../../../layouts/AdminPageLayout/AdminPageLayout';
-import AdminProductsPage from '../../../components/pages/AdminProductsPage/AdminProductsPage';
+import AdminProductsPage from '../../../components/pages/admin/AdminProductsPage/AdminProductsPage';
 import { ICategory } from '../../../models/Category';
 import { IProduct } from '../../../models/Product';
 import { TProductsByStoreId } from '../../../slices/Evotor/interfaces';
