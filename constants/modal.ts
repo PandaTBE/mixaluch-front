@@ -9,5 +9,6 @@ export const DEFAULT_MODAL_STYLES: CSSProperties = {
     backgroundColor: theme.backgroundColors.primary,
     padding: '10px',
     borderRadius: '5px',
-    overflow: 'hidden',
+    overflow: 'auto',
+    maxHeight: '90vh',
 };

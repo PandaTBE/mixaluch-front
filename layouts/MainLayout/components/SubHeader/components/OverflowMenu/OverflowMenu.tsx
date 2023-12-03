@@ -1,6 +1,6 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { IconButton } from '@mui/material';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import {
     BodyWrapper,
     Delivery,
@@ -15,10 +15,12 @@ import {
 import { navigationListItems } from '../../../constants/constants';
 import { storePageToSwitch } from '../../../../../../slices/General/general';
 import { TPageToSwitch } from '../../../../../../slices/General/interfaces';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
+import { cloneDeep } from 'lodash';
+import { userReducerValues } from '../../../../../../slices/User/user';
 
 interface IProps {
     isDrawerOpen: boolean;
@@ -29,6 +31,7 @@ interface IProps {
  * Компонент для отображения выезжающего меню
  */
 const OverflowMenu: FC<IProps> = ({ isDrawerOpen, toggleDrawerOpen }) => {
+    const store = useSelector(userReducerValues);
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -36,6 +39,20 @@ const OverflowMenu: FC<IProps> = ({ isDrawerOpen, toggleDrawerOpen }) => {
         dispatch(storePageToSwitch(link));
         toggleDrawerOpen();
     };
+
+    const _navigationItems = useMemo(() => {
+        const result = cloneDeep(navigationListItems);
+
+        if (store.user?.is_staff && store.authToken) {
+            result.push({
+                id: 'admin',
+                href: '/admin',
+                name: 'Панель администратора',
+                isActive: (pathname, href) => pathname.includes(href),
+            });
+        }
+        return result;
+    }, [store.user, store.authToken]);
 
     return (
         <StyledDrawer
@@ -58,7 +75,7 @@ const OverflowMenu: FC<IProps> = ({ isDrawerOpen, toggleDrawerOpen }) => {
                 </HeaderWrapper>
                 <BodyWrapper>
                     <Nav>
-                        {navigationListItems.map((element) => {
+                        {_navigationItems.map((element) => {
                             return (
                                 <StyledLink
                                     key={element.id}

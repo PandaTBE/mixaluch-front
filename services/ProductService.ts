@@ -103,7 +103,7 @@ export const productApi = createApi({
         /** Создание картинки для товара */
         createProductImage: build.mutation<IProductImage, IProductImageDTO>({
             query: (data) => {
-                let formData = new FormData();
+                const formData = new FormData();
                 Object.entries(data).forEach(([key, value]) => {
                     formData.append(key, value);
                 });

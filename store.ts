@@ -17,8 +17,10 @@ import { newsApi } from './services/NewsService';
 import { telegramApi } from './services/TelegramService';
 import { productApi } from './services/ProductService';
 import { cloneDeep } from 'lodash';
+import { removeImageBgApi } from './services/RemoveImageBGService';
 
 const combinedReducer = combineReducers({
+    [removeImageBgApi.reducerPath]: removeImageBgApi.reducer,
     [telegramApi.reducerPath]: telegramApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
@@ -84,6 +86,7 @@ const makeStore = () =>
         reducer: reducer as typeof combinedReducer,
         middleware: (getDefaultMiddleware) => {
             return getDefaultMiddleware()
+                .concat(removeImageBgApi.middleware)
                 .concat(telegramApi.middleware)
                 .concat(productApi.middleware)
                 .concat(orderApi.middleware)

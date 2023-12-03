@@ -1,6 +1,15 @@
 import { ChangeEvent, FC, useEffect, useId, useState } from 'react';
 import { IProps } from './interfaces';
-import { FormControlLabel, Grid, IconButton, Modal, Stack, TextField, Button as MaterialButton } from '@mui/material';
+import {
+    FormControlLabel,
+    Grid,
+    IconButton,
+    Modal,
+    Stack,
+    TextField,
+    Button as MaterialButton,
+    CircularProgress,
+} from '@mui/material';
 import { CloseIconWrapper, ContentWrapper, HiddenInput, ImageWrapper, StyledCheckbox, Wrapper } from './styles';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import Image from 'next/image';
@@ -24,6 +33,7 @@ import {
 } from '../../constants/constants';
 import { DS } from '../../../../../../../../constants/constants';
 import useHandleResults from './hooks/useHandleResults';
+import { removeImageBgApi } from '../../../../../../../../services/RemoveImageBGService';
 
 /**
  * Компонент для отображения модального окна для редактирования картинки товара и добавления новой
@@ -43,6 +53,8 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
     const [deleteProductImage, deleteProductImageResult] = productApi.useDeleteProductImageMutation({
         fixedCacheKey: `${DELETE_PRODUCT_IMAGE_QUERY_KEY}${DS}${requestsId}`,
     });
+
+    const [removeBg, removeBgResult] = removeImageBgApi.useRemoveBgMutation();
 
     useHandleResults(requestsId, modalState.productId);
 
@@ -83,6 +95,12 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
     }, [modalState.image, isCanceled]);
 
     useEffect(() => {
+        if (removeBgResult.data) {
+            formik.setFieldValue('image', removeBgResult.data);
+        }
+    }, [removeBgResult.data]);
+
+    useEffect(() => {
         if (!formik.values.alt_text && formik.values.image) {
             formik.setFieldValue('alt_text', formik.values.image.name);
         }
@@ -111,7 +129,10 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
         };
 
     const isLoading =
-        createProductImageResult.isLoading || updateProductImageResult.isLoading || deleteProductImageResult.isLoading;
+        createProductImageResult.isLoading ||
+        updateProductImageResult.isLoading ||
+        deleteProductImageResult.isLoading ||
+        removeBgResult.isLoading;
 
     return (
         <Modal onClose={() => toggleEditImageOpen(modalState.image)} open={modalState.open}>
@@ -134,9 +155,11 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <ImageWrapper isNoImage={!modalState.image && !formik.values.image}>
-                                {!modalState.image && !formik.values.image && <span>Здесь пока нет изображения</span>}
-
-                                {(modalState.image?.image || formik.values.image) && (
+                                {removeBgResult.isLoading ? (
+                                    <CircularProgress />
+                                ) : !modalState.image && !formik.values.image ? (
+                                    <span>Здесь пока нет изображения</span>
+                                ) : (
                                     <Image
                                         objectFit="fill"
                                         sizes={'inherit'}
@@ -189,6 +212,18 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
                                             onChange={onImageChange(formik.setFieldValue)}
                                             type="file"
                                         />
+                                    </MaterialButton>
+                                    <MaterialButton
+                                        disabled={isLoading || !formik.values.image}
+                                        component="label"
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={() => {
+                                            formik.values.image && removeBg({ image_file: formik.values.image });
+                                        }}
+                                        startIcon={<CloudUploadIcon />}
+                                    >
+                                        <span>Удалить фон</span>
                                     </MaterialButton>
                                     <MaterialButton
                                         disabled={isLoading}
