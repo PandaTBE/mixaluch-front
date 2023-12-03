@@ -12,8 +12,6 @@ import { TProductsByStoreId } from '../../../../slices/Evotor/interfaces';
 import { AdminProductsApi } from '../../../../api/admin/products/AdminProductsApi';
 import { storeProductsByStoreId, storeStores } from '../../../../slices/Evotor/evotor';
 import { storeCategories } from '../../../../slices/Category/category';
-import stores from '../../../../stores.json';
-import productsByStoreId from '../../../../productsByStoreId.json';
 import AdminReturnToProductsLayout from '../../../../layouts/AdminReturnToProductsLayout/AdminReturnToProductsLayout';
 
 /**

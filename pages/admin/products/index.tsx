@@ -13,8 +13,6 @@ import { TProductsByStoreId } from '../../../slices/Evotor/interfaces';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { AdminProductsApi } from '../../../api/admin/products/AdminProductsApi';
-import stores from '../../../stores.json';
-import productsByStoreId from '../../../productsByStoreId.json';
 
 const Products: NextPage<{
     categories?: ICategory[] | null;

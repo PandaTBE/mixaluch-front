@@ -10,8 +10,6 @@ import { IProduct } from '../../../../models/Product';
 import { ICategory } from '../../../../models/Category';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import stores from '../../../../stores.json';
-import productsByStoreId from '../../../../productsByStoreId.json';
 import { storeProductsByStoreId, storeStores } from '../../../../slices/Evotor/evotor';
 import { storeCategories } from '../../../../slices/Category/category';
 import { storeProducts } from '../../../../slices/Product/product';
