@@ -30,7 +30,7 @@ const MainCategories: FC<IProps> = ({ isSkeleton = false }) => {
 
     return (
         <Wrapper>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} justifyContent={'center'}>
                 {isSkeleton
                     ? Array(4)
                           .fill(null)
