@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { userReducerValues } from '../../../../slices/User/user';
 import {
     cartReducerValues,
+    DELIVERY_COST,
     FREE_DELIVERY_BORDER,
     storeCartItems,
     storeDeliveryCost,
@@ -36,6 +37,8 @@ export const usePrepareData = () => {
     useEffect(() => {
         if (totalSum >= FREE_DELIVERY_BORDER) {
             dispatch(storeDeliveryCost(0));
+        } else {
+            dispatch(storeDeliveryCost(DELIVERY_COST));
         }
     }, [totalSum]);
 
