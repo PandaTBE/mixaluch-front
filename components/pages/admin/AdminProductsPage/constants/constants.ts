@@ -5,6 +5,8 @@ import Category from '../components/Category/Category';
 import { ITableColumnProps, TOrder } from '../interfaces';
 import ExternalIds from '../components/TableBody/components/ExternalIds/ExternalIds';
 import Edit from '../components/TableBody/components/Edit/Edit';
+import { TProductsByStoreIdByProductId } from '../../../../../slices/Evotor/interfaces';
+import { EVOTOR_EXTERNAL_ID_DATA_SOURCE } from '../../../../../constants/admin';
 
 export const COLUMNS: {
     id: string;
@@ -13,7 +15,12 @@ export const COLUMNS: {
     align?: TableCellProps['align'];
     component?: FC<ITableColumnProps>;
     isSortDisabled?: boolean;
-    sortHandler?: (a: IProduct, b: IProduct, order: TOrder) => number;
+    sortHandler?: (
+        a: IProduct,
+        b: IProduct,
+        order: TOrder,
+        productsByStoreIdByProductId: TProductsByStoreIdByProductId,
+    ) => number;
 }[] = [
     {
         id: 'title',
@@ -51,9 +58,22 @@ export const COLUMNS: {
         headerText: 'Связь с эвотор',
         align: 'right',
         component: ExternalIds,
-        sortHandler: (a, b, order) => {
+        sortHandler: (a, b, order, productsByStoreIdByProductId) => {
+            const aExternalId = a.external_ids.find((item) => item.data_source === EVOTOR_EXTERNAL_ID_DATA_SOURCE);
+            const bExternalId = b.external_ids.find((item) => item.data_source === EVOTOR_EXTERNAL_ID_DATA_SOURCE);
             const multiplier = order === 'asc' ? 1 : -1;
-            return a.external_ids?.length > b.external_ids?.length ? 1 * multiplier : -1 * multiplier;
+            if (aExternalId && bExternalId && productsByStoreIdByProductId) {
+                const aSplittedId = aExternalId.external_id.split('/');
+                const aProduct = productsByStoreIdByProductId[aSplittedId[0]]?.[aSplittedId[1]];
+                const bSplittedId = aExternalId.external_id.split('/');
+                const bProduct = productsByStoreIdByProductId[bSplittedId[0]]?.[bSplittedId[1]];
+
+                if (aProduct && bProduct) {
+                    return 1 * multiplier;
+                }
+            }
+
+            return -1 * multiplier;
         },
     },
     {

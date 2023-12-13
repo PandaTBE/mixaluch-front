@@ -10,11 +10,13 @@ import { cloneDeep } from 'lodash';
 import TableHeader from './components/TableHeader/TableHeader';
 import TableBody from './components/TableBody/TableBody';
 import { useRouter } from 'next/router';
+import { evotorReducerValues } from '../../../../slices/Evotor/evotor';
 
 /**
  * Отображение таблицы со всеми товарами
  */
 const AdminProductsPage = () => {
+    const { productsByStoreIdByProductId } = useSelector(evotorReducerValues);
     const { products } = useSelector(productReducerValues);
 
     const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
@@ -43,7 +45,9 @@ const AdminProductsPage = () => {
 
             setSortedProducts(
                 cloneDeep(products).sort((a, b) =>
-                    currentColumnForSort?.sortHandler ? currentColumnForSort?.sortHandler(a, b, order) : 0,
+                    currentColumnForSort?.sortHandler
+                        ? currentColumnForSort?.sortHandler(a, b, order, productsByStoreIdByProductId)
+                        : 0,
                 ),
             );
         }
