@@ -69,11 +69,11 @@ export const COLUMNS: {
                 const bProduct = productsByStoreIdByProductId[bSplittedId[0]]?.[bSplittedId[1]];
 
                 if (aProduct && bProduct) {
-                    return 1 * multiplier;
+                    return -1 * multiplier;
                 }
             }
 
-            return -1 * multiplier;
+            return -1;
         },
     },
     {
