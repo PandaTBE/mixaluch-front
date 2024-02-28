@@ -8,6 +8,7 @@ const nextConfig = {
     },
 
     images: {
+        domains: ['mixaluch-back-dev.ru', 'mixaluch-back.ru'],
         loader: 'default',
     },
 };
