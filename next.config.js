@@ -8,7 +8,8 @@ const nextConfig = {
     },
 
     images: {
-        domains: ['mixaluch-back-dev.ru', 'mixaluch-back.ru'],
+        // eslint-disable-next-line no-undef
+        domains: process.env['NEXT_CONFIG_IMAGE_DOMAINS']?.split(' ') || [],
         loader: 'default',
     },
 };
