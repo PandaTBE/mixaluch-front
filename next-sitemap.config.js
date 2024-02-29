@@ -2,7 +2,8 @@
 
 // eslint-disable-next-line no-undef
 module.exports = {
-    siteUrl: 'https://mixaluch-shop.ru/',
+    // eslint-disable-next-line no-undef
+    siteUrl: process.env['NEXT_PUBLIC_FRONT_HOST'] || '',
     changefreq: 'daily',
     priority: 0.7,
     sitemapSize: 5000,
