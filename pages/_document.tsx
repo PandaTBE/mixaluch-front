@@ -32,20 +32,24 @@ class MyDocument extends Document {
         return (
             <Html lang="ru">
                 <Head>
-                    <Script
-                        strategy="afterInteractive"
-                        dangerouslySetInnerHTML={{
-                            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    {process.env['NEXT_PUBLIC_ENV'] !== 'dev' && (
+                        <Script
+                            strategy="afterInteractive"
+                            dangerouslySetInnerHTML={{
+                                __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-5F5V3MX');`,
-                        }}
-                    />
-                    <Script
-                        strategy="afterInteractive"
-                        dangerouslySetInnerHTML={{
-                            __html: `(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                            }}
+                        />
+                    )}
+
+                    {process.env['NEXT_PUBLIC_ENV'] !== 'dev' && (
+                        <Script
+                            strategy="afterInteractive"
+                            dangerouslySetInnerHTML={{
+                                __html: `(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
    m[i].l=1*new Date();
    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
@@ -58,8 +62,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         webvisor:true,
         ecommerce:"dataLayer"
    });`,
-                        }}
-                    />
+                            }}
+                        />
+                    )}
+
                     <link rel="preconnect" href="https://fonts.googleapis.com" />
                     <link rel="preconnect" href="https://fonts.gstatic.com" />
                     <link
@@ -76,17 +82,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <meta name="yandex-verification" content="2c5486f281db7b72" />
                 </Head>
                 <body>
-                    <noscript
-                        dangerouslySetInnerHTML={{
-                            __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5F5V3MX"
+                    {process.env['NEXT_PUBLIC_ENV'] !== 'dev' && (
+                        <noscript
+                            dangerouslySetInnerHTML={{
+                                __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5F5V3MX"
 height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
-                        }}
-                    ></noscript>
-                    <noscript
-                        dangerouslySetInnerHTML={{
-                            __html: `<div><img src="https://mc.yandex.ru/watch/92745351" style="position:absolute; left:-9999px;" alt="" /></div>`,
-                        }}
-                    ></noscript>
+                            }}
+                        ></noscript>
+                    )}
+                    {process.env['NEXT_PUBLIC_ENV'] !== 'dev' && (
+                        <noscript
+                            dangerouslySetInnerHTML={{
+                                __html: `<div><img src="https://mc.yandex.ru/watch/92745351" style="position:absolute; left:-9999px;" alt="" /></div>`,
+                            }}
+                        ></noscript>
+                    )}
+
                     <Main />
                     <NextScript />
                 </body>
