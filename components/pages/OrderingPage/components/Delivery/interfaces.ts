@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon';
+
 export interface IOrderFormValues {
     name: string;
     phone_number: string;
@@ -7,4 +9,7 @@ export interface IOrderFormValues {
     cardPayment: boolean;
     address: string;
     comment: string;
+    deliverByTime: boolean;
+    deliveryDate: DateTime;
+    deliveryTime: DateTime;
 }

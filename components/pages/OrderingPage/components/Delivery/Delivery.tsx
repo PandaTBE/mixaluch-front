@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import Button from '../../../../Button/Button';
 import { DELIVERY_COST, FREE_DELIVERY_BORDER } from '../../../../../slices/Cart/cart';
 import { OrderingPageContext } from '../../context';
-import { Stack } from '@mui/material';
+import { FormGroup, Stack } from '@mui/material';
 import { useContext } from 'react';
 import { useFormik } from 'formik';
 import {
@@ -16,12 +16,18 @@ import {
     StyledTextField,
     Title,
     Wrapper,
+    StyledSwitch,
+    StyledFormControlLabel,
 } from './styles';
 import { IOrderFormValues } from './interfaces';
 import {
     googleAnalytics4DataLayers,
     sendNewDataLayer,
 } from '../../../../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
+import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
+import { DateTime } from 'luxon';
 
 /**
  * Компонент для отображения секции доставки
@@ -29,17 +35,6 @@ import {
 const Delivery = () => {
     const phoneRegExp = /^(\+7|7|8)?[\s-]?\(?[489][0-9]{2}\)?[\s-]?[0-9]{3}[\s-]?[0-9]{2}[\s-]?[0-9]{2}$/gm;
     const context = useContext(OrderingPageContext);
-
-    const initialValues = {
-        name: context?.user ? `${context.user.name} ${context.user.second_name || ''}` : '',
-        phone_number: context?.user ? context.user.phone_number : '',
-        courierDelivery: true,
-        selfDelivery: false,
-        cashPayment: false,
-        cardPayment: true,
-        address: '',
-        comment: '',
-    };
 
     const validationSchema = yup.object({
         phone_number: yup
@@ -60,7 +55,19 @@ const Delivery = () => {
 
     const formik = useFormik({
         validationSchema,
-        initialValues,
+        initialValues: {
+            name: context?.user ? `${context.user.name} ${context.user.second_name || ''}` : '',
+            phone_number: context?.user ? context.user.phone_number : '',
+            courierDelivery: true,
+            selfDelivery: false,
+            cashPayment: false,
+            cardPayment: true,
+            deliverByTime: false,
+            deliveryDate: DateTime.now(),
+            deliveryTime: DateTime.fromObject({ hour: DateTime.now().hour + 2, minute: 0 }),
+            address: '',
+            comment: '',
+        },
         onSubmit,
     });
 
@@ -134,7 +141,35 @@ const Delivery = () => {
                             </DeliveryCost>
                         </Stack>
                     </CheckboxWrapper>
+                    <FormGroup>
+                        <StyledFormControlLabel
+                            control={
+                                <StyledSwitch
+                                    onChange={formik.handleChange}
+                                    checked={formik.values.deliverByTime}
+                                    name={'deliverByTime'}
+                                />
+                            }
+                            label="Доставить ко времени"
+                        />
+                    </FormGroup>
 
+                    {formik.values.deliverByTime && (
+                        <LocalizationProvider dateAdapter={AdapterLuxon} adapterLocale="ru-RU">
+                            <DatePicker
+                                value={formik.values.deliveryDate}
+                                label={'Дата доставки'}
+                                onChange={(newValue) => formik.setFieldValue('deliveryDate', newValue)}
+                                name={'deliveryDate'}
+                            />
+                            <TimePicker
+                                value={formik.values.deliveryTime}
+                                label={'Время доставки'}
+                                onChange={(newValue) => formik.setFieldValue('deliveryTime', newValue)}
+                                name={'deliveryTime'}
+                            />
+                        </LocalizationProvider>
+                    )}
                     {formik.values.courierDelivery && (
                         <StyledTextField
                             error={formik.touched.address && Boolean(formik.errors.address)}

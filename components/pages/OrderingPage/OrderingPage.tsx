@@ -78,6 +78,7 @@ const OrderingPage = () => {
             formValues,
             totalSum,
         });
+
         createOrder({ authToken, body });
     };
 

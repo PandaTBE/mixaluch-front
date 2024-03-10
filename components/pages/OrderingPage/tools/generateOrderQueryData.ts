@@ -1,7 +1,8 @@
 import { IExtendedCartItem } from '../../../../slices/Cart/interfaces';
-import { IOrderDTO, TOrderDeliveryType, TOrderPaymentType } from '../../../../models/Order';
+import { IOrderDTO, TOrderDeliveryDate, TOrderDeliveryType, TOrderPaymentType } from '../../../../models/Order';
 import { IOrderFormValues } from '../components/Delivery/interfaces';
 import { omit } from 'lodash';
+import { DateTime } from 'luxon';
 
 interface IArgs {
     /** элементы заказа (продукты) */
@@ -24,9 +25,20 @@ const generateOrderQueryData = (args: IArgs): IOrderDTO => {
 
     let deliveryType: TOrderDeliveryType = 'COURIER_DELIVERY';
     let paymentType: TOrderPaymentType = 'CARD_PAYMENT';
+    let deliveryDate: TOrderDeliveryDate = 'AS_SOON_AS_POSSIBLE';
 
     if (formValues.selfDelivery) deliveryType = 'SELF_DELIVERY';
     if (formValues.cashPayment) paymentType = 'CASH_PAYMENT';
+
+    if (formValues.deliverByTime) {
+        deliveryDate = DateTime.fromObject({
+            year: formValues.deliveryDate.year,
+            month: formValues.deliveryDate.month,
+            day: formValues.deliveryDate.day,
+            hour: formValues.deliveryTime.hour,
+            minute: formValues.deliveryTime.minute,
+        }).toISO();
+    }
 
     const products = orderItems.map((orderItem) => omit(orderItem, 'id'));
 
@@ -40,6 +52,7 @@ const generateOrderQueryData = (args: IArgs): IOrderDTO => {
         name: formValues.name,
         total_sum: Math.floor(totalSum),
         comment: formValues.comment,
+        delivery_date: deliveryDate,
         order_data: {
             products,
         },
