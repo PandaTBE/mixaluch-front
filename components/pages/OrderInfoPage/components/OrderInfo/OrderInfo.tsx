@@ -17,6 +17,8 @@ interface IProps {
  * Компонент для отображения информации о заказе
  */
 const OrderInfo: FC<IProps> = ({ order }) => {
+    const deliveryDate = DateTime.fromISO(order.delivery_date).isValid;
+
     return (
         <>
             <InfoWrapper>
@@ -45,6 +47,14 @@ const OrderInfo: FC<IProps> = ({ order }) => {
                     <div>{order.address}</div>
                 </InfoWrapper>
             )}
+
+            {DateTime.fromISO(order.delivery_date).isValid ? (
+                <InfoWrapper>
+                    <OrderDataKey>Дата и время доставки</OrderDataKey>
+                    <div>{DateTime.fromISO(order.delivery_date).toFormat('dd-MM-yyyy, HH:mm')}</div>
+                </InfoWrapper>
+            ) : null}
+
             <InfoWrapper>
                 <OrderDataKey>Получатель</OrderDataKey>
                 <div>{order.name}</div>
