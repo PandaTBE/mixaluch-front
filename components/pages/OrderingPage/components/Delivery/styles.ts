@@ -1,4 +1,4 @@
-import { Checkbox, TextField } from '@mui/material';
+import { Checkbox, FormControlLabel, Switch, TextField } from '@mui/material';
 import styled from 'styled-components';
 
 export const Wrapper = styled.section`
@@ -56,3 +56,19 @@ export const CheckboxSubLabel = styled.div`
 `;
 
 export const StyledTextField = styled(TextField)``;
+
+export const StyledSwitch = styled(Switch)`
+    & .MuiSwitch-switchBase.Mui-checked {
+        color: ${(p) => p.theme.colors.primary} !important;
+    }
+
+    & .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+        background-color: ${(p) => p.theme.colors.primarySmooth} !important;
+    }
+`;
+
+export const StyledFormControlLabel = styled(FormControlLabel)`
+    & .MuiTypography-root {
+        font-size: 20px;
+    }
+`;

@@ -17,6 +17,7 @@
         "@mui/icons-material": "5.10.6",
         "@mui/material": "5.10.6",
         "@mui/styled-engine-sc": "5.10.6",
+        "@mui/x-date-pickers": "6.19.6",
         "@reduxjs/toolkit": "1.8.5",
         "axios": "0.27.2",
         "formik": "2.2.9",

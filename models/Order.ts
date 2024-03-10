@@ -17,6 +17,7 @@ export interface IOrder {
     comment: string;
     address: string;
     total_sum: number;
+    delivery_date: TOrderDeliveryDate;
     name: string;
     id: number;
 }
@@ -32,6 +33,7 @@ export interface IOrderDTO {
     comment?: string;
     address: string;
     total_sum: number;
+    delivery_date?: TOrderDeliveryDate;
     name: string;
 }
 
@@ -40,3 +42,5 @@ export type TOrderStatusType = 'IN_PROCESS' | 'ACCEPTED' | 'COLLECTED' | 'IN_DEL
 export type TOrderDeliveryType = 'SELF_DELIVERY' | 'COURIER_DELIVERY';
 
 export type TOrderPaymentType = 'CASH_PAYMENT' | 'CARD_PAYMENT';
+
+export type TOrderDeliveryDate = 'AS_SOON_AS_POSSIBLE' | string;

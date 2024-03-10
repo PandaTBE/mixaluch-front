@@ -1,5 +1,7 @@
 import type { AppProps } from 'next/app';
 import DataComponent from '../components/DataComponent/DataComponent';
+import { ruRU } from '@mui/x-date-pickers/locales';
+import { createTheme, ThemeProvider as MaterialUiThemeProvider } from '@mui/material/styles';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../constants/theme';
@@ -16,6 +18,8 @@ import { useEffect, useState } from 'react';
 import '../i18n';
 import Meta from '../components/Meta/Meta';
 
+const materialUiTheme = createTheme({}, ruRU);
+
 function MyApp({ Component, ...rest }: AppProps) {
     const { store, props } = wrapper.useWrappedStore(rest);
     const [hydrated, setHydrated] = useState(false);
@@ -26,10 +30,12 @@ function MyApp({ Component, ...rest }: AppProps) {
 
     return (
         <Provider store={store}>
-            <Meta>
-                <DataComponent />
-                <ThemeProvider theme={theme}>{hydrated && <Component {...props.pageProps} />}</ThemeProvider>
-            </Meta>
+            <MaterialUiThemeProvider theme={materialUiTheme}>
+                <Meta>
+                    <DataComponent />
+                    <ThemeProvider theme={theme}>{hydrated && <Component {...props.pageProps} />}</ThemeProvider>
+                </Meta>
+            </MaterialUiThemeProvider>
         </Provider>
     );
 }
