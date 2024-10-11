@@ -17,8 +17,6 @@ interface IProps {
  * Компонент для отображения информации о заказе
  */
 const OrderInfo: FC<IProps> = ({ order }) => {
-    const deliveryDate = DateTime.fromISO(order.delivery_date).isValid;
-
     return (
         <>
             <InfoWrapper>
