@@ -21,9 +21,10 @@ export const Wrapper = styled.button<IButtonProps>`
     padding: 5px 10px;
     width: ${(p) => p.width};
     border: 0;
+    opacity: ${(p) => (p.disabled ? 0.5 : 1)};
     :hover {
         cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
-        background-color: ${(p) => p.theme.colors.primarySmooth};
+        background-color: ${(p) => (p.disabled ? p.theme.colors.primary : p.theme.colors.primarySmooth)};
     }
     min-height: 40px;
     font-size: 16px;
