@@ -1,4 +1,4 @@
-import { Alert, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Stack } from '@mui/system';
 import { cloneDeep } from 'lodash';
 import { useRouter } from 'next/router';
@@ -41,10 +41,6 @@ const CartPage = () => {
     return (
         <Wrapper>
             <PageTitle text={'Корзина'} />
-            <Alert style={{ marginTop: '15px' }} variant="outlined" severity="error">
-                В связи с высокой нагруженностью в период с 13 декабря 2024 года по 5 января 2025 года заказы через сайт
-                приниматься не будут. Благодарим за понимание и приносим извинения за временные неудобства!
-            </Alert>
             <ContentWrapper>
                 <Grid container spacing={2}>
                     {cartItems.length ? (
@@ -71,7 +67,7 @@ const CartPage = () => {
                                         <span>{Math.floor(totalSum)} ₽</span>
                                     </TotalValueTitle>
                                     <ConfirmButtonWrapper>
-                                        <Button clickHandler={onOrderClick} disabled>
+                                        <Button clickHandler={onOrderClick}>
                                             <div>Оформить заказ</div>
                                         </Button>
                                     </ConfirmButtonWrapper>
