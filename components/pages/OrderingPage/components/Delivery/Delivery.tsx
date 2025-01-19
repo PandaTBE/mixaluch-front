@@ -137,7 +137,9 @@ const Delivery = () => {
                             </Stack>
 
                             <DeliveryCost>
-                                {Math.floor(context?.totalSum || 0) >= FREE_DELIVERY_BORDER ? '+ 0 ₽' : '+ 200 ₽'}
+                                {Math.floor(context?.totalSum || 0) >= FREE_DELIVERY_BORDER
+                                    ? '+ 0 ₽'
+                                    : `+ ${DELIVERY_COST} ₽`}
                             </DeliveryCost>
                         </Stack>
                     </CheckboxWrapper>
