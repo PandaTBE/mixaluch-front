@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, Alert } from '@mui/material';
 import { Stack } from '@mui/system';
 import { cloneDeep } from 'lodash';
 import { useRouter } from 'next/router';
@@ -41,6 +41,10 @@ const CartPage = () => {
     return (
         <Wrapper>
             <PageTitle text={'Корзина'} />
+            <Alert style={{ marginTop: '15px' }} variant="outlined" severity="error">
+                В связи с высокой нагрузкой заказы временно не принимаются. Приносим извинения за неудобства. С
+                уважением, команда "У Михалыча".
+            </Alert>
             <ContentWrapper>
                 <Grid container spacing={2}>
                     {cartItems.length ? (
@@ -67,7 +71,7 @@ const CartPage = () => {
                                         <span>{Math.floor(totalSum)} ₽</span>
                                     </TotalValueTitle>
                                     <ConfirmButtonWrapper>
-                                        <Button clickHandler={onOrderClick}>
+                                        <Button clickHandler={onOrderClick} disabled>
                                             <div>Оформить заказ</div>
                                         </Button>
                                     </ConfirmButtonWrapper>
