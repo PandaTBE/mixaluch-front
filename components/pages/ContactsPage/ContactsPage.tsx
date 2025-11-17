@@ -29,7 +29,7 @@ const ContactsPage = () => {
             </ScheduleWrapper>
             <Text>Заказы через сайт принимаются круглосуточно!</Text>
             <Text fontWeight={700}>Реквизиты:</Text>
-            <Text>ИП Сурова Елена Олеговна</Text>
+            <Text>ИП Серебрянская Елена Олеговна</Text>
             <Text>ОГРНИП: 325508100001771</Text>
             <Text>ИНН: 503608103489</Text>
         </Wrapper>

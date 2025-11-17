@@ -1,7 +1,7 @@
 export const weekDays = [
     {
         name: 'Понедельник',
-        workingHours: 'с 9:00 до 19:00',
+        workingHours: 'санитарный день',
     },
     {
         name: 'Вторник',
