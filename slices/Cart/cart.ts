@@ -5,7 +5,7 @@ import { ICartItem } from '../../models/CartItem';
 import { IExtendedCartItem, IState } from './interfaces';
 
 export const FREE_DELIVERY_BORDER = 5000;
-export const DELIVERY_COST = 300;
+export const DELIVERY_COST = 400;
 
 const initialState: IState = {
     rawCartItems: [],
