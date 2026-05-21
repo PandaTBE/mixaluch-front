@@ -88,9 +88,7 @@ const OverflowMenu: FC<IProps> = ({ isDrawerOpen, toggleDrawerOpen }) => {
                         })}
                     </Nav>
                     <Delivery>Доставка с 9:00 до 19:00</Delivery>
-                    <Telephone href="tel:+79269376840">+7 (926) 937-68-40</Telephone>
-                    <Telephone href="tel:+79264013393">+7 (926) 401-33-93</Telephone>
-                    <Telephone href="tel:+79775703378">+7 (977) 570-33-78</Telephone>
+                    <Telephone href="tel:+79250001660">+7 (925) 000-16-60</Telephone>
                 </BodyWrapper>
             </Wrapper>
         </StyledDrawer>

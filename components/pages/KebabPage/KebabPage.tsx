@@ -12,17 +12,7 @@ const KebabPage = () => {
             <ul>
                 <li>
                     <Text fontWeight={500}>
-                        <a href="tel:+79269376840">+7 (926) 937-68-40</a>
-                    </Text>
-                </li>
-                <li>
-                    <Text fontWeight={500}>
-                        <a href="tel:+79264013393">+7 (926) 401-33-93</a>
-                    </Text>
-                </li>
-                <li>
-                    <Text fontWeight={500}>
-                        <a href="tel:+79775703378">+7 (977) 570-33-78</a>
+                        <a href="tel:+79250001660">+7 (925) 000-16-60</a>
                     </Text>
                 </li>
             </ul>

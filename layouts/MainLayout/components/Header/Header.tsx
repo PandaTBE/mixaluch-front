@@ -67,7 +67,7 @@ const Header: FC = () => {
                             <Delivery>Доставка с 9:00 до 19:00</Delivery>
                         </Grid>
                         <Grid textAlign="right" item xs={4} sm={3} md={2} lg={2}>
-                            <Telephone href="tel:+79269376840">+7 (926) 937-68-40</Telephone>
+                            <Telephone href="tel:+79250001660">+7 (925) 000-16-60</Telephone>
                         </Grid>
                     </Grid>
                 </ContentWrapper>
