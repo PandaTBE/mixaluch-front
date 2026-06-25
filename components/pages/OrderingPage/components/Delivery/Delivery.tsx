@@ -3,7 +3,7 @@ import Button from '../../../../Button/Button';
 import { DELIVERY_COST, FREE_DELIVERY_BORDER } from '../../../../../slices/Cart/cart';
 import { OrderingPageContext } from '../../context';
 import { FormGroup, Stack } from '@mui/material';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useFormik } from 'formik';
 import {
     ButtonWrapper,
@@ -32,9 +32,15 @@ import { DateTime } from 'luxon';
 /**
  * Компонент для отображения секции доставки
  */
+const COURIER_DELIVERY_DISABLED = true;
+
 const Delivery = () => {
     const phoneRegExp = /^(\+7|7|8)?[\s-]?\(?[489][0-9]{2}\)?[\s-]?[0-9]{3}[\s-]?[0-9]{2}[\s-]?[0-9]{2}$/gm;
     const context = useContext(OrderingPageContext);
+
+    useEffect(() => {
+        context?.storeDeliveryCostTrans(0);
+    }, []);
 
     const validationSchema = yup.object({
         phone_number: yup
@@ -58,8 +64,8 @@ const Delivery = () => {
         initialValues: {
             name: context?.user ? `${context.user.name} ${context.user.second_name || ''}` : '',
             phone_number: context?.user ? context.user.phone_number : '',
-            courierDelivery: true,
-            selfDelivery: false,
+            courierDelivery: false,
+            selfDelivery: true,
             cashPayment: false,
             cardPayment: true,
             deliverByTime: false,
@@ -117,10 +123,16 @@ const Delivery = () => {
                             <DeliveryCost>+ 0 ₽</DeliveryCost>
                         </Stack>
                     </CheckboxWrapper>
-                    <CheckboxWrapper onClick={onCourierDeliveryChange(formik.setFieldValue)}>
+                    <CheckboxWrapper
+                        style={COURIER_DELIVERY_DISABLED ? { pointerEvents: 'none', opacity: 0.5 } : undefined}
+                        onClick={
+                            COURIER_DELIVERY_DISABLED ? undefined : onCourierDeliveryChange(formik.setFieldValue)
+                        }
+                    >
                         <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={1}>
                             <Stack direction={'row'} spacing={1} alignItems={'center'}>
                                 <StyledCheckbox
+                                    disabled={COURIER_DELIVERY_DISABLED}
                                     onChange={onCourierDeliveryChange(formik.setFieldValue)}
                                     checked={formik.values.courierDelivery}
                                     name={'courierDelivery'}
@@ -143,18 +155,20 @@ const Delivery = () => {
                             </DeliveryCost>
                         </Stack>
                     </CheckboxWrapper>
-                    <FormGroup>
-                        <StyledFormControlLabel
-                            control={
-                                <StyledSwitch
-                                    onChange={formik.handleChange}
-                                    checked={formik.values.deliverByTime}
-                                    name={'deliverByTime'}
-                                />
-                            }
-                            label="Доставить ко времени"
-                        />
-                    </FormGroup>
+                    {!COURIER_DELIVERY_DISABLED && (
+                        <FormGroup>
+                            <StyledFormControlLabel
+                                control={
+                                    <StyledSwitch
+                                        onChange={formik.handleChange}
+                                        checked={formik.values.deliverByTime}
+                                        name={'deliverByTime'}
+                                    />
+                                }
+                                label="Доставить ко времени"
+                            />
+                        </FormGroup>
+                    )}
 
                     {formik.values.deliverByTime && (
                         <LocalizationProvider dateAdapter={AdapterLuxon} adapterLocale="ru-RU">

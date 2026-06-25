@@ -4,7 +4,7 @@ import generateOrderQueryData from './tools/generateOrderQueryData';
 import Order from './components/Order/Order';
 import PageTitle from '../../PageTitle/PageTitle';
 import UserInfo from './components/UserInfo/UserInfo';
-import { Accordion, AccordionDetails, AccordionSummary, Stack } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Alert, Stack } from '@mui/material';
 import { AccordionWrapper, ErrorWrapper, OrderWrapper, Total, TotalValue, Wrapper, WrapperItem } from './styles';
 import { IOrderFormValues } from './components/Delivery/interfaces';
 import { orderApi } from '../../../services/OrderService';
@@ -96,6 +96,10 @@ const OrderingPage = () => {
     return (
         <OrderingPageContext.Provider value={context}>
             <PageTitle text={'Оформление заказа'} />
+            <Alert style={{ marginTop: '15px' }} variant="outlined" severity="error">
+                В связи с высокой нагрузкой доставка временно отключена. Самовывоз по-прежнему доступен. Приносим
+                извинения за неудобства.
+            </Alert>
             {isError && (
                 <ErrorWrapper>
                     <ErrorMessage
