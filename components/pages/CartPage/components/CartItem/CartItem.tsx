@@ -23,6 +23,8 @@ import {
 } from './styles';
 import { useTranslation } from 'react-i18next';
 import { IProductImage } from '../../../../../models/Product';
+import { formatProductPrice } from '../../../../../tools/productPrice';
+import NegotiablePrice from '../../../../NegotiablePrice/NegotiablePrice';
 
 interface IProps {
     /** Элемент корзины */
@@ -67,8 +69,14 @@ const CartItem: FC<IProps> = ({ cartItem, onCartItemTitleClick }) => {
                         >
                             <ProductTitle onClick={onTitleClick}>{cartItem.product.title}</ProductTitle>
                             <Stack direction={'row'} spacing={1} alignItems={'center'}>
-                                <Price>{cartItem.product.regular_price} ₽</Price>
-                                <UnitWrapper>за 1 {t(cartItem.product.unit)}</UnitWrapper>
+                                {cartItem.product.is_negotiable_price ? (
+                                    <NegotiablePrice />
+                                ) : (
+                                    <>
+                                        <Price>{formatProductPrice(cartItem.product)}</Price>
+                                        <UnitWrapper>за 1 {t(cartItem.product.unit)}</UnitWrapper>
+                                    </>
+                                )}
                             </Stack>
                             <QuantityInputWrapper>
                                 <QuantityInput
@@ -84,13 +92,15 @@ const CartItem: FC<IProps> = ({ cartItem, onCartItemTitleClick }) => {
                 </div>
                 <Stack spacing={2} direction={'column'} justifyContent="space-between">
                     <StyledCloseIcon onClick={onRemoveClick} />
-                    <TotalPriceWrapper>
-                        <TotalPrice>{Math.floor(cartItem.product.regular_price * cartItem.quantity)} ₽</TotalPrice>
-                    </TotalPriceWrapper>
+                    {!cartItem.product.is_negotiable_price && (
+                        <TotalPriceWrapper>
+                            <TotalPrice>{formatProductPrice(cartItem.product, cartItem.quantity)}</TotalPrice>
+                        </TotalPriceWrapper>
+                    )}
                 </Stack>
             </Stack>
             <FooterWrapper>
-                <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
+                <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'} flexWrap="wrap" gap={1}>
                     <FooterQuantityInputWrapper>
                         <QuantityInput
                             minQuantityValue={cartItem.product.min_quantity}
@@ -101,7 +111,9 @@ const CartItem: FC<IProps> = ({ cartItem, onCartItemTitleClick }) => {
                         />
                     </FooterQuantityInputWrapper>
 
-                    <TotalPrice>{Math.floor(cartItem.product.regular_price * cartItem.quantity)} ₽</TotalPrice>
+                    {!cartItem.product.is_negotiable_price && (
+                        <TotalPrice>{formatProductPrice(cartItem.product, cartItem.quantity)}</TotalPrice>
+                    )}
                 </Stack>
             </FooterWrapper>
         </Wrapper>

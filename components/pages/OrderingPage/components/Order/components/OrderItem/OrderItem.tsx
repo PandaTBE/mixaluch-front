@@ -4,6 +4,9 @@ import { FC } from 'react';
 import { IExtendedCartItem } from '../../../../../../../slices/Cart/interfaces';
 import { OrderItemImageWrapper, ProductTitle, QuantityWrapper } from './styles';
 import { IProductImage } from '../../../../../../../models/Product';
+import { formatProductPrice } from '../../../../../../../tools/productPrice';
+import NegotiablePrice from '../../../../../../NegotiablePrice/NegotiablePrice';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
     /** Элемент заказа (продукт) */
@@ -14,6 +17,7 @@ interface IProps {
  * Компонент для отображения элемента заказа (продутка)
  */
 const OrderItem: FC<IProps> = ({ orderItem }) => {
+    const { t } = useTranslation();
     const productImage =
         orderItem.product.product_image.find((image) => image.is_feature) ||
         (orderItem.product.product_image[0] as IProductImage | undefined);
@@ -27,7 +31,14 @@ const OrderItem: FC<IProps> = ({ orderItem }) => {
                 <ProductTitle>{orderItem.product.title}</ProductTitle>
             </Stack>
             <QuantityWrapper>
-                {orderItem.quantity} x <span>{orderItem.product.regular_price} ₽</span>
+                {orderItem.product.is_negotiable_price ? (
+                    <Stack alignItems="flex-end" spacing={0.5}>
+                        <div>{orderItem.quantity} {t(orderItem.product.unit)}</div>
+                        <NegotiablePrice />
+                    </Stack>
+                ) : (
+                    <>{orderItem.quantity} x <span>{formatProductPrice(orderItem.product)}</span></>
+                )}
             </QuantityWrapper>
         </Stack>
     );

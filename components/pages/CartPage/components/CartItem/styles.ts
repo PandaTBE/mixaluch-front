@@ -32,7 +32,6 @@ export const ProductTitle = styled.div`
 export const Price = styled.div`
     color: ${(p) => p.theme.colors.primary};
     font-size: 18px;
-    white-space: nowrap;
 `;
 
 export const QuantityInputWrapper = styled.div`
@@ -56,7 +55,6 @@ export const StyledCloseIcon = styled(CloseIcon)`
 export const TotalPrice = styled.div`
     font-size: 1.5rem;
     /* align-self: flex-end; */
-    white-space: nowrap;
     @media (max-width: 599px) {
         font-size: 1rem;
     }

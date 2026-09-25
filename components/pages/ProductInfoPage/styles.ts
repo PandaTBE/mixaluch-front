@@ -65,7 +65,6 @@ export const Price = styled.div`
     font-size: 2rem;
     font-weight: 600;
     line-height: 2rem;
-    white-space: nowrap;
 `;
 
 export const ButtonWrapper = styled.div`

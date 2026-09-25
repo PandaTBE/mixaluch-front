@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import { cloneDeep } from 'lodash';
 import { useRouter } from 'next/router';
@@ -66,6 +66,11 @@ const CartPage = () => {
                                         <span>Итого к оплате: </span>
                                         <span>{Math.floor(totalSum)} ₽</span>
                                     </TotalValueTitle>
+                                    {cartItems.some((item) => item.product.is_negotiable_price) && (
+                                        <Typography variant="body2" color="text.secondary" mt={2}>
+                                            Товары с договорной ценой не включены в итог. Их стоимость согласуется отдельно.
+                                        </Typography>
+                                    )}
                                     <ConfirmButtonWrapper>
                                         <Button clickHandler={onOrderClick}>
                                             <div>Оформить заказ</div>

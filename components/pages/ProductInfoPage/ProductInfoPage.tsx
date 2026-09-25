@@ -27,6 +27,7 @@ import {
     sendNewDataLayer,
 } from '../../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
 import { useTranslation } from 'react-i18next';
+import { formatProductPrice } from '../../../tools/productPrice';
 
 /**
  * Компонент для отображения страницы информации о товаре
@@ -109,10 +110,10 @@ const ProductInfoPage = () => {
                     <Grid item xs={12} sm={6}>
                         <ProductTitle>{selectedProduct?.title}</ProductTitle>
                         <BoxWrapper>
-                            <Stack justifyContent={'space-between'} direction={'row'} spacing={2}>
+                            <Stack justifyContent={'space-between'} direction={'row'} flexWrap="wrap" gap={2}>
                                 <Stack direction={'column'} spacing={1}>
-                                    <Price>{selectedProduct?.regular_price} ₽</Price>
-                                    <div>за 1 {t(selectedProduct?.unit)}</div>
+                                    <Price>{formatProductPrice(selectedProduct)}</Price>
+                                    {!selectedProduct.is_negotiable_price && <div>за 1 {t(selectedProduct.unit)}</div>}
                                 </Stack>
                                 <ButtonWrapper>
                                     {cartItem && selectedProduct ? (

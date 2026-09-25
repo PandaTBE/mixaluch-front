@@ -1,3 +1,4 @@
+import { getProductPrice } from '../../tools/productPrice';
 import { IProduct } from '../../models/Product';
 import { IExtendedCartItem } from '../../slices/Cart/interfaces';
 import {
@@ -27,7 +28,7 @@ export const googleAnalytics4DataLayers = {
                 items: products.map((element, index) => ({
                     item_name: element.title,
                     item_id: element.id.toString(),
-                    price: element.regular_price.toString(),
+                    price: getProductPrice(element).toString(),
                     item_brand: 'Mixaluch',
                     item_category: selectedCategory?.name || 'All products',
                     item_list_name: selectedCategory?.name || 'All products',
@@ -50,7 +51,7 @@ export const googleAnalytics4DataLayers = {
                     {
                         item_name: product.title,
                         item_id: product.id.toString(),
-                        price: product.regular_price.toString(),
+                        price: getProductPrice(product).toString(),
                         index: 1,
                         quantity: '1',
                     },
@@ -70,7 +71,7 @@ export const googleAnalytics4DataLayers = {
                     {
                         item_name: product.title,
                         item_id: product.id.toString(),
-                        price: product.regular_price.toString(),
+                        price: getProductPrice(product).toString(),
                         index: 1,
                         quantity: '1',
                     },
@@ -90,7 +91,7 @@ export const googleAnalytics4DataLayers = {
                     {
                         item_name: product.title,
                         item_id: product.id.toString(),
-                        price: product.regular_price.toString(),
+                        price: getProductPrice(product).toString(),
                         index: 1,
                         quantity: '1',
                     },
@@ -110,7 +111,7 @@ export const googleAnalytics4DataLayers = {
                     {
                         item_name: cartItem.product.title,
                         item_id: cartItem.product.id.toString(),
-                        price: cartItem.product.regular_price.toString(),
+                        price: getProductPrice(cartItem.product).toString(),
                         index: 1,
                         quantity: cartItem.quantity.toString(),
                     },
@@ -130,7 +131,7 @@ export const googleAnalytics4DataLayers = {
                     return {
                         item_name: element.product.title,
                         item_id: element.id?.toString() || element.product.id.toString(),
-                        price: element.product.regular_price.toString(),
+                        price: getProductPrice(element.product).toString(),
                         quantity: element.quantity.toString(),
                     };
                 }),
@@ -149,7 +150,7 @@ export const googleAnalytics4DataLayers = {
                     return {
                         item_name: element.product.title,
                         item_id: element.id?.toString() || element.product.id.toString(),
-                        price: element.product.regular_price.toString(),
+                        price: getProductPrice(element.product).toString(),
                         index,
                         quantity: element.quantity.toString(),
                     };
@@ -170,7 +171,7 @@ export const googleAnalytics4DataLayers = {
                     return {
                         item_name: element.product.title,
                         item_id: element.id?.toString() || element.product.id.toString(),
-                        price: element.product.regular_price.toString(),
+                        price: getProductPrice(element.product).toString(),
                         quantity: element.quantity.toString(),
                     };
                 }),
@@ -190,7 +191,7 @@ export const googleAnalytics4DataLayers = {
                     return {
                         item_name: element.product.title,
                         item_id: element.id?.toString() || element.product.id.toString(),
-                        price: element.product.regular_price.toString(),
+                        price: getProductPrice(element.product).toString(),
                         quantity: element.quantity.toString(),
                     };
                 }),
@@ -218,7 +219,7 @@ export const googleAnalytics4DataLayers = {
                     return {
                         item_name: element.product.title,
                         item_id: element.id?.toString() || element.product.id.toString(),
-                        price: element.product.regular_price.toString(),
+                        price: getProductPrice(element.product).toString(),
                         quantity: Math.round(element.quantity),
                     };
                 }),

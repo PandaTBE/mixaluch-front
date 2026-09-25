@@ -1,6 +1,6 @@
 import OrderItem from './components/OrderItem/OrderItem';
 import { OrderingPageContext } from '../../context';
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { StyledDivider, Subtotal, SubtotalValue, SubtotalWrapper, Total, TotalValue, Wrapper } from './styles';
 import { useContext, useMemo } from 'react';
 
@@ -41,6 +41,11 @@ const Order = () => {
                 <Total>Итого:</Total>
                 <TotalValue>{Math.floor(context?.totalSumWithDelivery || 0)} ₽</TotalValue>
             </Stack>
+            {context?.cartItems.some((item) => item.product.is_negotiable_price) && (
+                <Typography variant="body2" color="text.secondary" mt={2}>
+                    Товары с договорной ценой не включены в итог. Их стоимость согласуем отдельно.
+                </Typography>
+            )}
         </Wrapper>
     );
 };

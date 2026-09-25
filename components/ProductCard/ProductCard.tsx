@@ -25,8 +25,10 @@ import {
     sendNewDataLayer,
 } from '../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
 import { Stack } from '@mui/material';
+import NegotiablePrice from '../NegotiablePrice/NegotiablePrice';
 import { useTranslation } from 'react-i18next';
 import { IProductImage } from '../../models/Product';
+import { formatProductPrice } from '../../tools/productPrice';
 
 /**
  * Компонент для отображения карточки продукта
@@ -66,8 +68,16 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
                 <Title onClick={onProductClick}>{product.title}</Title>
 
                 <Stack flexWrap={'wrap'} gap={'10px'} direction={'row'} alignItems={'end'}>
-                    <Price>{product.regular_price} ₽</Price>
-                    <UnitWrapper>за 1 {t(product.unit)}</UnitWrapper>
+                    {product.is_negotiable_price ? (
+                        <Stack mt="10px">
+                            <NegotiablePrice />
+                        </Stack>
+                    ) : (
+                        <>
+                            <Price>{formatProductPrice(product)}</Price>
+                            <UnitWrapper>за 1 {t(product.unit)}</UnitWrapper>
+                        </>
+                    )}
                 </Stack>
                 <ButtonWrapper>
                     {cartItem ? (

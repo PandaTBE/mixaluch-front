@@ -60,7 +60,7 @@ const PopularProducts: FC<IProps> = ({ isSkeleton = false }) => {
                         enabled: true,
                         clickable: true,
                     }}
-                    loop={true}
+                    loop={(popularProducts?.length || 0) > 5}
                 >
                     {isSkeleton
                         ? Array(6)

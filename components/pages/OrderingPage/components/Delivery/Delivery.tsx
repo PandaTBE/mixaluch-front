@@ -242,7 +242,7 @@ const Delivery = () => {
                     </CheckboxWrapper>
                     <ButtonWrapper>
                         <Button
-                            disabled={context?.totalSum === 0}
+                            disabled={!context?.cartItems.length}
                             loading={context?.createOrderFetching}
                             type={'submit'}
                         >

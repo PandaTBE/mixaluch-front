@@ -2,6 +2,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { FC } from 'react';
 import { IOrder } from '../../../../../models/Order';
 import { FooterWrapper, StyledTableRow, Wrapper } from './styles';
+import { formatProductPrice } from '../../../../../tools/productPrice';
 
 interface IProps {
     order: IOrder;
@@ -28,7 +29,7 @@ const OrderList: FC<IProps> = ({ order }) => {
                                 <StyledTableRow key={element.product.id}>
                                     <TableCell>{element.product.title}</TableCell>
                                     <TableCell align="right">{element.quantity}</TableCell>
-                                    <TableCell align="right">{element.product.regular_price} ₽</TableCell>
+                                    <TableCell align="right">{formatProductPrice(element.product)}</TableCell>
                                 </StyledTableRow>
                             ))}
                             <StyledTableRow>
@@ -43,6 +44,9 @@ const OrderList: FC<IProps> = ({ order }) => {
                     <FooterWrapper>
                         Итого:<span>{order.total_sum_with_delivery} ₽</span>
                     </FooterWrapper>
+                    {order.order_data.products.some((item) => item.product.is_negotiable_price) && (
+                        <p>Товары с договорной ценой не включены в итог. Их стоимость согласуем отдельно.</p>
+                    )}
                 </div>
             </Paper>
         </Wrapper>

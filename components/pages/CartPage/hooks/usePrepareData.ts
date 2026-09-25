@@ -11,6 +11,7 @@ import {
     storeTotalSumWithDeliivery,
 } from '../../../../slices/Cart/cart';
 import { CART_ITEMS_LOCAL_STORAGE_KEY } from '../../../../constants/constants';
+import { getProductPrice } from '../../../../tools/productPrice';
 
 /**
  * Касстомный хук для подготовки данных
@@ -24,7 +25,7 @@ export const usePrepareData = () => {
     useEffect(() => {
         if (cartItems.length) {
             const totalSum = cartItems.reduce((acc, value) => {
-                return (acc += value.quantity * value.product.regular_price);
+                return acc + value.quantity * getProductPrice(value.product);
             }, 0);
 
             dispatch(storeTotalSum(totalSum));

@@ -1,6 +1,7 @@
 export interface IProduct {
     product_image: IProductImage[];
     regular_price: number;
+    is_negotiable_price?: boolean;
     min_quantity: number;
     description: string;
     unit: TProductUnit;
@@ -15,6 +16,7 @@ export interface IProduct {
 
 export interface IProductDTO {
     regular_price: number;
+    is_negotiable_price: boolean;
     min_quantity: number;
     description?: string;
     discount_price: number;

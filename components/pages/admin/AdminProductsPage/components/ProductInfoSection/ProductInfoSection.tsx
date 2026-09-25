@@ -51,6 +51,7 @@ const ProductInfoSection: FC<IProps> = ({ product }) => {
 
     const initialValues: Omit<IProductDTO, 'category'> & { category: string | number } = {
         regular_price: 0,
+        is_negotiable_price: false,
         discount_price: 0,
         min_quantity: 0.3,
         description: '',
@@ -90,6 +91,7 @@ const ProductInfoSection: FC<IProps> = ({ product }) => {
         if (product) {
             formik.setValues({
                 regular_price: product.regular_price,
+                is_negotiable_price: product.is_negotiable_price ?? false,
                 discount_price: product.discount_price,
                 min_quantity: product.min_quantity,
                 description: product.description,
@@ -246,8 +248,24 @@ const ProductInfoSection: FC<IProps> = ({ product }) => {
                             ))}
                         </Select>
                     </FormControl>
+                    <FormControlLabel
+                        control={
+                            <StyledCheckbox
+                                disabled={isLoading}
+                                onChange={(event) => {
+                                    formik.handleChange(event);
+                                    if (event.target.checked) {
+                                        formik.setFieldValue('regular_price', Number(formik.values.regular_price) || 0);
+                                    }
+                                }}
+                                checked={formik.values.is_negotiable_price}
+                                name="is_negotiable_price"
+                            />
+                        }
+                        label="Договорная цена"
+                    />
                     <TextField
-                        disabled={isLoading}
+                        disabled={isLoading || formik.values.is_negotiable_price}
                         error={formik.touched.regular_price && Boolean(formik.errors.regular_price)}
                         helperText={formik.touched.regular_price && formik.errors.regular_price}
                         value={formik.values.regular_price}
