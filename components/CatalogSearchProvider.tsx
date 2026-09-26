@@ -91,8 +91,8 @@ export function CatalogSearchProvider({ children }: { children: ReactNode }) {
         ownNavigation.current = true;
         focusId.current = document.activeElement?.id || null;
         if (router.pathname === '/catalog') {
-            destination.current = catalogHref(query.category, text);
-            void setQuery({ search: text || null, page: null }).catch(() => {
+            destination.current = catalogHref(null, text);
+            void setQuery({ search: text || null, category: null, page: null }).catch(() => {
                 setError('Не удалось выполнить поиск. Попробуйте ещё раз.');
             });
         } else {
