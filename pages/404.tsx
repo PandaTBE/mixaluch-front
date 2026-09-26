@@ -6,7 +6,11 @@ import MainLayout from '../layouts/MainLayout/MainLayout';
  * страница 404
  */
 const NotFound: NextPage = () => {
-    return <MainLayout><NotFoundPage /></MainLayout>;
+    return (
+        <MainLayout>
+            <NotFoundPage />
+        </MainLayout>
+    );
 };
 
 export default NotFound;

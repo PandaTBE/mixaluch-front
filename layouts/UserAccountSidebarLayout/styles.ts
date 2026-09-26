@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Section = styled.section`
+    min-width: 0;
     flex: 0 0 80%;
     padding-left: 10px;
 

@@ -1,75 +1,43 @@
-import { ContentWrapper, Delivery, Nav, StyledLink, Telephone, Wrapper } from './styles';
 import Container from '../../../../components/Container/Container';
-import { Grid } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
-import { storePageToSwitch } from '../../../../slices/General/general';
-import { TPageToSwitch } from '../../../../slices/General/interfaces';
-import IntersectionObserverWrapper from './components/IntersectionObserverWrapper/IntersectionObserverWrapper';
-import { navigationListItems } from '../constants/constants';
+import { useSelector } from 'react-redux';
 import { userReducerValues } from '../../../../slices/User/user';
-import { FC, useMemo } from 'react';
-import { cloneDeep } from 'lodash';
+import { navigationListItems } from '../constants/constants';
+import { ContentWrapper, Delivery, Nav, StyledLink, Telephone, Wrapper } from './styles';
 
-/**
- * Компонент для отображения шапки страницы
- */
-const Header: FC = () => {
-    const store = useSelector(userReducerValues);
-    const dispatch = useDispatch();
+const Header = () => {
+    const { authToken, user } = useSelector(userReducerValues);
     const router = useRouter();
-
-    const onLinkClick = (link: TPageToSwitch) => () => {
-        dispatch(storePageToSwitch(link));
-    };
-
-    const _navigationItems = useMemo(() => {
-        const result = cloneDeep(navigationListItems);
-
-        if (store.user?.is_staff && store.authToken) {
-            result.push({
-                id: 'admin',
-                href: '/admin',
-                name: 'Панель администратора',
-                isActive: (pathname, href) => pathname.includes(href),
-            });
-        }
-        return result;
-    }, [store.user, store.authToken]);
+    const items =
+        authToken && user?.is_staff
+            ? [
+                  ...navigationListItems,
+                  {
+                      id: 'admin',
+                      href: '/admin',
+                      name: 'Админка',
+                      isActive: (pathname: string) => pathname.startsWith('/admin'),
+                  },
+              ]
+            : navigationListItems;
 
     return (
         <Wrapper>
             <Container>
                 <ContentWrapper>
-                    <Grid container spacing={2} alignItems={'center'}>
-                        <Grid item xs={3} sm={6} md={7} lg={8}>
-                            <Nav>
-                                <IntersectionObserverWrapper>
-                                    {
-                                        _navigationItems.map((element) => {
-                                            return (
-                                                <StyledLink
-                                                    key={element.id}
-                                                    data-targetid={element.id}
-                                                    onClick={onLinkClick(element.href as TPageToSwitch)}
-                                                    active={element.isActive(router.pathname, element.href)}
-                                                >
-                                                    <Link href={element.href}>{element.name}</Link>
-                                                </StyledLink>
-                                            );
-                                        }) as JSX.Element[]
-                                    }
-                                </IntersectionObserverWrapper>
-                            </Nav>
-                        </Grid>
-                        <Grid textAlign="right" item xs={5} sm={3} md={3} lg={2}>
-                            <Delivery>Доставка с 9:00 до 19:00</Delivery>
-                        </Grid>
-                        <Grid textAlign="right" item xs={4} sm={3} md={2} lg={2}>
-                            <Telephone href="tel:+79250001660">+7 (925) 000-16-60</Telephone>
-                        </Grid>
-                    </Grid>
+                    <Nav aria-label="Основная навигация">
+                        <StyledLink active={router.pathname === '/'}>
+                            <Link href="/">Главная</Link>
+                        </StyledLink>
+                        {items.map((item) => (
+                            <StyledLink key={item.id} active={item.isActive(router.pathname, item.href)}>
+                                <Link href={item.href}>{item.name}</Link>
+                            </StyledLink>
+                        ))}
+                    </Nav>
+                    <Delivery>Доставка с 9:00 до 19:00</Delivery>
+                    <Telephone href="tel:+79250001660">+7 (925) 000-16-60</Telephone>
                 </ContentWrapper>
             </Container>
         </Wrapper>

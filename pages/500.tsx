@@ -3,10 +3,14 @@ import ServerErrorPage from '../components/pages/ServerErrorPage/ServerErrorPage
 import MainLayout from '../layouts/MainLayout/MainLayout';
 
 /**
- * страница 404
+ * Страница ошибки сервера (500)
  */
 const ServerError: NextPage = () => {
-    return <MainLayout><ServerErrorPage /></MainLayout>;
+    return (
+        <MainLayout>
+            <ServerErrorPage />
+        </MainLayout>
+    );
 };
 
 export default ServerError;

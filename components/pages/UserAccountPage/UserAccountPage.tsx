@@ -1,4 +1,5 @@
 import { ContentWrapper, UserData } from './styles';
+import { AccountDataSkeleton } from '../../LoadingSkeleton/components/UserAccountPageSkeleton/UserAccountPageSkeleton';
 
 import PageTitle from '../../PageTitle/PageTitle';
 import { useSelector } from 'react-redux';
@@ -13,8 +14,13 @@ const UserAccountPage = () => {
     return (
         <div>
             <PageTitle text={'Контактные данные'} />
-            <ContentWrapper>
-                {userFetching && <div>Загрузка данных...</div>}
+            {(userFetching || (!user && !userFetchingError)) && (
+                <span className="visually-hidden" role="status">
+                    Загрузка контактных данных…
+                </span>
+            )}
+            <ContentWrapper aria-busy={userFetching || (!user && !userFetchingError)}>
+                {!user && !userFetchingError && <AccountDataSkeleton />}
                 {userFetchingError && <div>Ошибка получения данных пользователя</div>}
                 {user && (
                     <>

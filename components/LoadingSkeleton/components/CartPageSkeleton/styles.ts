@@ -1,17 +1,47 @@
 import styled from 'styled-components';
+import { Stack, Typography } from '@mui/material';
+import Skeleton from 'react-loading-skeleton';
+import { ProductImageWrapper, ProductTitle } from '../../../pages/CartPage/components/CartItem/styles';
 
-export const WrappedItem = styled.div<{ flex: string }>`
-    flex: ${(p) => p.flex};
+export const ProductContent = styled(Stack)`
+    && {
+        min-width: 0;
+        align-items: center;
+    }
 `;
 
-export const Wrapper = styled.div`
-    padding: 20px 0;
+export const SkeletonProductImage = styled(ProductImageWrapper)`
+    cursor: default;
 `;
 
-export const ContentWrapper = styled.div`
-    margin-top: 40px;
+export const SkeletonProductTitle = styled(ProductTitle)`
+    cursor: default;
+`;
 
-    @media (max-width: 575px) {
-        margin-top: 20px;
+export const ProductTitlePlaceholder = styled.span`
+    position: relative;
+    display: block;
+    color: transparent;
+`;
+
+export const RemoveButtonPlaceholder = styled.div`
+    width: 44px;
+    height: 44px;
+`;
+
+export const RemoveIconSkeleton = styled(Skeleton)`
+    margin: 10px;
+`;
+
+export const TotalPlaceholder = styled.span`
+    color: transparent;
+    background: #ebebeb;
+    border-radius: 4px;
+`;
+
+export const NegotiablePriceNote = styled(Typography)`
+    && {
+        color: rgba(0, 0, 0, 0.6);
+        margin-top: 16px;
     }
 `;

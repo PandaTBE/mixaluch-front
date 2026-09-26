@@ -1,39 +1,45 @@
 import styled from 'styled-components';
+import { Alert, Stack } from '@mui/material';
+
+export const BackLink = styled.a`
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin: 26px 0 12px;
+    color: #746e68;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    &:hover {
+        color: ${(p) => p.theme.colors.primary};
+    }
+`;
 
 export const Wrapper = styled.div`
     display: flex;
-    padding-top: 15px;
-    justify-content: space-between;
+    align-items: flex-start;
+    padding: 28px 0 64px;
+    gap: 28px;
     flex-grow: 1;
     @media (max-width: 767px) {
-        flex-wrap: wrap;
+        flex-direction: column;
+        padding: 20px 0 40px;
+        gap: 16px;
     }
 `;
 
 export const WrapperItem = styled.div`
-    flex: 0 0 50%;
+    flex: 1 1 0;
+    min-width: 0;
     :first-child {
-        padding-right: 15px;
-        padding-bottom: 15px;
-        border-right: ${(p) => `1px solid ${p.theme.border.primary}`};
+        flex-grow: 1.35;
     }
-
     :last-child {
-        padding-left: 15px;
-        padding-bottom: 15px;
+        flex-grow: 0.85;
     }
 
     @media (max-width: 767px) {
-        flex: 0 0 100%;
-        :first-child {
-            padding-right: 0px;
-            border-right: none;
-        }
-
-        :last-child {
-            order: -1;
-            padding-left: 0px;
-        }
+        width: 100%;
     }
 `;
 
@@ -46,6 +52,8 @@ export const AccordionWrapper = styled.div`
 
 export const OrderWrapper = styled.div`
     display: block;
+    position: sticky;
+    top: 24px;
     @media (max-width: 767px) {
         display: none;
     }
@@ -53,6 +61,12 @@ export const OrderWrapper = styled.div`
 
 export const Total = styled.div`
     font-size: 20px;
+`;
+
+export const OrderHeading = styled.h2`
+    margin: 0 0 12px;
+    font-size: 20px;
+    font-weight: 700;
 `;
 
 export const TotalValue = styled.div`
@@ -67,5 +81,19 @@ export const ErrorWrapper = styled.div`
 
     @media (max-width: 991px) {
         width: 100%;
+    }
+`;
+
+export const NoticeAlert = styled(Alert)`
+    && {
+        margin-top: 20px;
+    }
+`;
+
+export const OrderSummaryRow = styled(Stack)`
+    && {
+        flex-grow: 1;
+        align-items: center;
+        justify-content: space-between;
     }
 `;

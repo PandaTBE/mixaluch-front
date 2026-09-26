@@ -1,29 +1,57 @@
-import { Stack } from '@mui/material';
+import { AccountHeading, AccountDataValue, SkeletonNavItem } from './styles';
+import { ReactNode } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { Navigation, Section, Wrapper } from './styles';
+import {
+    AccordionNavigationWrapper,
+    AccordionTitle,
+    NavigationWrapper,
+    Section,
+    Wrapper,
+} from '../../../../layouts/UserAccountSidebarLayout/styles';
+import { Aside } from '../../../../layouts/UserAccountSidebarLayout/components/Navigation/styles';
+import { ContentWrapper, UserData } from '../../../pages/UserAccountPage/styles';
+import PageTitle from '../../../PageTitle/PageTitle';
 
-/**
- * Компонент для отображения загрузки для страницы пользователя
- */
-const UserAccountPageSkeleton = () => {
-    return (
-        <Wrapper>
-            <Navigation>
-                <Stack spacing={2}>
-                    <Skeleton width={150} />
-                    <Skeleton width={100} />
-                    <Skeleton width={75} />
-                </Stack>
-            </Navigation>
-            <Section>
-                <Stack spacing={2}>
-                    <Skeleton width={250} />
-                    <Skeleton width={225} />
-                    <Skeleton width={200} />
-                </Stack>
-            </Section>
-        </Wrapper>
-    );
-};
+export const AccountSkeletonLayout = ({ children }: { children: ReactNode }) => (
+    <Wrapper aria-hidden="true">
+        <AccordionNavigationWrapper>
+            <AccountHeading>
+                <AccordionTitle>Личный кабинет</AccordionTitle>
+            </AccountHeading>
+        </AccordionNavigationWrapper>
+        <NavigationWrapper>
+            <Aside>
+                {['Контактные данные', 'История заказов', 'Выход'].map((label) => (
+                    <SkeletonNavItem key={label}>{label}</SkeletonNavItem>
+                ))}
+            </Aside>
+        </NavigationWrapper>
+        <Section>{children}</Section>
+    </Wrapper>
+);
+
+export const AccountDataSkeleton = () => (
+    <div aria-hidden="true">
+        {['Имя:', 'Телефон:', 'Email:'].map((label) => (
+            <UserData key={label}>
+                <span>{label}</span>
+                <AccountDataValue>
+                    <Skeleton width="65%" />
+                </AccountDataValue>
+            </UserData>
+        ))}
+    </div>
+);
+
+const UserAccountPageSkeleton = () => (
+    <AccountSkeletonLayout>
+        <div>
+            <PageTitle text="Контактные данные" />
+            <ContentWrapper>
+                <AccountDataSkeleton />
+            </ContentWrapper>
+        </div>
+    </AccountSkeletonLayout>
+);
 
 export default UserAccountPageSkeleton;

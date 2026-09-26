@@ -6,7 +6,10 @@ import MainLayout from '../layouts/MainLayout/MainLayout';
  */
 const Contacts = () => {
     return (
-        <MainLayout title={'Контакты – Информация о компании'}>
+        <MainLayout
+            title={'Контакты магазина «У Михалыча»'}
+            description={'Адрес, телефон и часы работы магазина «У Михалыча» в Подольске.'}
+        >
             <ContactsPage />
         </MainLayout>
     );

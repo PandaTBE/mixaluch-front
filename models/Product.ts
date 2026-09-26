@@ -14,6 +14,9 @@ export interface IProduct {
     discount_price: number;
 }
 
+/** Публичная карточка v2 не содержит служебные внешние ID. */
+export type IProductCard = Omit<IProduct, 'external_ids'>;
+
 export interface IProductDTO {
     regular_price: number;
     is_negotiable_price: boolean;

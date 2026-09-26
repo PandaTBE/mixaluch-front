@@ -1,8 +1,9 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { IconButton } from '@mui/material';
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import {
     BodyWrapper,
+    Contacts,
     Delivery,
     HeaderWrapper,
     LogoWrapper,
@@ -11,16 +12,19 @@ import {
     StyledLink,
     Telephone,
     Wrapper,
+    CategorySection,
 } from './styles';
 import { navigationListItems } from '../../../constants/constants';
-import { storePageToSwitch } from '../../../../../../slices/General/general';
-import { TPageToSwitch } from '../../../../../../slices/General/interfaces';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cloneDeep } from 'lodash';
 import { userReducerValues } from '../../../../../../slices/User/user';
+import { CategoryApi } from '../../../../../../api/CategoryApi';
+import type { ICategory } from '../../../../../../models/Category';
+import CategoryItem from '../../../../../../components/pages/CatalogPage/components/CategoryItem/CategoryItem';
+import { catalogHref, visibleCategoryTree } from '../../../../../../components/pages/CatalogPage/catalogNavigation';
 
 interface IProps {
     isDrawerOpen: boolean;
@@ -32,13 +36,25 @@ interface IProps {
  */
 const OverflowMenu: FC<IProps> = ({ isDrawerOpen, toggleDrawerOpen }) => {
     const store = useSelector(userReducerValues);
-    const dispatch = useDispatch();
     const router = useRouter();
+    const [categories, setCategories] = useState<ICategory[] | null>(null);
+    const selectedId = typeof router.query.category === 'string' ? Number(router.query.category) : null;
+    const byParent = visibleCategoryTree(categories || []);
 
-    const onLinkClick = (link: TPageToSwitch) => () => {
-        dispatch(storePageToSwitch(link));
-        toggleDrawerOpen();
-    };
+    useEffect(() => {
+        if (!isDrawerOpen || categories !== null) return;
+        let active = true;
+        CategoryApi.getCategories()
+            .then((result) => {
+                if (active) setCategories(result);
+            })
+            .catch(() => {
+                if (active) setCategories([]);
+            });
+        return () => {
+            active = false;
+        };
+    }, [isDrawerOpen, categories]);
 
     const _navigationItems = useMemo(() => {
         const result = cloneDeep(navigationListItems);
@@ -65,11 +81,11 @@ const OverflowMenu: FC<IProps> = ({ isDrawerOpen, toggleDrawerOpen }) => {
             <Wrapper>
                 <HeaderWrapper>
                     <Link href={'/'}>
-                        <LogoWrapper onClick={onLinkClick('/')}>
-                            <Image src={'/static/logo.png'} alt={'Mixaluch logo'} layout={'fill'} />
+                        <LogoWrapper onClick={toggleDrawerOpen}>
+                            <Image src={'/static/logo.png'} alt={'У Михалыча — главная'} layout={'fill'} />
                         </LogoWrapper>
                     </Link>
-                    <IconButton color={'inherit'} onClick={toggleDrawerOpen}>
+                    <IconButton color={'inherit'} onClick={toggleDrawerOpen} aria-label="Закрыть меню">
                         <ChevronLeftIcon />
                     </IconButton>
                 </HeaderWrapper>
@@ -79,7 +95,7 @@ const OverflowMenu: FC<IProps> = ({ isDrawerOpen, toggleDrawerOpen }) => {
                             return (
                                 <StyledLink
                                     key={element.id}
-                                    onClick={onLinkClick(element.href as TPageToSwitch)}
+                                    onClick={toggleDrawerOpen}
                                     active={router.pathname === element.href}
                                 >
                                     <Link href={element.href}>{element.name}</Link>
@@ -87,8 +103,38 @@ const OverflowMenu: FC<IProps> = ({ isDrawerOpen, toggleDrawerOpen }) => {
                             );
                         })}
                     </Nav>
-                    <Delivery>Доставка с 9:00 до 19:00</Delivery>
-                    <Telephone href="tel:+79250001660">+7 (925) 000-16-60</Telephone>
+                    <CategorySection
+                        aria-label="Категории товаров"
+                        onClick={(event) => {
+                            if ((event.target as HTMLElement).closest('a')) toggleDrawerOpen();
+                        }}
+                    >
+                        <h2>Категории</h2>
+                        <ul>
+                            {(byParent['0'] || []).map((item) => (
+                                <CategoryItem
+                                    key={item.id}
+                                    category={item}
+                                    childrenByParent={byParent}
+                                    selectedId={selectedId}
+                                    search=""
+                                    hrefFor={catalogHref}
+                                />
+                            ))}
+                        </ul>
+                        {categories?.length === 0 && (
+                            <Link href="/catalog">
+                                <a>Открыть каталог</a>
+                            </Link>
+                        )}
+                    </CategorySection>
+                    <Contacts>
+                        <Delivery>
+                            <span>Самовывоз</span>
+                            Подольск, ул. Правды, 28
+                        </Delivery>
+                        <Telephone href="tel:+79250001660">+7 (925) 000-16-60</Telephone>
+                    </Contacts>
                 </BodyWrapper>
             </Wrapper>
         </StyledDrawer>

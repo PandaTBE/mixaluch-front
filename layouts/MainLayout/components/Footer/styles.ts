@@ -1,8 +1,10 @@
+import { Stack } from '@mui/material';
 import styled from 'styled-components';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 
 export const Wrapper = styled.div`
-    background-color: ${(p) => p.theme.backgroundColors.primary};
+    background-color: white;
+    border-top: 1px solid #eceae7;
     min-height: 100px;
     position: relative;
 `;
@@ -13,7 +15,7 @@ export const StyledLink = styled.div<{ active: boolean }>`
 `;
 
 export const ContentWrapper = styled.div`
-    padding: 15px 0;
+    padding: 26px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,7 +24,8 @@ export const ContentWrapper = styled.div`
 export const Delivery = styled.div`
     color: ${(p) => p.theme.colors.grey};
     white-space: nowrap;
-    margin-top: 15px;
+    margin-top: 10px;
+    font-size: 13px;
 `;
 
 export const LogoWrapper = styled.div`
@@ -42,28 +45,42 @@ export const StyledLocalMallOutlinedIcon = styled(LocalMallOutlinedIcon)`
     fill: white !important;
 `;
 
-export const LastOrderWrapper = styled.div<{ clicked: boolean }>`
+export const LastOrderWrapper = styled.button`
     cursor: pointer;
     z-index: 100;
     position: fixed;
-    transition: 0.3s all;
     bottom: 20px;
     right: 20px;
 
-    width: ${(p) => (p.clicked ? '200px' : '50px')};
+    padding: 0 18px;
     height: 50px;
+    border: 0;
     background-color: ${(p) => p.theme.colors.primary};
+    color: white;
+    font: inherit;
 
     display: flex;
     align-items: center;
     justify-content: center;
     column-gap: 10px;
     border-radius: 25px;
+
+    &:hover {
+        filter: brightness(0.92);
+    }
+
+    @media (max-width: 575px) {
+        right: 12px;
+        bottom: 12px;
+        padding: 0 14px;
+    }
 `;
 
-export const LastOrderText = styled.div`
-    color: white;
-    text-decoration: underline;
-    cursor: pointer;
-    white-space: nowrap;
+export const FooterNavigation = styled(Stack)`
+    && {
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
 `;

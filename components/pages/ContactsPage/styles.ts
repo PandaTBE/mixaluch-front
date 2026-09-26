@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    padding: 20px 0;
+    max-width: 760px;
+    padding: 20px 0 48px;
+    line-height: 1.6;
+    a {
+        color: ${(p) => p.theme.colors.primary};
+    }
 `;
 
 export const Text = styled.p<{ fontWeight?: number }>`
@@ -12,11 +17,14 @@ export const Text = styled.p<{ fontWeight?: number }>`
 
 export const ScheduleWrapper = styled.div`
     margin-top: 20px;
+    background: #f6f5f3;
+    border-radius: 16px;
+    padding: 16px 22px 22px;
 `;
 
 export const ScheduleItem = styled.div`
     display: flex;
-    column-gap: 20;
+    column-gap: 20px;
     margin-top: 10px;
 `;
 

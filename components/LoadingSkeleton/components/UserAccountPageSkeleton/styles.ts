@@ -1,33 +1,18 @@
 import styled from 'styled-components';
+import { NavItem } from '../../../../layouts/UserAccountSidebarLayout/components/Navigation/styles';
 
-export const Wrapper = styled.div`
-    width: 100%;
-    flex-grow: 0;
-    display: flex;
-    padding: 20px 0;
-
-    @media (max-width: 767px) {
-        flex-wrap: wrap;
-    }
+export const AccountHeading = styled.div`
+    min-height: 48px;
+    padding: 12px 16px;
+    box-shadow: 0 2px 4px #0003;
 `;
 
-export const Section = styled.section`
-    flex: 0 0 80%;
-    padding-left: 10px;
-
-    @media (max-width: 767px) {
-        padding-left: 0;
-        flex: 0 0 100%;
-        margin-top: 15px;
-    }
+export const SkeletonNavItem = styled(NavItem)`
+    cursor: default;
+    text-decoration: none;
 `;
 
-export const Navigation = styled.div`
-    flex: 0 0 20%;
-    padding-right: 10px;
-
-    @media (max-width: 767px) {
-        flex: 0 0 100%;
-        padding-right: 0;
-    }
+export const AccountDataValue = styled.div`
+    flex: 1;
+    min-width: 0;
 `;

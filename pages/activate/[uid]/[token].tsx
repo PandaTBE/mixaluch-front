@@ -6,7 +6,11 @@ import MainLayout from '../../../layouts/MainLayout/MainLayout';
  * Страница активации аккаунта после регистрации
  */
 const Activate: NextPage = () => {
-    return <MainLayout title={'Активация аккаунта'}><ActivatePage /></MainLayout>;
+    return (
+        <MainLayout title={'Активация аккаунта'}>
+            <ActivatePage />
+        </MainLayout>
+    );
 };
 
 export default Activate;

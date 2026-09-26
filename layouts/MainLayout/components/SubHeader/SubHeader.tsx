@@ -1,12 +1,10 @@
 import Container from '../../../../components/Container/Container';
 import Link from 'next/link';
 import MenuIcon from '@mui/icons-material/Menu';
-import OverflowMenu from './components/OverflowMenu/OverflowMenu';
+import SearchIcon from '@mui/icons-material/Search';
 import { cartReducerValues } from '../../../../slices/Cart/cart';
-import { IconButton, Stack } from '@mui/material';
-import { storePageToSwitch } from '../../../../slices/General/general';
-import { TPageToSwitch } from '../../../../slices/General/interfaces';
-import { useDispatch, useSelector } from 'react-redux';
+import { IconButton } from '@mui/material';
+import { useSelector } from 'react-redux';
 import { userReducerValues } from '../../../../slices/User/user';
 import { useState } from 'react';
 import {
@@ -16,64 +14,85 @@ import {
     LoginIcon,
     LogoWrapper,
     MenuIconWrapper,
+    SearchForm,
+    SearchInput,
     TotalItems,
-    TotalSum,
     Wrapper,
 } from './styles';
 import Image from 'next/image';
+import { useCatalogSearch } from '../../../../components/CatalogSearchProvider';
+import OverflowMenu from './components/OverflowMenu/OverflowMenu';
 
-/**
- * Компонент для отображения сабхеддера
- */
 const SubHeader = () => {
     const { authToken } = useSelector(userReducerValues);
-    const { totalSum, cartItems } = useSelector(cartReducerValues);
+    const { cartItems } = useSelector(cartReducerValues);
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const dispatch = useDispatch();
-
-    const toggleDrawerOpen = () => {
-        setDrawerOpen((prevState) => !prevState);
-    };
-
-    const onLinkClick = (link: TPageToSwitch) => () => {
-        dispatch(storePageToSwitch(link));
-    };
+    const search = useCatalogSearch();
 
     return (
         <Wrapper>
             <Container>
-                <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
+                <div className="header-row">
                     <MenuIconWrapper>
-                        <IconButton color="inherit" onClick={toggleDrawerOpen}>
+                        <IconButton aria-label="Открыть меню" color="inherit" onClick={() => setDrawerOpen(true)}>
                             <MenuIcon />
                         </IconButton>
                     </MenuIconWrapper>
-
-                    <Link href={'/'}>
-                        <LogoWrapper onClick={onLinkClick('/')}>
-                            <Image src={'/static/logo.png'} alt={'Mixaluch logo'} priority={true} layout={'fill'} />
+                    <Link href="/">
+                        <LogoWrapper>
+                            <Image
+                                src="/static/logo.png"
+                                alt="У Михалыча — главная"
+                                priority
+                                layout="fill"
+                                objectFit="contain"
+                            />
                         </LogoWrapper>
                     </Link>
-
-                    <Stack direction="row" spacing={2} alignItems="center">
-                        <Link href={authToken ? '/user-account' : '/login'}>
-                            <LoginIcon onClick={onLinkClick('/user-account')} />
-                        </Link>
-                        <Link href={'/cart'}>
-                            <CartWrapper>
-                                <Stack direction="row" spacing={1} alignItems="center" onClick={onLinkClick('/cart')}>
-                                    <CartIconWrapper>
-                                        <CartIcon />
-                                        {cartItems.length ? <TotalItems>{cartItems.length}</TotalItems> : null}
-                                    </CartIconWrapper>
-                                    <TotalSum>{Math.floor(totalSum)} ₽</TotalSum>
-                                </Stack>
-                            </CartWrapper>
-                        </Link>
-                    </Stack>
-                </Stack>
+                    <Link href="/delivery">
+                        <a className="pickup">
+                            <b>Самовывоз</b>
+                            <span>Подольск, ул. Правды, 28</span>
+                        </a>
+                    </Link>
+                    <SearchForm role="search" action="/catalog" method="get" onSubmit={search.submit}>
+                        <label htmlFor="header-search">Поиск по товарам</label>
+                        <SearchIcon aria-hidden="true" />
+                        <SearchInput
+                            id="header-search"
+                            type="search"
+                            name="search"
+                            placeholder="Найти что-нибудь вкусное"
+                            value={search.value}
+                            onChange={(event) => search.change(event.target.value)}
+                            maxLength={100}
+                            aria-describedby={search.error ? 'header-search-error' : undefined}
+                        />
+                        <button type="submit" aria-label="Найти товары">
+                            Найти
+                        </button>
+                        {search.error && (
+                            <span id="header-search-error" className="search-error" role="alert">
+                                {search.error}
+                            </span>
+                        )}
+                    </SearchForm>
+                    <Link href={authToken ? '/user-account' : '/login'}>
+                        <a className="account" aria-label="Личный кабинет">
+                            <LoginIcon />
+                        </a>
+                    </Link>
+                    <Link href="/cart">
+                        <CartWrapper>
+                            <CartIconWrapper>
+                                <CartIcon />
+                                {cartItems.length > 0 && <TotalItems>{cartItems.length}</TotalItems>}
+                            </CartIconWrapper>
+                        </CartWrapper>
+                    </Link>
+                </div>
             </Container>
-            <OverflowMenu isDrawerOpen={isDrawerOpen} toggleDrawerOpen={toggleDrawerOpen} />
+            <OverflowMenu isDrawerOpen={isDrawerOpen} toggleDrawerOpen={() => setDrawerOpen((open) => !open)} />
         </Wrapper>
     );
 };

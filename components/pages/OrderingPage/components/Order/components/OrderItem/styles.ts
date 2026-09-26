@@ -1,3 +1,4 @@
+import { Stack } from '@mui/material';
 import styled from 'styled-components';
 
 export const OrderItemImageWrapper = styled.div`
@@ -15,3 +16,25 @@ export const QuantityWrapper = styled.div`
 `;
 
 export const ProductTitle = styled.div``;
+
+export const ItemRow = styled(Stack)`
+    && {
+        align-items: center;
+        justify-content: space-between;
+    }
+`;
+
+export const ProductDetails = styled(Stack)`
+    && {
+        align-items: flex-start;
+        @media (min-width: 600px) {
+            align-items: center;
+        }
+    }
+`;
+
+export const NegotiableQuantity = styled(Stack)`
+    && {
+        align-items: flex-end;
+    }
+`;

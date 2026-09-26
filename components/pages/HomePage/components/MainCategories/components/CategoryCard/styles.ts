@@ -1,23 +1,42 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.a`
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: 16px;
     display: flex;
     flex-direction: column;
-    cursor: pointer;
+    color: #292522;
+    background: #f5f1ec;
+    text-decoration: none;
+    &:nth-child(3n + 2) {
+        background: #eef1e8;
+    }
+    &:nth-child(3n) {
+        background: #f4ebe4;
+    }
+    &:hover {
+        color: ${(p) => p.theme.colors.primary};
+    }
+    &:focus-visible {
+        outline: 2px solid ${(p) => p.theme.colors.primary};
+        outline-offset: 3px;
+    }
 `;
 
 export const CategoryImageWrapper = styled.div`
     width: 100%;
-    height: 300px;
+    aspect-ratio: 1.6;
     overflow: hidden;
     position: relative;
 `;
 
 export const NameWrapper = styled.div`
-    border: ${(p) => `1px solid ${p.theme.border.primary}`};
-    padding: 15px;
-    border-radius: 0 0 10px 10px;
-    font-size: 1.5rem;
+    padding: 12px 14px 14px;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.25;
+    @media (max-width: 450px) {
+        font-size: 14px;
+        padding: 10px;
+    }
 `;

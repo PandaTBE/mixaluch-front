@@ -16,7 +16,9 @@ const ContactsPage = () => {
             <Text>
                 По вопросам сотрудничества обращаться по телефону: <a href="tel:+79250001660">+7 (925) 000-16-60</a>
             </Text>
-            <Text>Email: mixaluch-shop@yandex.ru</Text>
+            <Text>
+                Email: <a href="mailto:mixaluch-shop@yandex.ru">mixaluch-shop@yandex.ru</a>
+            </Text>
             <Text fontWeight={700}>График работы магазина:</Text>
             <ScheduleWrapper>
                 {weekDays.map((element) => (

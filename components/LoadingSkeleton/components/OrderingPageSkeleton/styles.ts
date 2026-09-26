@@ -1,39 +1,68 @@
 import styled from 'styled-components';
+import { Alert, Stack } from '@mui/material';
+import { CheckboxWrapper } from '../../../pages/OrderingPage/components/Delivery/styles';
+import { ProductTitle } from '../../../pages/OrderingPage/components/Order/components/OrderItem/styles';
 
-export const Wrapper = styled.div`
-    display: flex;
-    justify-content: space-between;
-    flex-grow: 1;
-    padding-top: 15px;
-
-    @media (max-width: 767px) {
-        flex-wrap: wrap;
+export const DeliveryAlert = styled(Alert)`
+    && {
+        margin-top: 15px;
     }
 `;
 
-export const WrapperItem = styled.div`
-    flex: 0 0 50%;
-    :first-child {
-        padding-right: 15px;
-        padding-bottom: 15px;
-        border-right: ${(p) => `1px solid ${p.theme.border.primary}`};
+export const SkeletonCheckboxWrapper = styled(CheckboxWrapper)`
+    cursor: default;
+`;
+
+export const CheckboxPlaceholder = styled.span`
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    padding: 9px;
+`;
+
+export const OrderHeading = styled(Stack)`
+    && {
+        align-items: center;
+        justify-content: space-between;
+        min-height: 54px;
+        padding-left: 16px;
+        padding-right: 16px;
+        box-shadow: 0 2px 4px #0003;
     }
+`;
 
-    :last-child {
-        padding-left: 15px;
-        padding-bottom: 15px;
+export const ProductTitlePlaceholder = styled(ProductTitle)`
+    position: relative;
+    color: transparent;
+`;
+
+export const PricePlaceholder = styled.div`
+    flex-shrink: 0;
+`;
+
+export const CheckboxContent = styled(Stack)`
+    && {
+        align-items: center;
     }
+`;
 
-    @media (max-width: 767px) {
-        flex: 0 0 100%;
-        :first-child {
-            padding-right: 0px;
-            border-right: none;
-        }
+export const SummaryRow = styled(Stack)`
+    && {
+        justify-content: space-between;
+    }
+`;
 
-        :last-child {
-            order: -1;
-            padding-left: 0px;
+export const OrderItemRow = styled(SummaryRow)`
+    && {
+        align-items: center;
+    }
+`;
+
+export const OrderItemDetails = styled(Stack)`
+    && {
+        align-items: flex-start;
+        @media (min-width: 600px) {
+            align-items: center;
         }
     }
 `;

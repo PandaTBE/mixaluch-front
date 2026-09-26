@@ -29,13 +29,18 @@ const QuantityInput: FC<IProps> = ({ productId, cartItemId, unit, minQuantityVal
     );
     const debouncedQuantityValue = useDebounce(quantity, 2000);
     const didMount = useRef(false);
-    const { patchCartItem } = useFetchData();
+    const isDeleted = useRef(false);
+    const { patchCartItem, deleteCartItem } = useFetchData();
     const dispatch = useDispatch();
 
     /** Патч элемента корзины на сервер */
     useEffect(() => {
         if (didMount.current) {
-            if (isFinite(Number(debouncedQuantityValue)) && !(Number(debouncedQuantityValue) < minQuantityValue)) {
+            if (
+                !isDeleted.current &&
+                isFinite(Number(debouncedQuantityValue)) &&
+                !(Number(debouncedQuantityValue) < minQuantityValue)
+            ) {
                 patchCartItem(Number(debouncedQuantityValue), cartItemId);
             }
         } else {
@@ -65,7 +70,6 @@ const QuantityInput: FC<IProps> = ({ productId, cartItemId, unit, minQuantityVal
 
         if (!isFinite(value) || value < minQuantityValue) {
             setQuantity(minQuantityValue);
-            // patchCartItem(minQuantityValue, cartItemId);
         }
     };
 
@@ -73,7 +77,10 @@ const QuantityInput: FC<IProps> = ({ productId, cartItemId, unit, minQuantityVal
         const value = unit === 'PC' ? 1 : 0.1;
         switch (type) {
             case 'minus':
-                if (Number(currentQuantity) - value >= minQuantityValue) {
+                if (Number(currentQuantity) - value < minQuantityValue) {
+                    isDeleted.current = true;
+                    deleteCartItem(productId, cartItemId);
+                } else {
                     setQuantity((currentQuantity - value).toFixed(1));
                 }
                 break;

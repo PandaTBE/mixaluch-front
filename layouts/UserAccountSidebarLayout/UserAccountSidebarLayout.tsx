@@ -8,8 +8,6 @@ import { storeRawCartItems } from '../../slices/Cart/cart';
 import { useDispatch, useSelector } from 'react-redux';
 import { userApi } from '../../services/UserService';
 import { useRouter } from 'next/router';
-import { storePageToSwitch } from '../../slices/General/general';
-import { TPageToSwitch } from '../../slices/General/interfaces';
 import { AUTH_TOKEN_LOCAL_STORAGE_KEY } from '../../constants/constants';
 
 interface IProps {
@@ -28,7 +26,6 @@ const UserAccountSidebarLayout: FC<IProps> = ({ children }) => {
 
     useEffect(() => {
         if (!authToken && !isLoading) {
-            dispatch(storePageToSwitch('/user-account'));
             router.push('/login');
         }
     }, [authToken, isLoading]);
@@ -42,9 +39,8 @@ const UserAccountSidebarLayout: FC<IProps> = ({ children }) => {
         }
     };
 
-    const onLinkClick = (link: TPageToSwitch) => {
+    const onLinkClick = (link: '/user-account' | '/orders') => {
         router.push(link);
-        dispatch(storePageToSwitch(link));
     };
 
     return (
@@ -67,5 +63,4 @@ const UserAccountSidebarLayout: FC<IProps> = ({ children }) => {
     );
 };
 
-
-export default UserAccountSidebarLayout
+export default UserAccountSidebarLayout;

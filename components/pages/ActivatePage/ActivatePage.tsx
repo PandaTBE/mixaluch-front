@@ -3,8 +3,6 @@ import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import PageTitle from '../../PageTitle/PageTitle';
 import SuccessMessage from '../../SuccessMessage/SuccessMessage';
 import { ButtonWrapper, MessageWrapper, Text, Wrapper } from './styles';
-import { storePageToSwitch } from '../../../slices/General/general';
-import { useDispatch } from 'react-redux';
 import { useMemo } from 'react';
 import { userApi } from '../../../services/UserService';
 import { useRouter } from 'next/router';
@@ -14,7 +12,6 @@ import { useRouter } from 'next/router';
  */
 const ActivatePage = () => {
     const [activate, { isLoading, error, status }] = userApi.useActivateMutation();
-    const dispatch = useDispatch();
     const router = useRouter();
     const {
         query: { uid, token },
@@ -35,7 +32,6 @@ const ActivatePage = () => {
     };
 
     const onLoginRedirect = () => {
-        dispatch(storePageToSwitch('/user-account'));
         router.push('/login');
     };
 

@@ -7,7 +7,10 @@ import MainLayout from '../layouts/MainLayout/MainLayout';
  */
 const About: NextPage = () => {
     return (
-        <MainLayout title={'Информация о компании'}>
+        <MainLayout
+            title={'О семейном магазине «У Михалыча»'}
+            description={'Продукты, мясо, рыба и выпечка в семейном магазине «У Михалыча» в Подольске.'}
+        >
             <AboutPage />
         </MainLayout>
     );

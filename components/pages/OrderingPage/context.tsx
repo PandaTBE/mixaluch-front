@@ -10,6 +10,8 @@ interface IContext {
     deliveryCost: number;
     user: IUser | null;
     totalSum: number;
+    selfDeliveryEnabled: boolean;
+    courierDeliveryEnabled: boolean;
     storeDeliveryCostTrans: (value: number) => void;
     createOrderTrans: (formValues: IOrderFormValues) => void;
 }

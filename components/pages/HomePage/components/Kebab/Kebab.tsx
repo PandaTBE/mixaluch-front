@@ -1,7 +1,5 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
-import { storePageToSwitch } from '../../../../../slices/General/general';
 import Button from '../../../../Button/Button';
 import { ButtonWrapper, ContentWrapper, Layout, SubTitle, Title, Wrapper } from './styles';
 
@@ -9,11 +7,9 @@ import { ButtonWrapper, ContentWrapper, Layout, SubTitle, Title, Wrapper } from 
  * Компонент для отображения секции с шашлыком
  */
 const Kebab = () => {
-    const dispatch = useDispatch();
     const router = useRouter();
 
     const onClick = () => {
-        dispatch(storePageToSwitch('/kebab'));
         router.push('/kebab');
     };
 

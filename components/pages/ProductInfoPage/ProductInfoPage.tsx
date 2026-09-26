@@ -1,9 +1,12 @@
 import { SwiperSlide } from 'swiper/react';
 import {
+    BackLink,
     ButtonContentWrapper,
     ButtonText,
     ButtonWrapper,
     ImageWrapper,
+    ProductGallery,
+    PurchaseRow,
     MainSwiper,
     Price,
     BoxWrapper,
@@ -15,7 +18,6 @@ import {
 import SwiperCore, { Navigation, Thumbs } from 'swiper';
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { productReducerValues } from '../../../slices/Product/product';
 import { Grid, Stack } from '@mui/material';
 import Button from '../../Button/Button';
 import QuantityInput from '../../QuantityInput/QuantityInput';
@@ -28,15 +30,22 @@ import {
 } from '../../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
 import { useTranslation } from 'react-i18next';
 import { formatProductPrice } from '../../../tools/productPrice';
+import { IProduct } from '../../../models/Product';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 /**
  * Компонент для отображения страницы информации о товаре
  */
-const ProductInfoPage = () => {
+const ProductInfoPage = ({ product: selectedProduct }: { product: IProduct }) => {
     const { addCartItem } = useFetchData();
-    const { selectedProduct } = useSelector(productReducerValues);
     const { cartItems } = useSelector(cartReducerValues);
     const [thumbsSwiper, setThumbsSwiper] = useState<null | SwiperCore>(null);
+    const router = useRouter();
+    const from =
+        typeof router.query.from === 'string' && /^\/catalog(?:\?|$)/.test(router.query.from)
+            ? router.query.from
+            : '/catalog';
 
     const { t } = useTranslation();
 
@@ -73,14 +82,13 @@ const ProductInfoPage = () => {
 
     return (
         <Wrapper>
+            <Link href={from} passHref>
+                <BackLink>← Вернуться к каталогу</BackLink>
+            </Link>
             {selectedProduct ? (
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
-                        <Stack
-                            direction={{ xs: 'column', sm: 'row' }}
-                            spacing={2}
-                            height={{ xs: 400, sm: 300, md: 500 }}
-                        >
+                        <ProductGallery direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                             <SideSwiper
                                 onSwiper={setThumbsSwiper}
                                 breakpoints={{
@@ -105,12 +113,12 @@ const ProductInfoPage = () => {
                             >
                                 {slides}
                             </MainSwiper>
-                        </Stack>
+                        </ProductGallery>
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <ProductTitle>{selectedProduct?.title}</ProductTitle>
                         <BoxWrapper>
-                            <Stack justifyContent={'space-between'} direction={'row'} flexWrap="wrap" gap={2}>
+                            <PurchaseRow direction="row">
                                 <Stack direction={'column'} spacing={1}>
                                     <Price>{formatProductPrice(selectedProduct)}</Price>
                                     {!selectedProduct.is_negotiable_price && <div>за 1 {t(selectedProduct.unit)}</div>}
@@ -132,7 +140,7 @@ const ProductInfoPage = () => {
                                         </Button>
                                     )}
                                 </ButtonWrapper>
-                            </Stack>
+                            </PurchaseRow>
                         </BoxWrapper>
                         {selectedProduct?.description && <BoxWrapper>{selectedProduct.description}</BoxWrapper>}
                     </Grid>

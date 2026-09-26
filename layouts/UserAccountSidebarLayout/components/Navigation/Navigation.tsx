@@ -1,17 +1,16 @@
 import { FC } from 'react';
-import { TPageToSwitch } from '../../../../slices/General/interfaces';
 import { Aside, NavItem } from './styles';
 
 interface IProps {
     onLogoutClick: () => void;
-    onLinkClick: (link: TPageToSwitch) => void;
+    onLinkClick: (link: '/user-account' | '/orders') => void;
 }
 
 /**
  * Компонент для отображения нафигации
  */
 const Navigation: FC<IProps> = ({ onLogoutClick, onLinkClick }) => {
-    const handleLinkClick = (link: TPageToSwitch) => () => {
+    const handleLinkClick = (link: '/user-account' | '/orders') => () => {
         onLinkClick(link);
     };
 

@@ -1,58 +1,31 @@
-import { Grid } from '@mui/material';
 import { FC } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { useDispatch, useSelector } from 'react-redux';
-import { storeSelectedCategoryId } from '../../../../../slices/Catalog/catalog';
+import { useSelector } from 'react-redux';
 import { categoryReducerValues } from '../../../../../slices/Category/category';
-import { storePageToSwitch } from '../../../../../slices/General/general';
-import { TPageToSwitch } from '../../../../../slices/General/interfaces';
 import CategoryCard from './components/CategoryCard/CategoryCard';
-import { Wrapper } from './styles';
+import { CategoryImageWrapper, NameWrapper, Wrapper as CardWrapper } from './components/CategoryCard/styles';
+import { CategoryImageSkeleton, Wrapper } from './styles';
 
 interface IProps {
     isSkeleton?: boolean;
 }
 
-/**
- * Компонент для отображения основных категорий
- */
 const MainCategories: FC<IProps> = ({ isSkeleton = false }) => {
     const { mainCategories } = useSelector(categoryReducerValues);
-    const dispatch = useDispatch();
-
-    const storePageToSwitchTrans = (page: TPageToSwitch) => {
-        dispatch(storePageToSwitch(page));
-    };
-
-    const storeSelectedCategoryIdTrans = (id: number | null) => {
-        dispatch(storeSelectedCategoryId(id));
-    };
+    const activeCategories = mainCategories?.filter((category) => category.is_active !== false);
 
     return (
-        <Wrapper>
-            <Grid container spacing={2} justifyContent={'center'}>
-                {isSkeleton
-                    ? Array(4)
-                          .fill(null)
-                          .map((_, index) => {
-                              return (
-                                  <Grid xs={12} sm={6} item key={index}>
-                                      <Skeleton height={350} />
-                                  </Grid>
-                              );
-                          })
-                    : mainCategories?.map((category) => {
-                          return (
-                              <Grid xs={12} sm={6} item key={category.id}>
-                                  <CategoryCard
-                                      storeSelectedCategoryIdTrans={storeSelectedCategoryIdTrans}
-                                      storePageToSwitchTrans={storePageToSwitchTrans}
-                                      category={category}
-                                  />
-                              </Grid>
-                          );
-                      })}
-            </Grid>
+        <Wrapper aria-label="Категории продуктов">
+            {isSkeleton
+                ? Array.from({ length: activeCategories?.length ?? 6 }, (_, index) => (
+                      <CardWrapper as="div" key={index} aria-hidden="true">
+                          <CategoryImageWrapper>
+                              <CategoryImageSkeleton height="100%" borderRadius={0} />
+                          </CategoryImageWrapper>
+                          <NameWrapper>{activeCategories?.[index].name || <Skeleton width="70%" />}</NameWrapper>
+                      </CardWrapper>
+                  ))
+                : activeCategories?.map((category) => <CategoryCard category={category} key={category.id} />)}
         </Wrapper>
     );
 };

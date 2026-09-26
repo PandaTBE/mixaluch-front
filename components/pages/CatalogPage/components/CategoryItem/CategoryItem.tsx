@@ -1,62 +1,58 @@
-import { FC, useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import type { ICategory } from '../../../../../models/Category';
+import { ChildList, Row, Toggle, Wrapper } from './styles';
 
-import { ChildWrapper, ParentWrapper, Text, Wrapper } from './styles';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import Collapse from '@mui/material/Collapse';
-import List from '@mui/material/List';
-import { ICategory } from '../../../../../models/Category';
-import { CatalogContext } from '../../context';
-
-export interface IProps {
-    /** Основная категория с подкатегориями */
-    item: { parent: ICategory; children: ICategory[] };
+interface Props {
+    category: ICategory;
+    childrenByParent: Record<string, ICategory[]>;
+    selectedId: number | null;
+    search: string;
+    hrefFor: (category: number | null, search: string) => string;
 }
 
-/**
- * Отображение категории
- */
-const CategoryItem: FC<IProps> = ({ item }) => {
-    const context = useContext(CatalogContext);
-    const [open, setOpen] = useState(false);
+const CategoryItem = ({ category, childrenByParent, selectedId, search, hrefFor }: Props) => {
+    const children = childrenByParent[String(category.id)] || [];
+    const hasSelectedDescendant = (item: ICategory): boolean =>
+        item.id === selectedId || (childrenByParent[String(item.id)] || []).some(hasSelectedDescendant);
+    const [open, setOpen] = useState(category.id === selectedId || children.some(hasSelectedDescendant));
 
-    const toggleOpen = () => {
-        setOpen((prevState) => !prevState);
-    };
-
-    const onCategorySelect = (id: number) => () => {
-        if (context) {
-            context.storeSelectedCategoryIdTrans(id);
-        }
-    };
+    useEffect(() => {
+        if (category.id === selectedId || children.some(hasSelectedDescendant)) setOpen(true);
+    }, [selectedId]);
 
     return (
         <Wrapper>
-            <ParentWrapper onClick={toggleOpen}>
-                <Text
-                    isSelected={context?.selectedCategoryId === item.parent.id}
-                    onClick={onCategorySelect(item.parent.id)}
-                >
-                    {item.parent.name}
-                </Text>
-                {item.children.length ? open ? <ExpandLess /> : <ExpandMore /> : null}
-            </ParentWrapper>
-
-            <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                    {item.children.map((element) => (
-                        <ChildWrapper key={element.id}>
-                            <Text
-                                isChild={true}
-                                isSelected={context?.selectedCategoryId === element.id}
-                                onClick={onCategorySelect(element.id)}
-                            >
-                                {element.name}
-                            </Text>
-                        </ChildWrapper>
+            <Row>
+                <Link href={hrefFor(category.id, search)}>
+                    <a aria-current={category.id === selectedId ? 'page' : undefined}>{category.name}</a>
+                </Link>
+                {children.length > 0 && (
+                    <Toggle
+                        type="button"
+                        onClick={() => setOpen((value) => !value)}
+                        aria-expanded={open}
+                        aria-label={`${open ? 'Свернуть' : 'Развернуть'} подкатегории: ${category.name}`}
+                    >
+                        <ExpandMoreIcon aria-hidden="true" />
+                    </Toggle>
+                )}
+            </Row>
+            {children.length > 0 && open && (
+                <ChildList>
+                    {children.map((child) => (
+                        <CategoryItem
+                            key={child.id}
+                            category={child}
+                            childrenByParent={childrenByParent}
+                            selectedId={selectedId}
+                            search={search}
+                            hrefFor={hrefFor}
+                        />
                     ))}
-                </List>
-            </Collapse>
+                </ChildList>
+            )}
         </Wrapper>
     );
 };

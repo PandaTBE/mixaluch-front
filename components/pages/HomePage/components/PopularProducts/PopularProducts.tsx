@@ -1,86 +1,46 @@
-import { SwiperSlide } from 'swiper/react';
-import SwiperCore from 'swiper';
-import PageTitle from '../../../../PageTitle/PageTitle';
-import ProductCard from '../../../../ProductCard/ProductCard';
-import { productReducerValues } from '../../../../../slices/Product/product';
+import { FC } from 'react';
 import { useSelector } from 'react-redux';
-import usePrepareData from './hooks/usePrepareData';
-import { StyledArrowBackIcon, SwiperWrapper, StyledArrowForwardIcon, Wrapper, StyledSwiper } from './styles';
-import { FC, useState } from 'react';
-import { Stack } from '@mui/material';
-import Skeleton from 'react-loading-skeleton';
-import { Pagination } from 'swiper';
+import Link from 'next/link';
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import ProductCard from '../../../../ProductCard/ProductCard';
+import ProductCardSkeleton from '../../../../LoadingSkeleton/components/ProductCardSkeleton';
+import { productReducerValues } from '../../../../../slices/Product/product';
+import { NavigationLink, SectionHeading } from '../../styles';
+import { ProductGrid, Wrapper } from './styles';
 
 interface IProps {
-    /** Флаг загрузки */
     isSkeleton?: boolean;
 }
 
-/**
- * Компонент для отображения популярных товаров
- */
 const PopularProducts: FC<IProps> = ({ isSkeleton = false }) => {
-    const [swiperInstance, setSwiperInstance] = useState<null | SwiperCore>(null);
     const { popularProducts } = useSelector(productReducerValues);
-    const { swiperData } = usePrepareData();
-
-    if (!popularProducts?.length && !isSkeleton) return null;
+    if (popularProducts?.length === 0 || (!popularProducts && !isSkeleton)) return null;
 
     return (
-        <Wrapper>
-            <Stack direction="row" alignItems="center" spacing={2} justifyContent={'space-between'}>
-                <PageTitle text={'Популярные товары'} />
-                <Stack direction="row" spacing={1}>
-                    <StyledArrowBackIcon onClick={() => swiperInstance?.slidePrev()} />
-                    <StyledArrowForwardIcon onClick={() => swiperInstance?.slideNext()} />
-                </Stack>
-            </Stack>
-
-            <SwiperWrapper>
-                <StyledSwiper
-                    onSwiper={(swiper: SwiperCore) => setSwiperInstance(swiper)}
-                    slidesPerView={1}
-                    spaceBetween={10}
-                    breakpoints={{
-                        450: {
-                            slidesPerView: 2,
-                        },
-                        768: {
-                            slidesPerView: 3,
-                        },
-                        992: {
-                            slidesPerView: 4,
-                        },
-                        1200: {
-                            slidesPerView: 5,
-                        },
-                    }}
-                    modules={[Pagination]}
-                    pagination={{
-                        enabled: true,
-                        clickable: true,
-                    }}
-                    loop={(popularProducts?.length || 0) > 5}
-                >
-                    {isSkeleton
-                        ? Array(6)
-                              .fill(null)
-                              .map((_, index) => {
-                                  return (
-                                      <SwiperSlide style={{ height: 'auto' }} key={index}>
-                                          <Skeleton height={300} />
-                                      </SwiperSlide>
-                                  );
-                              })
-                        : popularProducts?.map((product) => {
-                              return (
-                                  <SwiperSlide style={{ height: 'auto' }} key={product.id}>
-                                      <ProductCard imageHeight={swiperData.imageHeight} product={product} />
-                                  </SwiperSlide>
-                              );
-                          })}
-                </StyledSwiper>
-            </SwiperWrapper>
+        <Wrapper aria-labelledby="popular-products-title">
+            <SectionHeading>
+                <h2 id="popular-products-title">Часто выбирают</h2>
+                {isSkeleton ? (
+                    <NavigationLink as="span">
+                        Весь каталог <ArrowForwardRoundedIcon />
+                    </NavigationLink>
+                ) : (
+                    <Link href="/catalog" passHref>
+                        <NavigationLink>
+                            Весь каталог <ArrowForwardRoundedIcon />
+                        </NavigationLink>
+                    </Link>
+                )}
+            </SectionHeading>
+            <ProductGrid>
+                {isSkeleton
+                    ? Array.from({ length: popularProducts?.length ?? 8 }, (_, index) => (
+                          <ProductCardSkeleton imageHeight="220px" product={popularProducts?.[index]} key={index} />
+                      ))
+                    : popularProducts?.map((product) => (
+                          <ProductCard imageHeight="220px" product={product} key={product.id} />
+                      ))}
+            </ProductGrid>
         </Wrapper>
     );
 };

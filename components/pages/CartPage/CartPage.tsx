@@ -1,26 +1,34 @@
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Stack } from '@mui/system';
 import { cloneDeep } from 'lodash';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
     googleAnalytics4DataLayers,
     sendNewDataLayer,
 } from '../../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
 import { cartReducerValues } from '../../../slices/Cart/cart';
-import { storePageToSwitch } from '../../../slices/General/general';
 import Button from '../../Button/Button';
 import PageTitle from '../../PageTitle/PageTitle';
 import CartItem from './components/CartItem/CartItem';
-import { ConfirmButtonWrapper, ContentWrapper, TotalValueTitle, TotalValueWrapper, Wrapper } from './styles';
+import {
+    BackLink,
+    ConfirmButtonWrapper,
+    ContentWrapper,
+    EmptyCart,
+    NegotiablePriceNotice,
+    TotalValueTitle,
+    TotalValueWrapper,
+    Wrapper,
+} from './styles';
 
 /**
  * Компонент для отображения страницы корзины
  */
 const CartPage = () => {
     const { cartItems, totalSum } = useSelector(cartReducerValues);
-    const dispatch = useDispatch();
     const router = useRouter();
 
     /** Отправка события просмотра корзину в аналитику */
@@ -29,17 +37,18 @@ const CartPage = () => {
     }, [cartItems]);
 
     const onOrderClick = () => {
-        dispatch(storePageToSwitch('/ordering'));
         router.push('/ordering');
     };
 
     const onCartItemTitleClick = (productId: number) => {
-        dispatch(storePageToSwitch('/catalog/[id]'));
         router.push(`/catalog/${productId}`);
     };
 
     return (
         <Wrapper>
+            <Link href="/catalog" passHref>
+                <BackLink>← Продолжить покупки</BackLink>
+            </Link>
             <PageTitle text={'Корзина'} />
             <ContentWrapper>
                 <Grid container spacing={2}>
@@ -67,9 +76,10 @@ const CartPage = () => {
                                         <span>{Math.floor(totalSum)} ₽</span>
                                     </TotalValueTitle>
                                     {cartItems.some((item) => item.product.is_negotiable_price) && (
-                                        <Typography variant="body2" color="text.secondary" mt={2}>
-                                            Товары с договорной ценой не включены в итог. Их стоимость согласуется отдельно.
-                                        </Typography>
+                                        <NegotiablePriceNotice variant="body2" color="text.secondary">
+                                            Товары с договорной ценой не включены в итог. Их стоимость согласуется
+                                            отдельно.
+                                        </NegotiablePriceNotice>
                                     )}
                                     <ConfirmButtonWrapper>
                                         <Button clickHandler={onOrderClick}>
@@ -81,7 +91,11 @@ const CartPage = () => {
                         </>
                     ) : (
                         <Grid item xs={12}>
-                            Ваша корзина пуста
+                            <EmptyCart>
+                                <h2>Ваша корзина пуста</h2>
+                                <p>Выберите товары в каталоге, чтобы оформить заказ.</p>
+                                <Link href="/catalog">Перейти в каталог →</Link>
+                            </EmptyCart>
                         </Grid>
                     )}
                 </Grid>

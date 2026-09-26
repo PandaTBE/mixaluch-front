@@ -5,12 +5,19 @@ import {
     Grid,
     IconButton,
     Modal,
-    Stack,
     TextField,
     Button as MaterialButton,
     CircularProgress,
 } from '@mui/material';
-import { CloseIconWrapper, ContentWrapper, HiddenInput, ImageWrapper, StyledCheckbox, Wrapper } from './styles';
+import {
+    CloseIconWrapper,
+    ContentWrapper,
+    HiddenInput,
+    ImageWrapper,
+    ImageFormFields,
+    StyledCheckbox,
+    Wrapper,
+} from './styles';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import Image from 'next/image';
 import * as yup from 'yup';
@@ -18,7 +25,6 @@ import { useFormik } from 'formik';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
-import { DEFAULT_MODAL_STYLES } from '../../../../../../../../constants/modal';
 import PageTitle from '../../../../../../../PageTitle/PageTitle';
 import { theme } from '../../../../../../../../constants/theme';
 import HistoryIcon from '@mui/icons-material/History';
@@ -58,7 +64,7 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
 
     useHandleResults(requestsId, modalState.productId);
 
-    const initialValues = {
+    const initialValues: { alt_text: string; is_feature: boolean; image?: File } = {
         alt_text: '',
         is_feature: false,
     };
@@ -68,7 +74,7 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
         is_feature: yup.boolean(),
     });
 
-    const onSubmit = (formValues: { alt_text: string; is_feature: boolean; image?: File }) => {
+    const onSubmit = (formValues: typeof initialValues) => {
         if (modalState.image) {
             updateProductImage({ data: { ...formValues, product: modalState.productId }, id: modalState.image.id });
         } else {
@@ -136,7 +142,7 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
 
     return (
         <Modal onClose={() => toggleEditImageOpen(modalState.image)} open={modalState.open}>
-            <Wrapper style={DEFAULT_MODAL_STYLES}>
+            <Wrapper>
                 <Modal onClose={toggleDeleteConfirmModal} open={isDeleConfirmModalOpen}>
                     <DeleteConfirmModal
                         bodyText={'Вы уверены, что хотите удалить изображение?'}
@@ -175,7 +181,7 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <form onSubmit={formik.handleSubmit}>
-                                <Stack gap={2}>
+                                <ImageFormFields>
                                     <TextField
                                         disabled={isLoading}
                                         error={formik.touched.alt_text && Boolean(formik.errors.alt_text)}
@@ -255,7 +261,7 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
                                             Удалить изображение
                                         </MaterialButton>
                                     )}
-                                </Stack>
+                                </ImageFormFields>
                             </form>
                         </Grid>
                     </Grid>

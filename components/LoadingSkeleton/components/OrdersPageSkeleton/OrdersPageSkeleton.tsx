@@ -1,27 +1,47 @@
-import { Stack } from '@mui/material';
+import { SkeletonPaper, SkeletonTableContainer } from '../styles';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import Skeleton from 'react-loading-skeleton';
-import { Navigation, Section, Wrapper } from './styles';
+import PageTitle from '../../../PageTitle/PageTitle';
+import { OrdersTableWrapper, StyledTableRow, Wrapper } from '../../../pages/OrdersPage/styles';
+import { AccountSkeletonLayout } from '../UserAccountPageSkeleton/UserAccountPageSkeleton';
 
-/**
- * Компонент отображения страницы загрузки для истории заказов
- */
-const OrdersPageSkeleton = () => {
-    return (
+export const OrdersContentSkeleton = () => (
+    <SkeletonPaper elevation={0} aria-hidden="true">
+        <SkeletonTableContainer>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Дата оформления</TableCell>
+                        <TableCell align="right">№ заказа</TableCell>
+                        <TableCell align="right">Статус</TableCell>
+                        <TableCell align="right">Сумма заказа</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {[0, 1, 2].map((row) => (
+                        <StyledTableRow key={row}>
+                            {[0, 1, 2, 3].map((column) => (
+                                <TableCell key={column} align={column ? 'right' : 'left'}>
+                                    <Skeleton />
+                                </TableCell>
+                            ))}
+                        </StyledTableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </SkeletonTableContainer>
+    </SkeletonPaper>
+);
+
+const OrdersPageSkeleton = () => (
+    <AccountSkeletonLayout>
         <Wrapper>
-            <Navigation>
-                <Stack spacing={2}>
-                    <Skeleton width={150} />
-                    <Skeleton width={100} />
-                    <Skeleton width={75} />
-                </Stack>
-            </Navigation>
-            <Section>
-                <Stack spacing={2}>
-                    <Skeleton height={400} />
-                </Stack>
-            </Section>
+            <PageTitle text="История заказов" />
+            <OrdersTableWrapper>
+                <OrdersContentSkeleton />
+            </OrdersTableWrapper>
         </Wrapper>
-    );
-};
+    </AccountSkeletonLayout>
+);
 
 export default OrdersPageSkeleton;

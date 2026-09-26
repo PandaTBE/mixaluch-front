@@ -2,10 +2,14 @@ import { Divider } from '@mui/material';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    padding: 15px 0;
+    padding: 24px;
+    background: #f7f5f2;
+    border: 1px solid #ebe7e3;
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(48, 45, 43, 0.04);
 
     @media (max-width: 767px) {
-        padding: 0;
+        padding: 18px;
     }
 `;
 

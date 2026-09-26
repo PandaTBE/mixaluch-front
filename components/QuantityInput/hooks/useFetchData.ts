@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartApi } from '../../../services/CartService';
-import { storeCartItemsRefetchObject } from '../../../slices/Cart/cart';
+import { deleteCartItem, storeCartItemsRefetchObject } from '../../../slices/Cart/cart';
 import { userReducerValues } from '../../../slices/User/user';
 
 /**
@@ -9,15 +9,16 @@ import { userReducerValues } from '../../../slices/User/user';
  */
 const useFetchData = () => {
     const [patchCartItem, data] = cartApi.usePatchCartItemMutation();
+    const [removeCartItem, removeData] = cartApi.useRemoveCartItemMutation();
     const { authToken, user } = useSelector(userReducerValues);
     const dispatch = useDispatch();
 
     /** Перезапрос товаров */
     useEffect(() => {
-        if (data.error) {
+        if (data.error || removeData.error) {
             dispatch(storeCartItemsRefetchObject());
         }
-    }, [data.error]);
+    }, [data.error, removeData.error, dispatch]);
 
     /** Обновление товара в корзине */
     const patchCartItemHandler = useCallback(
@@ -29,8 +30,19 @@ const useFetchData = () => {
         [authToken, user],
     );
 
+    const deleteCartItemHandler = useCallback(
+        (productId: number, cartItemId?: number) => {
+            if (authToken && cartItemId && user) {
+                removeCartItem({ authToken, cartItemId });
+            }
+            dispatch(deleteCartItem(productId));
+        },
+        [authToken, user, removeCartItem, dispatch],
+    );
+
     return {
         patchCartItem: patchCartItemHandler,
+        deleteCartItem: deleteCartItemHandler,
     };
 };
 

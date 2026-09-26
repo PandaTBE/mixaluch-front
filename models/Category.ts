@@ -4,4 +4,5 @@ export interface ICategory {
     name: string;
     slug: string;
     id: number;
+    is_active?: boolean;
 }

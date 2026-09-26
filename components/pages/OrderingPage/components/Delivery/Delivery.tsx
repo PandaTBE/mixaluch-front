@@ -1,3 +1,4 @@
+import { DeliveryOptionRow, CheckboxRow } from './styles';
 import * as yup from 'yup';
 import Button from '../../../../Button/Button';
 import { DELIVERY_COST, FREE_DELIVERY_BORDER } from '../../../../../slices/Cart/cart';
@@ -32,11 +33,10 @@ import { DateTime } from 'luxon';
 /**
  * Компонент для отображения секции доставки
  */
-const COURIER_DELIVERY_DISABLED = true;
-
 const Delivery = () => {
     const phoneRegExp = /^(\+7|7|8)?[\s-]?\(?[489][0-9]{2}\)?[\s-]?[0-9]{3}[\s-]?[0-9]{2}[\s-]?[0-9]{2}$/gm;
     const context = useContext(OrderingPageContext);
+    const hasAvailableDelivery = Boolean(context?.selfDeliveryEnabled || context?.courierDeliveryEnabled);
 
     useEffect(() => {
         context?.storeDeliveryCostTrans(0);
@@ -64,8 +64,8 @@ const Delivery = () => {
         initialValues: {
             name: context?.user ? `${context.user.name} ${context.user.second_name || ''}` : '',
             phone_number: context?.user ? context.user.phone_number : '',
-            courierDelivery: false,
-            selfDelivery: true,
+            courierDelivery: Boolean(context?.courierDeliveryEnabled && !context?.selfDeliveryEnabled),
+            selfDelivery: Boolean(context?.selfDeliveryEnabled),
             cashPayment: false,
             cardPayment: true,
             deliverByTime: false,
@@ -77,11 +77,27 @@ const Delivery = () => {
         onSubmit,
     });
 
+    useEffect(() => {
+        if (!context) return;
+        const useSelfDelivery = context.selfDeliveryEnabled;
+        formik.setValues((values) => ({
+            ...values,
+            selfDelivery: useSelfDelivery,
+            courierDelivery: !useSelfDelivery && context.courierDeliveryEnabled,
+        }));
+        context.storeDeliveryCostTrans(
+            useSelfDelivery || !context.courierDeliveryEnabled || context.totalSum >= FREE_DELIVERY_BORDER
+                ? 0
+                : DELIVERY_COST,
+        );
+    }, [context?.selfDeliveryEnabled, context?.courierDeliveryEnabled]);
+
     const onSelfDeliveryChange = (setFieldValue: (field: string, value: boolean) => void) => () => {
         context && context.storeDeliveryCostTrans(0);
         sendNewDataLayer(googleAnalytics4DataLayers.generateAddShippingInfo(context?.cartItems || [], 'selfDelivery'));
         setFieldValue('selfDelivery', true);
         setFieldValue('courierDelivery', false);
+        setFieldValue('deliverByTime', false);
     };
 
     const onCourierDeliveryChange = (setFieldValue: (field: string, value: boolean) => void) => () => {
@@ -110,32 +126,28 @@ const Delivery = () => {
             <Form onSubmit={formik.handleSubmit}>
                 <Stack spacing={2}>
                     <Title>Доставка</Title>
-                    <CheckboxWrapper onClick={onSelfDeliveryChange(formik.setFieldValue)}>
-                        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={1}>
-                            <Stack direction={'row'} spacing={1} alignItems={'center'}>
+                    <CheckboxWrapper>
+                        <DeliveryOptionRow direction={'row'} spacing={1}>
+                            <CheckboxRow direction={'row'} spacing={1}>
                                 <StyledCheckbox
                                     onChange={onSelfDeliveryChange(formik.setFieldValue)}
                                     checked={formik.values.selfDelivery}
                                     name={'selfDelivery'}
+                                    disabled={!context?.selfDeliveryEnabled}
                                 />
                                 <CheckboxLabel>Самовывоз</CheckboxLabel>
-                            </Stack>
+                            </CheckboxRow>
                             <DeliveryCost>+ 0 ₽</DeliveryCost>
-                        </Stack>
+                        </DeliveryOptionRow>
                     </CheckboxWrapper>
-                    <CheckboxWrapper
-                        style={COURIER_DELIVERY_DISABLED ? { pointerEvents: 'none', opacity: 0.5 } : undefined}
-                        onClick={
-                            COURIER_DELIVERY_DISABLED ? undefined : onCourierDeliveryChange(formik.setFieldValue)
-                        }
-                    >
-                        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={1}>
-                            <Stack direction={'row'} spacing={1} alignItems={'center'}>
+                    <CheckboxWrapper>
+                        <DeliveryOptionRow direction={'row'} spacing={1}>
+                            <CheckboxRow direction={'row'} spacing={1}>
                                 <StyledCheckbox
-                                    disabled={COURIER_DELIVERY_DISABLED}
                                     onChange={onCourierDeliveryChange(formik.setFieldValue)}
                                     checked={formik.values.courierDelivery}
                                     name={'courierDelivery'}
+                                    disabled={!context?.courierDeliveryEnabled}
                                 />
                                 <Stack>
                                     <CheckboxLabel>Курьером</CheckboxLabel>
@@ -146,16 +158,16 @@ const Delivery = () => {
                                         </CheckboxSubLabel>
                                     ) : null}
                                 </Stack>
-                            </Stack>
+                            </CheckboxRow>
 
                             <DeliveryCost>
                                 {Math.floor(context?.totalSum || 0) >= FREE_DELIVERY_BORDER
                                     ? '+ 0 ₽'
                                     : `+ ${DELIVERY_COST} ₽`}
                             </DeliveryCost>
-                        </Stack>
+                        </DeliveryOptionRow>
                     </CheckboxWrapper>
-                    {!COURIER_DELIVERY_DISABLED && (
+                    {context?.courierDeliveryEnabled && (
                         <FormGroup>
                             <StyledFormControlLabel
                                 control={
@@ -228,21 +240,29 @@ const Delivery = () => {
                         required
                     />
                     <Title>Способ оплаты</Title>
-                    <CheckboxWrapper onClick={onCashPaymentChange(formik.setFieldValue)}>
-                        <Stack direction={'row'} spacing={1} alignItems={'center'}>
-                            <StyledCheckbox checked={formik.values.cashPayment} name={'cashPayment'} />
-                            <CheckboxLabel>Наличными курьеру</CheckboxLabel>
-                        </Stack>
+                    <CheckboxWrapper>
+                        <CheckboxRow direction={'row'} spacing={1}>
+                            <StyledCheckbox
+                                onChange={onCashPaymentChange(formik.setFieldValue)}
+                                checked={formik.values.cashPayment}
+                                name={'cashPayment'}
+                            />
+                            <CheckboxLabel>Наличными при получении</CheckboxLabel>
+                        </CheckboxRow>
                     </CheckboxWrapper>
-                    <CheckboxWrapper onClick={onCardPaymentChange(formik.setFieldValue)}>
-                        <Stack direction={'row'} spacing={1} alignItems={'center'}>
-                            <StyledCheckbox checked={formik.values.cardPayment} name={'cardPayment'} />
-                            <CheckboxLabel>Картой курьеру</CheckboxLabel>
-                        </Stack>
+                    <CheckboxWrapper>
+                        <CheckboxRow direction={'row'} spacing={1}>
+                            <StyledCheckbox
+                                onChange={onCardPaymentChange(formik.setFieldValue)}
+                                checked={formik.values.cardPayment}
+                                name={'cardPayment'}
+                            />
+                            <CheckboxLabel>Картой при получении</CheckboxLabel>
+                        </CheckboxRow>
                     </CheckboxWrapper>
                     <ButtonWrapper>
                         <Button
-                            disabled={!context?.cartItems.length}
+                            disabled={!context?.cartItems.length || !hasAvailableDelivery}
                             loading={context?.createOrderFetching}
                             type={'submit'}
                         >

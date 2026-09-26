@@ -27,9 +27,11 @@
         "next": "12.3.1",
         "next-redux-wrapper": "8.0.0",
         "next-sitemap": "3.1.52",
+        "nuqs": "2.10.1",
         "react": "18.2.0",
         "react-dom": "18.2.0",
         "react-i18next": "12.2.0",
+        "react-intersection-observer": "^11.0.1",
         "react-loading-skeleton": "3.1.0",
         "react-redux": "8.0.2",
         "reedux": "0.1.3",
@@ -52,6 +54,11 @@
         "babel-plugin-styled-components": "2.0.7",
         "eslint": "8.23.1",
         "eslint-config-next": "12.3.1",
-        "typescript": "4.8.3"
+        "typescript": "5.7.3"
+    },
+    "overrides": {
+        "nuqs": {
+            "next": "$next"
+        }
     }
 }

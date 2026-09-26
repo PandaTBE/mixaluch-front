@@ -6,55 +6,65 @@ import DeliveryPage from '../pages/DeliveryPage/DeliveryPage';
 import HomePageSkeleton from './components/HomePageSkeleton/HomePageSkeleton';
 import OrderingPageSkeleton from './components/OrderingPageSkeleton/OrderingPageSkeleton';
 import UserAccountPageSkeleton from './components/UserAccountPageSkeleton/UserAccountPageSkeleton';
-import { generalReducerValues } from '../../slices/General/general';
-import { useSelector } from 'react-redux';
 import OrdersPageSkeleton from './components/OrdersPageSkeleton/OrdersPageSkeleton';
 import ProductInfoPageSkeleton from './components/ProductInfoPageSkeleton/ProdcutInfoPageSkeleton';
+import OrderInfoPageSkeleton from './components/OrderInfoPageSkeleton/OrderInfoPageSkeleton';
+import AuthPageSkeleton from './components/AuthPageSkeleton';
+import KebabPage from '../pages/KebabPage/KebabPage';
 
-const LoadingSkeleton = () => {
-    const { pageToSwitch } = useSelector(generalReducerValues);
+const LoadingSkeleton = ({ url, fallback }: { url: string; fallback: JSX.Element }) => {
+    const path = url.split(/[?#]/)[0].replace(/\/$/, '') || '/';
 
-    if (pageToSwitch === '/') {
+    if (path === '/') {
         return <HomePageSkeleton />;
     }
 
-    if (pageToSwitch === '/catalog') {
+    if (path === '/catalog') {
         return <CatalogSkeleton />;
     }
 
-    if (pageToSwitch === '/user-account') {
+    if (path === '/user-account') {
         return <UserAccountPageSkeleton />;
     }
 
-    if (pageToSwitch === '/cart') {
+    if (path === '/cart') {
         return <CartPageSkeleton />;
     }
 
-    if (pageToSwitch === '/about') {
+    if (path === '/about') {
         return <AboutPage />;
     }
 
-    if (pageToSwitch === '/contacts') {
+    if (path === '/contacts') {
         return <ContactsPage />;
     }
 
-    if (pageToSwitch === '/delivery') {
+    if (path === '/delivery') {
         return <DeliveryPage />;
     }
 
-    if (pageToSwitch === '/ordering') {
+    if (path === '/ordering') {
         return <OrderingPageSkeleton />;
     }
 
-    if (pageToSwitch === '/orders') {
+    if (path === '/orders') {
         return <OrdersPageSkeleton />;
     }
 
-    if (pageToSwitch === '/catalog/[id]') {
+    if (/^\/catalog\/[^/]+$/.test(path)) {
         return <ProductInfoPageSkeleton />;
     }
 
-    return <div>Loading...</div>;
+    if (/^\/orders\/[^/]+$/.test(path)) return <OrderInfoPageSkeleton />;
+    if (path === '/kebab') return <KebabPage />;
+    if (
+        ['/login', '/register', '/reset-password'].includes(path) ||
+        /^\/(reset-password-confirm|activate)\/[^/]+\/[^/]+$/.test(path)
+    ) {
+        return <AuthPageSkeleton path={path} />;
+    }
+
+    return fallback;
 };
 
 export default LoadingSkeleton;

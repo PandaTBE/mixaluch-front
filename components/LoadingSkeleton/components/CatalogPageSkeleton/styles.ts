@@ -1,34 +1,21 @@
 import styled from 'styled-components';
+import Skeleton from 'react-loading-skeleton';
 
-export const Wrapper = styled.div`
-    display: grid;
-    grid-template-columns: 25% 70%;
-    gap: 20px;
-    justify-content: space-between;
-    @media (max-width: 767px) {
-        grid-template-columns: 1fr;
-    }
+export const CategoryHeading = styled.div`
+    padding: 12px 14px;
+    min-height: 48px;
+    margin-bottom: 8px;
 `;
 
-export const MainCategory = styled.div`
-    margin-top: 20px;
-    width: 75%;
-    @media (max-width: 767px) {
-        width: 45%;
-    }
+export const CategoryContent = styled.div`
+    padding: 12px 14px;
+    width: 100%;
 `;
 
-export const SubCategory = styled.div`
-    margin-left: 30px;
-    width: 75%;
-    @media (max-width: 767px) {
-        width: 45%;
-    }
+export const HeadingContent = styled.div`
+    width: 100%;
 `;
 
-export const SubCategoryWrapper = styled.div`
-    margin-top: 10px;
-`;
-export const SkeletonPageWrapper = styled.div`
-    padding: 20px 0;
+export const HeadingSkeleton = styled(Skeleton)`
+    max-width: 350px;
 `;

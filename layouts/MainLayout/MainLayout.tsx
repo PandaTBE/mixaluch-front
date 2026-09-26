@@ -1,53 +1,63 @@
-import { ContentWrapper, Wrapper } from './styles';
+import { BackToTopButton, ContentWrapper, LoadingStatus, Wrapper } from './styles';
 
 import Container from '../../components/Container/Container';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import { IProps } from './interfaces';
 import SubHeader from './components/SubHeader/SubHeader';
 import usePageLoading from '../../hooks/usePageLoading';
 import LoadingSkeleton from '../../components/LoadingSkeleton/LoadingSekeleton';
-import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
-import { storePageToSwitch } from '../../slices/General/general';
-import { TPageToSwitch } from '../../slices/General/interfaces';
 import Meta from '../../components/Meta/Meta';
 import ImportantNews from './components/ImportantNews/ImportantNews';
+import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
 
 /**
- * Layout для оборачивания контента
+ * Макет для оборачивания контента
  * @param children компонент, который необходимо обернуть
  */
-const MainLayout: FC<IProps> = ({ children, title, description }) => {
-    const { loading } = usePageLoading();
-    const dispatch = useDispatch();
-    const router = useRouter();
+const MainLayout: FC<IProps> = ({ children, title, description, image }) => {
+    const { loading, targetUrl } = usePageLoading();
+    const [showBackToTop, setShowBackToTop] = useState(false);
 
     useEffect(() => {
-        dispatch(storePageToSwitch(router.pathname as TPageToSwitch));
+        const updateVisibility = () => setShowBackToTop(window.scrollY > 320);
+
+        updateVisibility();
+        window.addEventListener('scroll', updateVisibility, { passive: true });
+        return () => window.removeEventListener('scroll', updateVisibility);
     }, []);
 
+    const scrollToTop = () => {
+        const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+        window.scrollTo({ top: 0, behavior });
+    };
+
     return (
-        <Meta title={title} description={description}>
+        <Meta title={title} description={description} image={image}>
             <Wrapper>
+                <a className="skip-link" href="#main-content">
+                    Перейти к содержимому
+                </a>
                 <ImportantNews />
                 <header>
-                    <Header />
                     <SubHeader />
+                    <Header />
                 </header>
-                <ContentWrapper>
-                    {loading ? (
-                        <Container>
-                            <LoadingSkeleton />
-                        </Container>
-                    ) : (
-                        <Container>{children}</Container>
-                    )}
+                {loading && <LoadingStatus role="status">Загрузка страницы…</LoadingStatus>}
+                <ContentWrapper id="main-content" aria-busy={loading}>
+                    <Container>
+                        {targetUrl ? <LoadingSkeleton url={targetUrl} fallback={children} /> : children}
+                    </Container>
                 </ContentWrapper>
                 <footer>
                     <Footer />
                 </footer>
+                {showBackToTop && (
+                    <BackToTopButton type="button" aria-label="Наверх" onClick={scrollToTop}>
+                        <ArrowUpwardRoundedIcon />
+                    </BackToTopButton>
+                )}
             </Wrapper>
         </Meta>
     );

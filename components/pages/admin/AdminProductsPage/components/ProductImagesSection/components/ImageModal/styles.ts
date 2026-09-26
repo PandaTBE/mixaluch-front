@@ -1,9 +1,18 @@
-import { Checkbox } from '@mui/material';
+import { Checkbox, Stack } from '@mui/material';
 import styled from 'styled-components';
+import { theme } from '../../../../../../../../constants/theme';
 
 export const Wrapper = styled.div`
     width: 70vw;
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: ${theme.backgroundColors.primary};
+    padding: 10px;
+    border-radius: 5px;
+    overflow: auto;
+    max-height: 90vh;
 
     @media (max-width: 991px) {
         width: 95vw;
@@ -52,4 +61,10 @@ export const HiddenInput = styled.input`
     left: 0;
     white-space: nowrap;
     width: 1;
+`;
+
+export const ImageFormFields = styled(Stack)`
+    && {
+        gap: 16px;
+    }
 `;

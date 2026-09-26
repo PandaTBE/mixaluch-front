@@ -4,14 +4,27 @@ import generateOrderQueryData from './tools/generateOrderQueryData';
 import Order from './components/Order/Order';
 import PageTitle from '../../PageTitle/PageTitle';
 import UserInfo from './components/UserInfo/UserInfo';
-import { Accordion, AccordionDetails, AccordionSummary, Alert, Stack } from '@mui/material';
-import { AccordionWrapper, ErrorWrapper, OrderWrapper, Total, TotalValue, Wrapper, WrapperItem } from './styles';
+import { Accordion, AccordionDetails, AccordionSummary, Alert } from '@mui/material';
+import {
+    AccordionWrapper,
+    BackLink,
+    ErrorWrapper,
+    OrderWrapper,
+    Total,
+    TotalValue,
+    Wrapper,
+    WrapperItem,
+    OrderHeading,
+    NoticeAlert,
+    OrderSummaryRow,
+} from './styles';
 import { IOrderFormValues } from './components/Delivery/interfaces';
 import { orderApi } from '../../../services/OrderService';
 import { OrderingPageContext } from './context';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { userReducerValues } from '../../../slices/User/user';
 import {
     cartReducerValues,
@@ -32,6 +45,13 @@ import {
  */
 const OrderingPage = () => {
     const [createOrder, { data, isLoading, isError }] = orderApi.useCreateOrderMutation();
+    const {
+        data: orderingSettings,
+        isError: settingsError,
+        isLoading: settingsLoading,
+    } = orderApi.useGetOrderingSettingsQuery(undefined, { refetchOnMountOrArgChange: true, pollingInterval: 30000 });
+    const selfDeliveryEnabled = !settingsError && orderingSettings?.self_delivery_enabled === true;
+    const courierDeliveryEnabled = !settingsError && orderingSettings?.courier_delivery_enabled === true;
     const { totalSum, cartItems, deliveryCost, totalSumWithDelivery } = useSelector(cartReducerValues);
     const [accordionExpanded, setAccordionExpanded] = useState(false);
     const { user, authToken } = useSelector(userReducerValues);
@@ -71,6 +91,7 @@ const OrderingPage = () => {
     };
 
     const createOrderTrans = (formValues: IOrderFormValues) => {
+        if (formValues.selfDelivery ? !selfDeliveryEnabled : !courierDeliveryEnabled) return;
         const body = generateOrderQueryData({
             orderItems: cartItems,
             totalSumWithDelivery,
@@ -88,6 +109,8 @@ const OrderingPage = () => {
         deliveryCost,
         cartItems,
         totalSum,
+        selfDeliveryEnabled,
+        courierDeliveryEnabled,
         user,
         storeDeliveryCostTrans,
         createOrderTrans,
@@ -95,11 +118,26 @@ const OrderingPage = () => {
 
     return (
         <OrderingPageContext.Provider value={context}>
+            <Link href="/cart" passHref>
+                <BackLink>← Вернуться в корзину</BackLink>
+            </Link>
             <PageTitle text={'Оформление заказа'} />
-            <Alert style={{ marginTop: '15px' }} variant="outlined" severity="error">
-                В связи с высокой нагрузкой доставка временно отключена. Самовывоз по-прежнему доступен. Приносим
-                извинения за неудобства.
-            </Alert>
+            {settingsLoading && <Alert severity="info">Проверяем доступность оформления заказа…</Alert>}
+            {settingsError && (
+                <Alert severity="error">Не удалось загрузить настройки оформления заказа. Обновите страницу.</Alert>
+            )}
+            {orderingSettings?.notice && (
+                <NoticeAlert variant="outlined" severity="warning">
+                    {orderingSettings.notice}
+                </NoticeAlert>
+            )}
+            {orderingSettings &&
+                !orderingSettings.self_delivery_enabled &&
+                !orderingSettings.courier_delivery_enabled && (
+                    <NoticeAlert variant="outlined" severity="error">
+                        Оформление заказов временно недоступно.
+                    </NoticeAlert>
+                )}
             {isError && (
                 <ErrorWrapper>
                     <ErrorMessage
@@ -118,15 +156,10 @@ const OrderingPage = () => {
                     <AccordionWrapper>
                         <Accordion expanded={accordionExpanded} onChange={toggleAccordionExpanded}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                <Stack
-                                    flexGrow={1}
-                                    direction={'row'}
-                                    alignItems={'center'}
-                                    justifyContent={'space-between'}
-                                >
-                                    <Total>Ваш заказа</Total>
+                                <OrderSummaryRow direction="row">
+                                    <Total>Ваш заказ</Total>
                                     <TotalValue>{Math.floor(context?.totalSumWithDelivery || 0)} ₽</TotalValue>
-                                </Stack>
+                                </OrderSummaryRow>
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Order />
@@ -134,6 +167,7 @@ const OrderingPage = () => {
                         </Accordion>
                     </AccordionWrapper>
                     <OrderWrapper>
+                        <OrderHeading>Ваш заказ</OrderHeading>
                         <Order />
                     </OrderWrapper>
                 </WrapperItem>

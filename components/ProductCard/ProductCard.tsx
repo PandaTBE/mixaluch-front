@@ -1,3 +1,4 @@
+import { PricingRow, NegotiablePriceWrapper } from './styles';
 import {
     ButtonContentWrapper,
     ButtonText,
@@ -13,22 +14,22 @@ import {
 import Button from '../Button/Button';
 import { FC, useMemo } from 'react';
 import { IProps } from './interfaces';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { cartReducerValues } from '../../slices/Cart/cart';
 import QuantityInput from '../QuantityInput/QuantityInput';
 import useFetchData from './hooks/useFetchData';
 import { useRouter } from 'next/router';
-import { storePageToSwitch } from '../../slices/General/general';
+import Link from 'next/link';
 import Image from 'next/image';
 import {
     googleAnalytics4DataLayers,
     sendNewDataLayer,
 } from '../../services/GoogleAnalytics4Service/GoogleAnalytics4Service';
-import { Stack } from '@mui/material';
 import NegotiablePrice from '../NegotiablePrice/NegotiablePrice';
 import { useTranslation } from 'react-i18next';
 import { IProductImage } from '../../models/Product';
 import { formatProductPrice } from '../../tools/productPrice';
+import { IProduct } from '../../models/Product';
 
 /**
  * Компонент для отображения карточки продукта
@@ -37,18 +38,21 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
     const { cartItems } = useSelector(cartReducerValues);
     const { addCartItem } = useFetchData();
     const { t } = useTranslation();
-    const dispatch = useDispatch();
     const router = useRouter();
+    const cartProduct: IProduct = { ...product, external_ids: 'external_ids' in product ? product.external_ids : [] };
 
     const onProductAdd = () => {
-        sendNewDataLayer(googleAnalytics4DataLayers.generateAddToCart(product));
-        addCartItem(product);
+        sendNewDataLayer(googleAnalytics4DataLayers.generateAddToCart(cartProduct));
+        addCartItem(cartProduct);
     };
 
     const onProductClick = () => {
-        sendNewDataLayer(googleAnalytics4DataLayers.generateSelectItem(product));
-        dispatch(storePageToSwitch('/catalog/[id]'));
-        router.push(`/catalog/${product.id}`);
+        sendNewDataLayer(googleAnalytics4DataLayers.generateSelectItem(cartProduct));
+    };
+
+    const productHref = {
+        pathname: `/catalog/${product.id}`,
+        query: router.pathname === '/catalog' ? { from: router.asPath } : {},
     };
 
     const cartItem = useMemo(() => {
@@ -56,29 +60,46 @@ const ProductCard: FC<IProps> = ({ product, imageHeight }) => {
     }, [cartItems, product]);
 
     const mainImage = useMemo(() => {
-        return product.product_image.find((image) => image.is_feature) || product.product_image[0];
+        return product.product_image?.find((image) => image.is_feature) || product.product_image?.[0];
     }, [product]) as IProductImage | undefined;
 
     return (
         <Wrapper>
-            <ImageWrapper height={imageHeight} onClick={onProductClick}>
-                <Image src={mainImage?.image || ''} alt={mainImage?.alt_text} layout={'fill'} objectFit={'contain'} />
-            </ImageWrapper>
+            <Link href={productHref} passHref>
+                <ImageWrapper
+                    height={imageHeight}
+                    onClick={onProductClick}
+                    aria-label={`Подробнее о товаре ${product.title}`}
+                >
+                    {mainImage?.image ? (
+                        <Image
+                            src={mainImage.image}
+                            alt={mainImage.alt_text || product.title}
+                            layout={'fill'}
+                            objectFit={'contain'}
+                        />
+                    ) : (
+                        <span>Фото скоро появится</span>
+                    )}
+                </ImageWrapper>
+            </Link>
             <ContentWrapper>
-                <Title onClick={onProductClick}>{product.title}</Title>
+                <Link href={productHref} passHref>
+                    <Title onClick={onProductClick}>{product.title}</Title>
+                </Link>
 
-                <Stack flexWrap={'wrap'} gap={'10px'} direction={'row'} alignItems={'end'}>
+                <PricingRow data-popular-product-pricing direction={'row'}>
                     {product.is_negotiable_price ? (
-                        <Stack mt="10px">
+                        <NegotiablePriceWrapper>
                             <NegotiablePrice />
-                        </Stack>
+                        </NegotiablePriceWrapper>
                     ) : (
                         <>
-                            <Price>{formatProductPrice(product)}</Price>
-                            <UnitWrapper>за 1 {t(product.unit)}</UnitWrapper>
+                            <Price data-popular-product-price>{formatProductPrice(product)}</Price>
+                            <UnitWrapper data-popular-product-unit>за 1 {t(product.unit)}</UnitWrapper>
                         </>
                     )}
-                </Stack>
+                </PricingRow>
                 <ButtonWrapper>
                     {cartItem ? (
                         <QuantityInput

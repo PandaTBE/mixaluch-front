@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    padding: 20px 0;
+    max-width: 760px;
+    padding: 20px 0 48px;
+    line-height: 1.6;
 `;
 
 export const Text = styled.div<{ fontWeight?: number }>`

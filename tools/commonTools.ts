@@ -37,6 +37,13 @@ const ruKeys: Record<string, string> = {
     є: 'ye',
 };
 
+const russianPlurals = new Intl.PluralRules('ru');
+
+export function pluralizeRu(count: number, [one, few, many]: readonly [string, string, string]): string {
+    const form = russianPlurals.select(count);
+    return form === 'one' ? one : form === 'many' ? many : few;
+}
+
 export function transliterate(word: string) {
     return word
         .split('')

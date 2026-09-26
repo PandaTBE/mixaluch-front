@@ -17,8 +17,8 @@ const SingleImportantNews: FC<IProps> = ({ newsData, removeImportantNews }) => {
         <MainWrapper>
             <Container>
                 <Wrapper>
-                    <NewsText>{newsData.short_text}</NewsText>
-                    <IconButton onClick={onRemove}>
+                    <NewsText role="status">{newsData.short_text}</NewsText>
+                    <IconButton onClick={onRemove} aria-label="Закрыть уведомление" size="small">
                         <CloseIcon />
                     </IconButton>
                 </Wrapper>

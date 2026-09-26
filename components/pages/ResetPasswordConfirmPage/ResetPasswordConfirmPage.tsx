@@ -4,8 +4,6 @@ import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import PageTitle from '../../PageTitle/PageTitle';
 import SuccessMessage from '../../SuccessMessage/SuccessMessage';
 import { ButtonWrapper, Form, MessageWrapper, ResetConfirmButtonWrapper, StyledInput, Wrapper } from './styles';
-import { storePageToSwitch } from '../../../slices/General/general';
-import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { useMemo, useState } from 'react';
 import { userApi } from '../../../services/UserService';
@@ -24,7 +22,6 @@ const ResetPasswordConfirmPage = () => {
     const {
         query: { uid, token },
     } = router;
-    const dispatch = useDispatch();
     const initialValues = { new_password: '', re_new_password: '' };
 
     const errorMessage = useMemo(() => {
@@ -62,7 +59,6 @@ const ResetPasswordConfirmPage = () => {
     };
 
     const onLoginRedirect = () => {
-        dispatch(storePageToSwitch('/user-account'));
         router.push('/login');
     };
 

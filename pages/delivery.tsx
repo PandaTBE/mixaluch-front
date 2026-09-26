@@ -6,7 +6,14 @@ import MainLayout from '../layouts/MainLayout/MainLayout';
  * Страница доставки
  */
 const Delivery: NextPage = () => {
-    return <MainLayout title={'Доставка – Интернет-магазин У Михалыча'}><DeliveryPage /></MainLayout>;
+    return (
+        <MainLayout
+            title={'Доставка и самовывоз — У Михалыча'}
+            description={'Условия доставки продуктов по Подольску и самовывоза из магазина «У Михалыча».'}
+        >
+            <DeliveryPage />
+        </MainLayout>
+    );
 };
 
 export default Delivery;
