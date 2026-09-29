@@ -4,10 +4,13 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const ts = require('typescript');
+const { transformSync } = require('next/dist/build/swc');
 
-function load(file, dependencies) {
+function load(file, dependencies, useSwc = false) {
     const source = fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
-    const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } });
+    const outputText = useSwc
+        ? transformSync(source, { jsc: { parser: { syntax: 'typescript' }, target: 'es5' }, module: { type: 'commonjs' } }).code
+        : ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
     const exports = {};
     vm.runInNewContext(outputText, { exports, require: (name) => {
         assert(name in dependencies, `Unexpected dependency: ${name}`);
@@ -45,7 +48,7 @@ function load(file, dependencies) {
                 return [{ uuid: `product-${storeId}` }];
             },
         } },
-    });
+    }, true);
     const data = await AdminProductsApi.getEvotorData('test-token');
     assert.deepEqual(calls, [['one', 'test-token'], ['two', 'test-token']]);
     assert.equal(data.productsByStoreId.one[0].uuid, 'product-one');

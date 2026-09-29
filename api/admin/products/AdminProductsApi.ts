@@ -5,9 +5,11 @@ export const AdminProductsApi = {
     async getEvotorData(authToken: string) {
         const stores = await EvotorApi.getAllStores(authToken);
         const responses = await Promise.all(
-            stores.map(async (store) => [store.uuid, await EvotorApi.getProductsByStoreId(store.uuid, authToken)] as const),
+            stores.map(async (store) => {
+                const products = await EvotorApi.getProductsByStoreId(store.uuid, authToken);
+                return [store.uuid, products] as const;
+            }),
         );
-
         return { stores, productsByStoreId: Object.fromEntries(responses) };
     },
 };
