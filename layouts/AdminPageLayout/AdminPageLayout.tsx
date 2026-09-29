@@ -2,22 +2,18 @@ import { FC, PropsWithChildren, useEffect } from 'react';
 import { ADMIN_TABS } from '../../constants/admin';
 import { ContentWrapper, StyledTab, StyledTabs } from './styles';
 import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
-import { adminReducerValues, storeSelectedTab } from '../../slices/Admin/admin';
 
 const AdminPageLayout: FC<PropsWithChildren> = ({ children }) => {
-    const { selectedTab } = useSelector(adminReducerValues);
-
-    const dispatch = useDispatch();
     const router = useRouter();
+    const selectedTab = ADMIN_TABS.find((tab) => tab.href === router.pathname) || ADMIN_TABS[0];
 
     useEffect(() => {
-        router.push(selectedTab.href);
-    }, [selectedTab]);
+        if (router.pathname === '/admin') void router.replace(ADMIN_TABS[0].href);
+    }, [router]);
 
     const handleChange = (_: React.SyntheticEvent, newValue: string) => {
         const currentTab = ADMIN_TABS.find((tab) => tab.id === newValue);
-        dispatch(storeSelectedTab(currentTab || ADMIN_TABS[0]));
+        if (currentTab) void router.push(currentTab.href);
     };
 
     return (

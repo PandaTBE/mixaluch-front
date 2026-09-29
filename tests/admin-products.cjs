@@ -38,10 +38,11 @@ function load(file, dependencies, useSwc = false) {
     assert.equal(headers.get('Authorization'), 'Token test-token');
 
     const calls = [];
+    let storeCalls = 0;
     let fail = false;
     const { AdminProductsApi } = load('api/admin/products/AdminProductsApi.ts', {
         '../../EvotorApi': { EvotorApi: {
-            getAllStores: async (token) => { assert.equal(token, 'test-token'); return [{ uuid: 'one' }, { uuid: 'two' }]; },
+            getAllStores: async () => { storeCalls += 1; return [{ uuid: 'one' }, { uuid: 'two' }]; },
             getProductsByStoreId: async (storeId, token) => {
                 calls.push([storeId, token]);
                 if (fail) throw new Error('upstream unavailable');
@@ -53,8 +54,13 @@ function load(file, dependencies, useSwc = false) {
     assert.deepEqual(calls, [['one', 'test-token'], ['two', 'test-token']]);
     assert.equal(data.productsByStoreId.one[0].uuid, 'product-one');
     assert.equal(data.productsByStoreId.two[0].uuid, 'product-two');
+    await AdminProductsApi.getEvotorData('test-token');
+    assert.equal(storeCalls, 1, 'navigation within the cache window should not refetch Evotor');
     fail = true;
-    await assert.rejects(AdminProductsApi.getEvotorData('test-token'), /upstream unavailable/);
+    await assert.rejects(AdminProductsApi.getEvotorData('other-token'), /upstream unavailable/);
+    fail = false;
+    await AdminProductsApi.getEvotorData('other-token');
+    assert.equal(storeCalls, 3, 'failed loads should be retried');
     console.log('Admin product query, staff auth and isolated Evotor loader: passed');
 })().catch((error) => { console.error(error); process.exitCode = 1; });
 

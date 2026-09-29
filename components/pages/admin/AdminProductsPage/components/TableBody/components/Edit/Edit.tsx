@@ -12,7 +12,7 @@ const Edit: FC<ITableColumnProps> = ({ product }) => {
     const router = useRouter();
 
     const onEditClick = () => {
-        router.push(`products/${product.id}`);
+        void router.push(`/admin/products/${product.id}`);
     };
 
     return (
