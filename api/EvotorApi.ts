@@ -1,4 +1,4 @@
-import { evotorInstance } from '.';
+import { instance } from '.';
 import { IEvotorProduct, IEvotorStore } from '../models/Evotor';
 
 /**
@@ -6,16 +6,20 @@ import { IEvotorProduct, IEvotorStore } from '../models/Evotor';
  */
 export const EvotorApi = {
     /** Получение всех магазинов */
-    async getAllStores() {
-        const data = await evotorInstance
-            .get<IEvotorStore[]>('/inventories/stores/search')
+    async getAllStores(authToken: string) {
+        const data = await instance
+            .get<IEvotorStore[]>('/admin/evotor/stores/', {
+                headers: { Authorization: `Token ${authToken}` },
+            })
             .then((response) => response.data);
         return data;
     },
     /** Получение списка товаров по Id магазина */
-    async getProductsByStoreId(storeId: string) {
-        const data = await evotorInstance
-            .get<IEvotorProduct[]>(`/inventories/stores/${storeId}/products`)
+    async getProductsByStoreId(storeId: string, authToken: string) {
+        const data = await instance
+            .get<IEvotorProduct[]>(`/admin/evotor/stores/${encodeURIComponent(storeId)}/products/`, {
+                headers: { Authorization: `Token ${authToken}` },
+            })
             .then((response) => response.data);
         return data;
     },

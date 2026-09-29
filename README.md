@@ -53,6 +53,20 @@ Run `node --test tests/page-loading.cjs` for event/cancellation regression tests
 with Playwright MCP `browser_run_code_unsafe` (`filename`) against the local frontend/backend for delayed navigation,
 responsive geometry, overflow, query updates and cancellation checks. No forms or orders are submitted.
 
+## Product administration
+
+The staff product list uses `GET /api/admin/products/` with `Authorization: Token <user-token>`.
+Query parameters: `page` (1-based), `page_size` (10, 25 or 100), `search`, `category` (ID, includes descendants),
+`sort_by` (`id`, `title`, `category`, `regular_price`, `discount_price`, `is_popular`) and `sort_order` (`asc`/`desc`).
+The response is `{count, next, previous, results}`. Hidden products/categories remain available to staff.
+
+Set `EVOTOR_TOKEN` only in the backend `.env`. Staff-only `/api/admin/evotor/stores/` and
+`/api/admin/evotor/stores/<uuid>/products/` proxy inventory reads; the token is never sent to the browser.
+Inventory failures do not prevent editing site products. Product, image and link edits refresh only the edited product.
+
+Run `node --test tests/admin-products.cjs tests/admin-product-edit.cjs tests/admin-editor-refresh.cjs tests/admin-image-mutation.cjs` for frontend
+regressions, and `python manage.py test store` in the backend environment for API and upload validation tests.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

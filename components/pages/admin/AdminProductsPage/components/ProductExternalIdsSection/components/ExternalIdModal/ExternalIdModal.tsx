@@ -11,9 +11,8 @@ import { evotorReducerValues } from '../../../../../../../../slices/Evotor/evoto
 import { IEvotorProduct } from '../../../../../../../../models/Evotor';
 import { EVOTOR_EXTERNAL_ID_DATA_SOURCE } from '../../../../../../../../constants/admin';
 import EvotorProductData from '../../../EvotorProductData/EvotorProductData';
-import { productReducerValues } from '../../../../../../../../slices/Product/product';
 import ErrorMessage from '../../../../../../../ErrorMessage/ErrorMessage';
-import { IExternalIdDTO, IProduct } from '../../../../../../../../models/Product';
+import { IExternalIdDTO } from '../../../../../../../../models/Product';
 import { productApi } from '../../../../../../../../services/ProductService';
 import {
     CREATE_EXTERNAL_ID_QUERY_KEY,
@@ -28,7 +27,6 @@ const ExternalIdModal: FC<IProps> = ({ isOpen, toggleOpen, product, externalId }
     const requestsId = useId();
 
     const { productsByStoreId, storesById, productsByStoreIdByProductId } = useSelector(evotorReducerValues);
-    const { products } = useSelector(productReducerValues);
 
     const [createExternalId, createExternalIdResult] = productApi.useCreateExternalIdMutation({
         fixedCacheKey: `${CREATE_EXTERNAL_ID_QUERY_KEY}${DS}${requestsId}`,
@@ -42,18 +40,20 @@ const ExternalIdModal: FC<IProps> = ({ isOpen, toggleOpen, product, externalId }
         fixedCacheKey: `${UPDATE_EXTERNAL_ID_QUERY_KEY}${DS}${requestsId}`,
     });
 
-    const [selectedEvotorProduct, setSelectedEvotorProduct] = useState<undefined | TExtendedEvotorProduct | null>();
-    const [isExternalIdExists, setIsExternalIdExists] = useState<{ isExists: boolean; product: null | IProduct }>({
-        isExists: false,
-        product: null,
-    });
+    const [selectedEvotorProduct, setSelectedEvotorProduct] = useState<TExtendedEvotorProduct | null>(null);
+    const [error, setError] = useState('');
+    const [hasSavedMutation, setHasSavedMutation] = useState(false);
+    const [isRefreshing, setRefreshing] = useState(false);
     const [isDeleConfirmModalOpen, setDeleteConfirmModalOpen] = useState(false);
 
     const [isCanceled, setIsCanceled] = useState({});
 
-    useHandleResults(requestsId, product);
+    const refreshProduct = useHandleResults(product.id);
 
     useEffect(() => {
+        setHasSavedMutation(false);
+        setSelectedEvotorProduct(null);
+        setError('');
         if (externalId && productsByStoreIdByProductId && externalId.data_source === EVOTOR_EXTERNAL_ID_DATA_SOURCE) {
             const splittedId = externalId.external_id.split('/');
             const evotorProduct = productsByStoreIdByProductId[splittedId?.[0]]?.[splittedId?.[1]] as
@@ -84,52 +84,71 @@ const ExternalIdModal: FC<IProps> = ({ isOpen, toggleOpen, product, externalId }
         setIsCanceled({});
     };
 
-    const onSave = () => {
-        if (selectedEvotorProduct) {
-            const selectedEvotorProductExternalId = `${selectedEvotorProduct.storeId}/${selectedEvotorProduct.uuid}`;
-            const isExists = (products || []).find((product) => {
-                return product.external_ids.find((externalId) => {
-                    return (
-                        externalId.data_source === EVOTOR_EXTERNAL_ID_DATA_SOURCE &&
-                        externalId.external_id === selectedEvotorProductExternalId
-                    );
-                });
-            });
-
-            if (isExists) {
-                setIsExternalIdExists({ isExists: true, product: isExists });
-            } else {
-                const result: IExternalIdDTO = {
-                    data_source: EVOTOR_EXTERNAL_ID_DATA_SOURCE,
-                    external_id: selectedEvotorProductExternalId,
-                    product: product.id,
-                };
-                if (externalId) {
-                    updateExternalId({ id: externalId.id, data: result });
-                } else {
-                    createExternalId(result);
-                }
-                toggleOpen();
-            }
+    const finishMutation = async () => {
+        setRefreshing(true);
+        try {
+            await refreshProduct();
+            toggleOpen();
+        } catch {
+            setError('Изменение сохранено, но не удалось обновить товар. Перезагрузите страницу.');
+        } finally {
+            setRefreshing(false);
         }
+    };
+
+    const onSave = async () => {
+        if (hasSavedMutation) return finishMutation();
+        if (!selectedEvotorProduct || isLoading) return;
+        setError('');
+        setRefreshing(true);
+        const data: IExternalIdDTO = {
+            data_source: EVOTOR_EXTERNAL_ID_DATA_SOURCE,
+            external_id: `${selectedEvotorProduct.storeId}/${selectedEvotorProduct.uuid}`,
+            product: product.id,
+        };
+        try {
+            if (externalId) {
+                await updateExternalId({ id: externalId.id, data }).unwrap();
+            } else {
+                await createExternalId(data).unwrap();
+            }
+        } catch (error) {
+            const isValidationError = error && typeof error === 'object' && 'status' in error && error.status === 400;
+            setError(isValidationError
+                ? 'Не удалось сохранить связь. Возможно, этот товар Эвотор уже связан с другим товаром.'
+                : 'Не удалось сохранить связь с Эвотор. Повторите попытку.');
+            setRefreshing(false);
+            return;
+        }
+        setHasSavedMutation(true);
+        await finishMutation();
     };
 
     const toggleDeleteConfirmModal = () => {
         setDeleteConfirmModalOpen((prevState) => !prevState);
     };
 
-    const onDeleteConfirm = () => {
-        if (externalId) {
-            deleteExternalId(externalId.id);
-            toggleOpen();
+    const onDeleteConfirm = async () => {
+        if (!externalId || isLoading) return;
+        if (hasSavedMutation) return finishMutation();
+        setError('');
+        setRefreshing(true);
+        try {
+            await deleteExternalId(externalId.id).unwrap();
+        } catch {
+            setError('Не удалось удалить связь с Эвотор. Повторите попытку.');
+            setRefreshing(false);
+            return;
         }
+        setHasSavedMutation(true);
+        await finishMutation();
     };
 
     const isLoading =
-        createExternalIdResult.isLoading || deleteExternalIdResult.isLoading || updateExternalIdResult.isLoading;
+        createExternalIdResult.isLoading || deleteExternalIdResult.isLoading || updateExternalIdResult.isLoading || isRefreshing;
 
     return (
-        <Modal open={isOpen} onClose={toggleOpen}>
+        <Modal open={isOpen} onClose={() => !isLoading && toggleOpen()}>
             <Wrapper style={DEFAULT_MODAL_STYLES}>
                 <Modal onClose={toggleDeleteConfirmModal} open={isDeleConfirmModalOpen}>
                     <DeleteConfirmModal
@@ -142,13 +161,9 @@ const ExternalIdModal: FC<IProps> = ({ isOpen, toggleOpen, product, externalId }
                 <PageTitle text={externalId ? 'Редактировать связь с Эвотор' : 'Создать связь с Эвотор'} />
                 <ContentWrapper>
                     <Stack direction="column" gap={1} marginBottom={2}>
-                        {isExternalIdExists.isExists && (
-                            <ErrorMessage
-                                text={`Этот товар из Эвотор уже имеет связь c ${isExternalIdExists.product?.title}`}
-                            />
-                        )}
-                        {createExternalIdResult.isError && (
-                            <ErrorMessage text={`При создании связи с Эвотор возникла ошибка`} />
+                        {error && <ErrorMessage text={error} />}
+                        {externalId && !selectedEvotorProduct && (
+                            <span>Текущая связь: {externalId.external_id}. Данные товара Эвотор недоступны; связь можно удалить или заменить.</span>
                         )}
                     </Stack>
                     <Autocomplete
@@ -161,7 +176,7 @@ const ExternalIdModal: FC<IProps> = ({ isOpen, toggleOpen, product, externalId }
                             );
                         }}
                         onChange={(_: SyntheticEvent<Element, Event>, newValue) => {
-                            setIsExternalIdExists({ isExists: false, product: null });
+                            setError('');
                             setSelectedEvotorProduct(newValue);
                         }}
                         groupBy={(option: TExtendedEvotorProduct) =>
@@ -169,6 +184,7 @@ const ExternalIdModal: FC<IProps> = ({ isOpen, toggleOpen, product, externalId }
                         }
                         renderInput={(params) => <TextField {...params} label="Товар из Эвотор" />}
                         getOptionLabel={(option: IEvotorProduct) => option.name}
+                        isOptionEqualToValue={(option, value) => option.uuid === value.uuid && option.storeId === value.storeId}
                         options={evotorProductOptions}
                         value={selectedEvotorProduct}
                         fullWidth={true}
@@ -189,7 +205,7 @@ const ExternalIdModal: FC<IProps> = ({ isOpen, toggleOpen, product, externalId }
                     >
                         {externalId && (
                             <>
-                                <Button variant="contained" color="error" onClick={toggleDeleteConfirmModal}>
+                                <Button disabled={isLoading} variant="contained" color="error" onClick={toggleDeleteConfirmModal}>
                                     Удалить связь
                                 </Button>
                                 <Button disabled={isLoading} variant="contained" color="warning" onClick={onCancel}>
@@ -198,8 +214,8 @@ const ExternalIdModal: FC<IProps> = ({ isOpen, toggleOpen, product, externalId }
                             </>
                         )}
 
-                        <Button disabled={isLoading} variant="contained" color="success" onClick={onSave}>
-                            Сохранить
+                        <Button disabled={isLoading || (!selectedEvotorProduct && !hasSavedMutation)} variant="contained" color="success" onClick={onSave}>
+                            {hasSavedMutation ? 'Обновить товар' : 'Сохранить'}
                         </Button>
                     </Stack>
                 </ContentWrapper>

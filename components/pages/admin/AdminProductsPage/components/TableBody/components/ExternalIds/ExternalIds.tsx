@@ -6,7 +6,7 @@ import { evotorReducerValues } from '../../../../../../../../slices/Evotor/evoto
 import { IEvotorProduct } from '../../../../../../../../models/Evotor';
 
 const ExternalIds: FC<ITableColumnProps> = ({ product }) => {
-    const { productsByStoreIdByProductId } = useSelector(evotorReducerValues);
+    const { productsByStoreId, productsByStoreIdByProductId } = useSelector(evotorReducerValues);
 
     const evotorProduct: null | IEvotorProduct = useMemo(() => {
         const externalId = product.external_ids.find((item) => item.data_source === EVOTOR_EXTERNAL_ID_DATA_SOURCE);
@@ -18,7 +18,11 @@ const ExternalIds: FC<ITableColumnProps> = ({ product }) => {
         }
 
         return null;
-    }, []);
+    }, [product.external_ids, productsByStoreIdByProductId]);
+
+    if (productsByStoreId === null) {
+        return <span>Данные Эвотор не загружены</span>;
+    }
 
     if (evotorProduct) {
         return <span>Есть связь с Evotor</span>;

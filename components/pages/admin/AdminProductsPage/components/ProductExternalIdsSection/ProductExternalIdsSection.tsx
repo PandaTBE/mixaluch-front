@@ -17,9 +17,9 @@ const ProductExternalIdsSection: FC<IProps> = ({ product }) => {
         if (product?.external_ids?.length) {
             const externalId = product.external_ids.find((item) => item.data_source === EVOTOR_EXTERNAL_ID_DATA_SOURCE);
 
-            if (externalId && productsByStoreIdByProductId) {
+            if (externalId) {
                 const splittedId = externalId.external_id.split('/');
-                const product = productsByStoreIdByProductId[splittedId[0]]?.[splittedId[1]];
+                const product = productsByStoreIdByProductId?.[splittedId[0]]?.[splittedId[1]];
 
                 return [externalId, product || null];
             }
@@ -45,9 +45,9 @@ const ProductExternalIdsSection: FC<IProps> = ({ product }) => {
                     product={product}
                     externalId={externalId}
                 />
-                <Title>Нет связи с эвотор</Title>
+                <Title>{externalId ? 'Связь с Эвотор сохранена, но данные товара недоступны' : 'Нет связи с Эвотор'}</Title>
                 <Button variant="contained" onClick={toggleExternalIdModal}>
-                    Создать связь
+                    {externalId ? 'Изменить связь' : 'Создать связь'}
                 </Button>
             </Wrapper>
         );

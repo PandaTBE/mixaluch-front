@@ -8,6 +8,7 @@ import {
     TextField,
     Button as MaterialButton,
     CircularProgress,
+    Alert,
 } from '@mui/material';
 import {
     CloseIconWrapper,
@@ -62,7 +63,10 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
 
     const [removeBg, removeBgResult] = removeImageBgApi.useRemoveBgMutation();
 
-    useHandleResults(requestsId, modalState.productId);
+    const refreshProduct = useHandleResults(modalState.productId);
+    const [error, setError] = useState('');
+    const [hasSavedMutation, setHasSavedMutation] = useState(false);
+    const [isRefreshing, setRefreshing] = useState(false);
 
     const initialValues: { alt_text: string; is_feature: boolean; image?: File } = {
         alt_text: '',
@@ -74,15 +78,39 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
         is_feature: yup.boolean(),
     });
 
-    const onSubmit = (formValues: typeof initialValues) => {
-        if (modalState.image) {
-            updateProductImage({ data: { ...formValues, product: modalState.productId }, id: modalState.image.id });
-        } else {
-            if (!isUndefined(formValues.image)) {
-                createProductImage({ ...formValues, product: modalState.productId } as IProductImageDTO);
-            }
+    const onSubmit = async (formValues: typeof initialValues) => {
+        if (hasSavedMutation) return finishMutation();
+        setError('');
+        if (!modalState.image && isUndefined(formValues.image)) {
+            setError('Выберите изображение для загрузки.');
+            return;
         }
-        toggleEditImageOpen(null);
+        setRefreshing(true);
+        try {
+            if (modalState.image) {
+                await updateProductImage({ data: { ...formValues, product: modalState.productId }, id: modalState.image.id }).unwrap();
+            } else {
+                await createProductImage({ ...formValues, product: modalState.productId } as IProductImageDTO).unwrap();
+            }
+        } catch {
+            setError('Не удалось сохранить изображение. Проверьте файл и повторите попытку.');
+            setRefreshing(false);
+            return;
+        }
+        setHasSavedMutation(true);
+        await finishMutation();
+    };
+
+    const finishMutation = async () => {
+        setRefreshing(true);
+        try {
+            await refreshProduct();
+            toggleEditImageOpen(null);
+        } catch {
+            setError('Изменение сохранено, но не удалось обновить товар. Перезагрузите страницу.');
+        } finally {
+            setRefreshing(false);
+        }
     };
 
     const formik = useFormik({
@@ -92,13 +120,14 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
     });
 
     useEffect(() => {
-        if (modalState.image) {
-            formik.setValues({
-                is_feature: modalState.image.is_feature,
-                alt_text: modalState.image.alt_text,
-            });
-        }
-    }, [modalState.image, isCanceled]);
+        formik.resetForm({ values: modalState.image ? {
+            is_feature: modalState.image.is_feature,
+            alt_text: modalState.image.alt_text || '',
+        } : initialValues });
+        setError('');
+        setHasSavedMutation(false);
+        removeBgResult.reset();
+    }, [modalState.image, modalState.open, isCanceled]);
 
     useEffect(() => {
         if (removeBgResult.data) {
@@ -112,11 +141,20 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
         }
     }, [formik.values.image]);
 
-    const onDeleteConfirm = () => {
-        if (modalState.image) {
-            deleteProductImage(modalState.image.id);
+    const onDeleteConfirm = async () => {
+        if (!modalState.image || isLoading) return;
+        if (hasSavedMutation) return finishMutation();
+        setError('');
+        setRefreshing(true);
+        try {
+            await deleteProductImage(modalState.image.id).unwrap();
+        } catch {
+            setError('Не удалось удалить изображение. Повторите попытку.');
+            setRefreshing(false);
+            return;
         }
-        toggleEditImageOpen(null);
+        setHasSavedMutation(true);
+        await finishMutation();
     };
 
     const toggleDeleteConfirmModal = () => {
@@ -138,10 +176,10 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
         createProductImageResult.isLoading ||
         updateProductImageResult.isLoading ||
         deleteProductImageResult.isLoading ||
-        removeBgResult.isLoading;
+        removeBgResult.isLoading || isRefreshing;
 
     return (
-        <Modal onClose={() => toggleEditImageOpen(modalState.image)} open={modalState.open}>
+        <Modal onClose={() => !isLoading && toggleEditImageOpen(modalState.image)} open={modalState.open}>
             <Wrapper>
                 <Modal onClose={toggleDeleteConfirmModal} open={isDeleConfirmModalOpen}>
                     <DeleteConfirmModal
@@ -152,12 +190,14 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
                     />
                 </Modal>
                 <PageTitle text={modalState.image ? 'Редактирование изображения' : 'Добавление нового изображения'} />
-                <CloseIconWrapper onClick={() => toggleEditImageOpen(modalState.image)}>
+                <CloseIconWrapper onClick={() => !isLoading && toggleEditImageOpen(modalState.image)}>
                     <IconButton>
                         <CloseRoundedIcon htmlColor={theme.colors.primary} />
                     </IconButton>
                 </CloseIconWrapper>
                 <ContentWrapper>
+                    {error && <Alert severity="error">{error}</Alert>}
+                    {removeBgResult.isError && <Alert severity="error">Не удалось удалить фон изображения.</Alert>}
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <ImageWrapper isNoImage={!modalState.image && !formik.values.image}>
@@ -238,7 +278,7 @@ const ImageModal: FC<IProps> = ({ modalState, toggleEditImageOpen }) => {
                                         startIcon={<SaveIcon />}
                                         color="success"
                                     >
-                                        Сохранить изменения
+                                        {hasSavedMutation ? 'Обновить товар' : 'Сохранить изменения'}
                                     </MaterialButton>
                                     <MaterialButton
                                         disabled={isLoading}

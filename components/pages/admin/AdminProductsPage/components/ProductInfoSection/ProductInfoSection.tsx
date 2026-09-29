@@ -1,16 +1,15 @@
-import { FC, useEffect, useId, useMemo, useState } from 'react';
+import { FC, useEffect, useId, useState } from 'react';
 import { IProps } from '../ProductExternalIdsSection/interfaces';
 import { useSelector } from 'react-redux';
 import { categoryReducerValues } from '../../../../../../slices/Category/category';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { ICategory } from '../../../../../../models/Category';
 import {
+    Alert,
     Button,
     FormControl,
     FormControlLabel,
     InputLabel,
-    ListSubheader,
     MenuItem,
     Modal,
     Select,
@@ -23,7 +22,6 @@ import { StyledCheckbox, StyledForm, Title } from './styles';
 import { PRODUCT_UNIT_OPTIONS } from '../../../../../../constants/admin';
 import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
 import { productApi } from '../../../../../../services/ProductService';
-import { isNumber } from 'lodash';
 import { CREATE_PRODUCT_QUERY_QEY, DELETE_PRODUCT_QUERY_QEY, UPDATE_PRODUCT_QUERY_QEY } from './constants/constants';
 import useHandleResults from './hooks/useHandleResults';
 import { DS } from '../../../../../../constants/constants';
@@ -64,15 +62,16 @@ const ProductInfoSection: FC<IProps> = ({ product }) => {
 
     const validationSchema = yup.object({
         title: yup.string().required('Это обязательное поле').max(255, 'Максимальное число символов - 255'),
-        category: yup.number().required('Это обязательное поле'),
-        regular_price: yup.number().required('Это обязательное поле'),
-        min_quantity: yup.number().required('Это обязательное поле'),
+        category: yup.number().typeError('Выберите категорию').integer().positive().required('Это обязательное поле'),
+        regular_price: yup.number().integer('Цена должна быть целым числом').min(0).required('Это обязательное поле'),
+        min_quantity: yup.number().moreThan(0, 'Укажите количество больше нуля').required('Это обязательное поле'),
     });
 
     const onSubmit = (formValues: Omit<IProductDTO, 'category'> & { category: string | number }) => {
-        if (isNumber(formValues.category)) {
+        const category = Number(formValues.category);
+        if (Number.isSafeInteger(category) && category > 0) {
             const slug = slugify(transliterate(formValues.title));
-            const result = { ...formValues, slug };
+            const result = { ...formValues, category, slug };
             if (product) {
                 updateProduct({ data: result as IProductDTO, id: product.id });
             } else {
@@ -102,42 +101,9 @@ const ProductInfoSection: FC<IProps> = ({ product }) => {
                 slug: product.slug,
             });
         }
-    }, [product, isCancel]);
-
-    const categoryOptionsByParentId = useMemo(() => {
-        if (categories?.length) {
-            const categoryParents = categories.reduce(
-                (
-                    acc: {
-                        [id: string]: {
-                            category: ICategory;
-                            children: (ICategory | (ICategory & { isGroup: boolean }))[];
-                        };
-                    },
-                    category,
-                ) => {
-                    if (!category.parent) {
-                        acc[category.id] = {
-                            category,
-                            children: [{ ...category, isGroup: true }, category],
-                        };
-                    }
-
-                    return acc;
-                },
-                {},
-            );
-
-            categories.forEach((category) => {
-                if (category.parent && categoryParents[category.parent]) {
-                    categoryParents[category.parent].children.push(category);
-                }
-            });
-
-            return categoryParents;
-        }
-        return [];
-    }, []);
+    }, [product?.id, product?.regular_price, product?.is_negotiable_price, product?.discount_price,
+        product?.min_quantity, product?.description, product?.is_popular, product?.category,
+        product?.title, product?.unit, product?.slug, isCancel]);
 
     const toggleDeleteConfirmModal = () => {
         setDeleteConfirmModalOpen((prevState) => !prevState);
@@ -159,6 +125,7 @@ const ProductInfoSection: FC<IProps> = ({ product }) => {
     return (
         <div>
             <Stack gap={1} direction="column">
+                {updateProductResult.isSuccess && <Alert severity="success">Изменения сохранены.</Alert>}
                 {createProductResult.isError && (
                     <ErrorMessage text={'При создании товара возникла ошибка, попробуйте позже'} />
                 )}
@@ -202,39 +169,26 @@ const ProductInfoSection: FC<IProps> = ({ product }) => {
                         multiline
                     />
                     <FormControl fullWidth>
-                        <InputLabel id="demo-category_select-select-label">Категория</InputLabel>
+                        <InputLabel id={`${requestsId}-category`}>Категория</InputLabel>
                         <Select
                             disabled={isLoading}
-                            labelId="category_select"
+                            labelId={`${requestsId}-category`}
                             value={formik.values.category}
                             label="Категория"
                             error={formik.touched.category && Boolean(formik.errors.category)}
                             onChange={formik.handleChange}
                             name="category"
                         >
-                            {Object.values(categoryOptionsByParentId).map((option) => {
-                                return option.children.map((category) => {
-                                    if ('isGroup' in category && category.isGroup) {
-                                        return (
-                                            <ListSubheader color="primary" key={`group_${category.id}`}>
-                                                {category.name}
-                                            </ListSubheader>
-                                        );
-                                    }
-                                    return (
-                                        <MenuItem key={category.id} value={category.id}>
-                                            {category.name}
-                                        </MenuItem>
-                                    );
-                                });
-                            })}
+                            {(categories || []).map((category) => (
+                                <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                     <FormControl fullWidth>
-                        <InputLabel id="demo-units_select-select-label">Ед. измерения</InputLabel>
+                        <InputLabel id={`${requestsId}-unit`}>Ед. измерения</InputLabel>
                         <Select
                             disabled={isLoading}
-                            labelId="units_select"
+                            labelId={`${requestsId}-unit`}
                             value={formik.values.unit}
                             label="Ед. измерения"
                             error={formik.touched.unit && Boolean(formik.errors.unit)}

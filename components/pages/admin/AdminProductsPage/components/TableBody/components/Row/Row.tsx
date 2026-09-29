@@ -12,7 +12,7 @@ import EvotorProductData from '../../../EvotorProductData/EvotorProductData';
 import { EVOTOR_EXTERNAL_ID_DATA_SOURCE } from '../../../../../../../../constants/admin';
 
 const Row: FC<IProps> = ({ product }) => {
-    const { productsByStoreIdByProductId } = useSelector(evotorReducerValues);
+    const { productsByStoreId, productsByStoreIdByProductId } = useSelector(evotorReducerValues);
 
     const [open, setOpen] = useState(false);
 
@@ -26,7 +26,7 @@ const Row: FC<IProps> = ({ product }) => {
         }
 
         return null;
-    }, []);
+    }, [product.external_ids, productsByStoreIdByProductId]);
 
     return (
         <>
@@ -58,7 +58,7 @@ const Row: FC<IProps> = ({ product }) => {
                             {evotorProduct ? (
                                 <EvotorProductData evotorProduct={evotorProduct} />
                             ) : (
-                                <div>Нет связи с товаром из эвотор</div>
+                                <div>{productsByStoreId === null ? 'Данные Эвотор не загружены' : 'Нет связи с товаром из Эвотор'}</div>
                             )}
                         </CollapsedContentWrapper>
                     </Collapse>

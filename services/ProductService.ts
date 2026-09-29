@@ -43,6 +43,14 @@ export const productApi = createApi({
             query: (args) => `products/${typeof args === 'object' && args.queryString ? `?${args.queryString}` : ''}`,
         }),
 
+        /** Постраничный список товаров для сотрудников */
+        getAdminProducts: build.query<
+            { count: number; next: string | null; previous: string | null; results: IProduct[] },
+            { page: number; page_size: number; search: string; category?: number; sort_by: string; sort_order: 'asc' | 'desc' }
+        >({
+            query: (params) => ({ url: 'admin/products/', params }),
+        }),
+
         /** Получение товара по ID */
         getProductById: build.query<IProduct, number>({
             query: (id) => `products/${id}/`,

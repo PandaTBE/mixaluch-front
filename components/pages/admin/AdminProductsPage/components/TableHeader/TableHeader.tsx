@@ -17,7 +17,7 @@ const TableHeader: FC<IProps> = ({ order, orderBy, onHeaderCellClick }) => {
                             direction={orderBy === column.key ? order : 'asc'}
                             onClick={onHeaderCellClick(column.key || null)}
                             active={orderBy === column.key}
-                            disabled={column.isSortDisabled || !column.sortHandler}
+                            disabled={column.isSortDisabled || !column.key}
                         >
                             {column.headerText}
                         </TableSortLabel>
