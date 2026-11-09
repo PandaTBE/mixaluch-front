@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import PersonalDataConsent from '../../PersonalDataConsent/PersonalDataConsent';
 import Button from '../../Button/Button';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import Link from 'next/link';
@@ -28,7 +29,15 @@ const RegisterPage = () => {
     const [register, { isLoading, error, data }] = userApi.useRegisterMutation();
     const [showRePassword, setShowRePassword] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const initialValues = { name: '', second_name: '', email: '', phone_number: '', password: '', re_password: '' };
+    const initialValues = {
+        name: '',
+        second_name: '',
+        email: '',
+        phone_number: '',
+        password: '',
+        re_password: '',
+        personalDataConsent: false,
+    };
 
     const toggleShowRePassword = () => {
         setShowRePassword((prevState) => !prevState);
@@ -53,6 +62,7 @@ const RegisterPage = () => {
     const phoneRegExp = /^(\+7|7|8)?[\s-]?\(?[489][0-9]{2}\)?[\s-]?[0-9]{3}[\s-]?[0-9]{2}[\s-]?[0-9]{2}$/gm;
 
     const validationSchema = yup.object({
+        personalDataConsent: yup.boolean().oneOf([true], 'Необходимо согласие на обработку персональных данных'),
         re_password: yup
             .string()
             .oneOf([yup.ref('password'), null], 'Пароли должны совпадать')
@@ -63,14 +73,8 @@ const RegisterPage = () => {
         name: yup.string().required('Это обязательное поле'),
     });
 
-    const onSubmit = (body: {
-        phone_number: string;
-        second_name: string;
-        re_password: string;
-        password: string;
-        email: string;
-        name: string;
-    }) => {
+    const onSubmit = ({ personalDataConsent, ...body }: typeof initialValues) => {
+        if (!personalDataConsent) return;
         register(body);
     };
 
@@ -98,7 +102,7 @@ const RegisterPage = () => {
                     />
                 </MessageWrapper>
             )}
-            <StyledForm onSubmit={formik.handleSubmit}>
+            <StyledForm onSubmit={formik.handleSubmit} noValidate>
                 <NameWrapper>
                     <StyledInput
                         error={formik.touched.name && Boolean(formik.errors.name)}
@@ -173,6 +177,12 @@ const RegisterPage = () => {
                     }}
                 />
 
+                <PersonalDataConsent
+                    checked={formik.values.personalDataConsent}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.personalDataConsent ? formik.errors.personalDataConsent : undefined}
+                />
                 <ButtonsWrapper>
                     <Stack direction={'row'} flexWrap={{ xs: 'wrap' }} gap={2} alignItems={'center'}>
                         <RegisterButtonWrapper>

@@ -1,4 +1,5 @@
 import { useFormik } from 'formik';
+import PersonalDataConsent from '../../../../PersonalDataConsent/PersonalDataConsent';
 import {
     ButtonWrapper,
     ContentWrapper,
@@ -23,19 +24,21 @@ import { useEffect } from 'react';
  */
 const Feedback = () => {
     const [sendMessage, { data, isLoading, isError }] = telegramApi.useSendMessageMutation();
-    const initialValues = { name: '', email: '', text: '' };
+    const initialValues = { name: '', email: '', text: '', personalDataConsent: false };
 
     useEffect(() => {
         if (data?.ok) formik.resetForm();
     }, [data]);
 
     const validationSchema = yup.object({
+        personalDataConsent: yup.boolean().oneOf([true], 'Необходимо согласие на обработку персональных данных'),
         email: yup.string().email('Введите корректный email').required('Это обязательное поле'),
         name: yup.string().required('Это обязательное поле'),
         text: yup.string().required('Это обязательное поле'),
     });
 
-    const onSubmit = (values: { name: string; email: string; text: string }) => {
+    const onSubmit = ({ personalDataConsent, ...values }: typeof initialValues) => {
+        if (!personalDataConsent) return;
         sendMessage(transformTextToHtmlFormat('Новое сообщение от пользователя', values));
     };
 
@@ -111,6 +114,12 @@ const Feedback = () => {
                                 rows={4}
                             />
                         </TextWrapper>
+                        <PersonalDataConsent
+                            checked={formik.values.personalDataConsent}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.personalDataConsent ? formik.errors.personalDataConsent : undefined}
+                        />
                         <ButtonWrapper>
                             <SubmitButton type="submit" disabled={isLoading}>
                                 {isLoading && <CircularProgress size={18} color="inherit" aria-hidden="true" />}

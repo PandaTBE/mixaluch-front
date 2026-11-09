@@ -59,6 +59,12 @@ const { chromium } = require('playwright');
         await form.getByText('Введите корректный email').waitFor();
         assert.equal(requests, 0);
         await form.getByLabel('Электронная почта').fill('test@example.com');
+        const consent = form.locator('input[name="personalDataConsent"]');
+        assert.equal(await consent.isChecked(), false);
+        await submit.click();
+        await form.getByText('Необходимо согласие на обработку персональных данных').waitFor();
+        assert.equal(requests, 0, 'Feedback must not submit without consent');
+        await consent.check();
         for (const response of [
             { status: 200, body: { ok: false } },
             { status: 503, body: { ok: false } },
@@ -76,9 +82,11 @@ const { chromium } = require('playwright');
             if (response.body.ok) {
                 await form.getByText('Спасибо! Ваше сообщение отправлено.').waitFor();
                 assert.equal(await form.getByLabel('Ваше имя').inputValue(), '');
+                assert.equal(await consent.isChecked(), false, 'Success clears consent');
             } else {
                 await form.getByText('Не удалось отправить сообщение. Попробуйте ещё раз.').waitFor();
                 assert.equal(await form.getByLabel('Сообщение', { exact: false }).inputValue(), 'Проверка формы');
+                assert.equal(await consent.isChecked(), true, 'Failure preserves consent');
             }
         }
         assert.equal(requests, 3);
